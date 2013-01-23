@@ -96,6 +96,10 @@ def imagemagick_average(inspec, outfile):
 
 def create_average_in_one_go(inspec):
     # Create with one IM call
+    if ' ' in inspec:
+        inspec = '"' + inspec + '"'
+    if ' ' in args.outfile:
+        args.outfile = '"' + args.outfile + '"'
     imagemagick_average(inspec, args.outfile)
 
 def create_average_in_batches(files):
@@ -118,12 +122,12 @@ def create_average_in_batches(files):
     for file in files:
         if i < (args.batch_size):
             # print i
-            batch += "\"" + file + "\" "
+            batch += '"' + file + '" '
             i += 1
         else:
             temp_file = os.path.join(temp_dir, TEMP_PREFIX + str(batch_number) + TEMP_SUFFIX)
 
-            print "Batch number:", batch_number, "/", number_of_batches
+            print "Batch number:", batch_number+1, "/", number_of_batches
             print "Number in batch:", i
             imagemagick_average(batch, temp_file)
             batch_number += 1
@@ -133,7 +137,7 @@ def create_average_in_batches(files):
         # print batch
         # print i
     # Now make an average from the temp files
-    imagemagick_average(temp_dir + "/*", args.outfile)
+    imagemagick_average(os.path.join(temp_dir, TEMP_PREFIX + "*" + TEMP_SUFFIX), args.outfile)
 
 def normalise_files(spec):
     files = get_file_list(spec)
@@ -142,15 +146,23 @@ def normalise_files(spec):
     normalise_needed = False
     print "Checking sizes"
     for i, file in enumerate(files):
-        width, height = Image.open(file).size
-        # print width, "x, height, height * 1.0/width, file
-        widths.append(width)
-        heights.append(height)
-        if (not normalise_needed and 
-                i > 0 and 
-                (width != widths[0] or 
-                height != heights[0])):
-            normalise_needed = True
+        print file
+        try:
+            width, height = Image.open(file).size
+            # print width, "x, height, height * 1.0/width, file
+            widths.append(width)
+            heights.append(height)
+            if (not normalise_needed and 
+                    i > 0 and 
+                    (width != widths[0] or 
+                    height != heights[0])):
+                normalise_needed = True
+        except:
+            print "Ignoring problem file:", file
+            # Add dummy data
+            widths.append(0)
+            heights.append(0)
+            continue
 
     if not normalise_needed:
         print "Images all the same size. Normalising not needed."
@@ -174,6 +186,9 @@ def normalise_files(spec):
     temp_dir = create_temp_dir()
     
     for i, file in enumerate(files):
+        if widths[i] == 0 and heights[i] == 0:
+            # Ignore problem file
+            continue
         print widths[i], "x", heights[i], file
         
         if ((widths[i], heights[i]) == size):
@@ -184,10 +199,14 @@ def normalise_files(spec):
             filename = os.path.split(file)[1]
             temp_file = os.path.join(temp_dir, filename)
             
-            im = Image.open(file)
-            # im = im.resize(size)
-            im = ImageOps.fit(im, size, Image.ANTIALIAS, (0.5, 0.5))
-            im.save(temp_file)
+            try:
+                im = Image.open(file)
+                # im = im.resize(size)
+                im = ImageOps.fit(im, size, Image.ANTIALIAS, (0.5, 0.5))
+                im.save(temp_file)
+            except:
+                print "Ignoring problem file:", filename
+                continue
 
     spec = os.path.split(spec)[1]
     spec = os.path.join(temp_dir, spec)
@@ -249,13 +268,13 @@ import doctest
 doctest.testmod()   # automatically validate the embedded tests
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Create a composite image either by averaging or selecting random pixels from input images. If images are not the same size, they can be normalised first. If there are many images to average, ImageMagick uses a lot of RAM causing very slow paging. To counter this, average in (preferably equal-sized) batches, which creates temp averages from a smaller number and then averages those.')
-    parser.add_argument('inspec', default='*.jpg',
+    parser = argparse.ArgumentParser(description='Create a composite image either by averaging or selecting random pixels from input images. If images are not the same size, they can be normalised first. If there are many images to average, ImageMagick uses a lot of RAM causing very slow paging. To counter this, average in (preferably equal-sized) batches, which creates temp averages from a smaller number and then averages those.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('-i', '--inspec', default='*.jpg',
         help='Input file spec')
     parser.add_argument('-o', '--outfile', default='out.jpg',
         help='Output file name')
-    parser.add_argument('-e', '--effect', default='average',
-        help="Effect to apply: average / random. Default: average")
+    parser.add_argument('-e', '--effect', default='average', choices=('average', 'random'),
+        help="Effect to apply")
     parser.add_argument('-n', '--normalise', nargs='?', const='mode',
         help="If images are different sizes, normalise them first. [mode|mean|width,height]")
 
