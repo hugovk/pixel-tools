@@ -17,7 +17,7 @@ def recursive_find(inspec):
 
     return matches
     
-def find_files(inspec, recursive):
+def find_files(inspec, recursive=False):
     if recursive:
         files = recursive_find(inspec)
     else:

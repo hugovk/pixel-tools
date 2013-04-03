@@ -19,8 +19,8 @@ def save_im(im):
         print "Show image"
         im.show()
     if not args.outfile:
-        args.outfile = "blockit_b-" + str(args.blockwidth) + "x" + str(args.blockheight) + "_" + str(args.outwidth) + "x" + str(args.outheight) + ".jpg" 
-        
+        args.outfile = "blockit_b-" + str(args.blockwidth) + "x" + str(args.blockheight) + "_" + str(args.outwidth) + "x" + str(args.outheight) + ".jpg"
+
     print "Save image to", args.outfile
     try:
         im.save(args.outfile)
@@ -34,7 +34,7 @@ def get_rand_point(image_dimension, block_dimension):
     else:
         rand_point = random.randrange(0, offset)
     return rand_point
-        
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Create image from blocks of other images.",
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     parser.add_argument('-o', '--outfile', #default='blockit.jpg',
         help='Output filename')
     parser.add_argument('-W', '--outwidth', metavar='pixels',
-        type=int, default=640, 
+        type=int, default=640,
         help='Width of output image')
     parser.add_argument('-H', '--outheight', metavar='pixels',
         type=int, default=320,
@@ -72,7 +72,7 @@ if __name__ == "__main__":
 
     if not args.blockwidth:  args.blockwidth  = args.blocksize
     if not args.blockheight: args.blockheight = args.blocksize
-    
+
     if args.vertical:       args.blockheight = args.outheight
     elif args.horizontal:   args.blockwidth = args.outwidth
 
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     # Reduce width and height to fit full blocks
     args.outwidth  = args.outwidth  - divmod(args.outwidth,  args.blockwidth)[1]
     args.outheight = args.outheight - divmod(args.outheight, args.blockheight)[1]
-    
+
     number_of_blocks = args.outwidth * args.outheight / (args.blockwidth * args.blockheight)
     print "Number of blocks required:", number_of_blocks
     print "Picking", number_of_blocks, "random files"
@@ -110,17 +110,16 @@ if __name__ == "__main__":
     width, height = 0,0
     for index, block_number in random_indices:
         # print open_index, index
-        
+
         if open_index != index:
             open_index = index
-            print "Blocks done:", done, "/", number_of_blocks
-            print "Getting blocks from file", index
+            sys.stdout.write("\rBlocks done: " + str(done) + "/" + str(number_of_blocks) + ". Getting blocks from file " + str(index))
             try:
                 open_im = Image.open(files[open_index])
             except:
                 print "Problem with file", files[open_index]
                 continue
-        
+
         rand_x = get_rand_point(open_im.size[0], args.blockwidth)
         rand_y = get_rand_point(open_im.size[1], args.blockheight)
         crop_box = (rand_x, rand_y, rand_x + args.blockwidth, rand_y + args.blockheight)
@@ -135,7 +134,8 @@ if __name__ == "__main__":
             width = 0
             height += args.blockheight
         done += 1
-            
+    sys.stdout.write('\r\n')
+
     print "Done:", done, "/", number_of_blocks
     # We have all the random blocks, save them
     save_im(new_image)
