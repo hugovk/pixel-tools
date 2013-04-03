@@ -106,7 +106,7 @@ def detect_and_draw(input_name, cascade, outdir):
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description='Find, crop and save faces (or other objects).', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description='Find, crop and save faces (or other objects). Requires OpenCV.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-c', '--cascade', default='D:\\temp\\opencv\\data\\haarcascades\\haarcascade_frontalface_alt.xml',
         help='Haar cascade file')
     parser.add_argument('-i', '--inspec', default='*.jpg',

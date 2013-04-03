@@ -264,7 +264,7 @@ import doctest
 doctest.testmod()   # automatically validate the embedded tests
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Create a composite image either by averaging or selecting random pixels from input images. If images are not the same size, they can be normalised first. If there are many images to average, ImageMagick uses a lot of RAM causing very slow paging. To counter this, average in (preferably equal-sized) batches, which creates temp averages from a smaller number and then averages those.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description='Create a composite image either by averaging or selecting random pixels from input images. If images are not the same size, they can be normalised first. If there are many images to average, ImageMagick uses a lot of RAM causing very slow paging. To counter this, average in (preferably equal-sized) batches, which creates temp averages from a smaller number and then averages those. Requires PIL and ImageMagick's convert.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-i', '--inspec', default='*.jpg',
         help='Input file spec')
     parser.add_argument('-o', '--outfile', default='out.jpg',

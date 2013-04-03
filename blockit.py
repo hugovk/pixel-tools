@@ -37,7 +37,7 @@ def get_rand_point(image_dimension, block_dimension):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Create image from blocks of other images.",
+        description="Create image from blocks of other images. Requires PIL.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-i', '--inspec', default='2*.jpg',
         help='Input file spec')

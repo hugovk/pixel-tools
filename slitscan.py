@@ -160,7 +160,7 @@ def make_image(files):
         inew.save(outfile, quality=100)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Slice input files into an output file', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description='Slice input files into an output file. Requires PIL.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-i', '--inspec', default='*.jpg',
         help='Input file spec')
     parser.add_argument('-o', '--outfile', help='Output file name')

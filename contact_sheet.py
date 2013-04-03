@@ -165,7 +165,7 @@ def make((ncols, nrows), inspec, outfile, thumbsize, half, quarter, margins, pad
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Make a contact sheet.',
+        description='Make a contact sheet. Requires PIL.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-i', '--inspec', default='*.jpg',
         help='Input file spec')
