@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 Create a contact sheet (or montage/collage) of the input images.
 
@@ -21,10 +21,15 @@ MAX_DIMENSION = 65500
 
 def tuple_arg(s):
     try:
-        w, h = map(int, s.split(','))
+        if ',' in s:
+            w, h = map(int, s.split(','))
+        elif ':' in s:
+            w, h = map(int, s.split(':'))
+        elif 'x' in s:
+            w, h = map(int, s.split('x'))
         return w, h
     except:
-        raise argparse.ArgumentTypeError("Thumbnail must be w,h")
+        raise argparse.ArgumentTypeError("Value must be w,h or w:h or wxh")
 
 def aspect_ratio(number, thumbsize, aspect_ratio):
     """

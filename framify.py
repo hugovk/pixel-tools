@@ -10,7 +10,9 @@ def create_dir(dir):
         os.mkdir(dir)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Wrapper around ffmpeg to extract frames from a video.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description="Wrapper around ffmpeg to extract frames from a video.", 
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('infile', metavar='file',
         # default='filename.mp4',
         help='Video file to extract')
