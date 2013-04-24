@@ -72,6 +72,22 @@ optional arguments:
                         Output image's save quality (default: 90)
 ```
 
+deframify.py
+============
+```
+usage: deframify.py [-h] [-i spec] [-r fps] [-o filename]
+
+Wrapper around ffmpeg to animate frames into a video.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i spec, --inspec spec
+                        Image files to animate (default: *.jpg)
+  -r fps, --framerate fps
+                        Framerate (default: 25)
+  -o filename, --outfile filename
+                        Output video filename (default: timelapse.mp4)
+```
 
 face_cropper.py
 ===============
