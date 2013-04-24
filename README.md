@@ -74,6 +74,9 @@ optional arguments:
 
 deframify.py
 ============
+
+See also `framify.py`.
+
 ```
 usage: deframify.py [-h] [-i spec] [-r fps] [-o filename]
 
@@ -119,7 +122,9 @@ optional arguments:
 
 framify.py
 ==========
-See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dframify&ss=2&s=int">Flickr</a>.
+See some images and videos that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dframify&ss=2&s=int">Flickr</a>.
+
+See also `deframify.py`.
 
 ```
 usage: framify.py [-h] [-o directory] [-r fps] file
