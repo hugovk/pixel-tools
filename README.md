@@ -142,6 +142,28 @@ optional arguments:
                         Framerate (default: 25)
 ```
 
+image_packer.py
+==========
+See some images and videos that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dimage_packer&ss=2&s=int">Flickr</a>.
+
+Based on <a href="http://code.activestate.com/recipes/442299/">S W's recipe</a>.
+
+```
+usage: image_packer.py [-h] [-o OUTFILE] [-s pixels] [-l] [-t]
+
+Pack multiple images of different sizes into one image.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTFILE, --outfile OUTFILE
+                        Output image file (default: output.png)
+  -s pixels, --size pixels
+                        Size (width,height tuple) of the image we're packing
+                        into (default: 1024,1024)
+  -l, --largest_first   Pack largest images first (default: False)
+  -t, --tempfiles       Save temporary files to show filling (default: False)
+```
+
 pixelator.py
 ============
 
