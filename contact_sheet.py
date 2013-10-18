@@ -96,6 +96,7 @@ def make_contact_sheet(fnames, (ncols,nrows), (photow,photoh),
     padh = (nrows-1)*padding
     isize = (ncols*photow+marw+padw,nrows*photoh+marh+padh)
 
+    print "Image size:", isize
     if isize[0] > MAX_DIMENSION:
         sys.exit("Output image is too wide: " + str(isize[0]) + " (Max: " + str(MAX_DIMENSION) + "). Tip: use --thumbsize (or --half or --quarter).")
     if isize[1] > MAX_DIMENSION:
@@ -117,7 +118,7 @@ def make_contact_sheet(fnames, (ncols,nrows), (photow,photoh),
             bbox = (left,upper,right,lower)
             try:
                 # Read in an image and resize appropriately
-                img = Image.open(fnames[count]).resize((photow,photoh))
+                img = Image.open(fnames[count]).resize((photow,photoh), Image.ANTIALIAS)
             except:
                 break
             inew.paste(img,bbox)
@@ -174,6 +175,8 @@ if __name__ == '__main__':
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-i', '--inspec', default='*.jpg',
         help='Input file spec')
+    parser.add_argument('-v', '--reverse', action='store_true',
+        help='Reverse list of input files')
     parser.add_argument('-o', '--outfile', default='contact_sheet.jpg',
         help='Output filename')
     parser.add_argument('-r', '--rows', type=int,

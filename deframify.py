@@ -28,7 +28,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print args
 
-    cmd = "ffmpeg -f image2 -r " + str(args.framerate) + " -pattern_type glob -i '" + args.inspec + "' -c:v libx264 " + args.outfile
+    cmd = "ffmpeg -f image2 -pattern_type glob -r " + str(args.framerate) + " -i '" + args.inspec + "' -c:v libx264 " + args.outfile
     print cmd
     os.system(cmd)
 

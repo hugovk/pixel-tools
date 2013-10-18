@@ -100,6 +100,7 @@ def create_average_in_batches(inspec):
     if args.batch_size == 1:
         print "No point using batch size of 1, create in one go instead"
         create_average_in_one_go(inspec)
+        return
 
     number_of_batches = number/args.batch_size
     print "Number of files:", number

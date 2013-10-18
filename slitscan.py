@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+"""
+Python/PIL version of eirikmagick.sh with extra options
+"""
 import argparse
 import glob
 import os
@@ -10,7 +13,9 @@ from PIL import Image
 try: import timing # Optional, http://stackoverflow.com/a/1557906/724176
 except: None
 
-# Python/PIL version of eirikmagick.sh
+# PIL jpeg saving: Maximum supported image dimension is 65500 pixels
+MAX_DIMENSION = 65500
+
 
 def sanity_check(files):
     num_files = len(files)
@@ -19,6 +24,13 @@ def sanity_check(files):
         sys.exit("Not enough input images")
 
 def make_image(files):
+    if not args.outfile:
+        args.outfile = "out-" + args.direction + "-" + args.mode
+        if args.greedy:
+            args.outfile += "-greedy"
+        args.outfile += ".jpg"
+    print "Outfile:", args.outfile
+
     outfile = args.outfile
     # Assume all images are the same dimension
     in_width, in_height = Image.open(files[0]).size
@@ -65,11 +77,17 @@ def make_image(files):
         print "Out height:\t", out_height
         left = 0
         right = in_width
-        
+
     # Reset width and height for greedy eirkismagick; don't want to go off the edge
-    if args.mode == "eiriksmagick":
+    if args.mode == "eiriksmagick" and args.greedy:
         out_width = in_width
         out_height = in_height
+
+    # print "Image size:", isize
+    if out_width > MAX_DIMENSION:
+        sys.exit("Output image is too wide: " + str(out_width) + " (Max: " + str(MAX_DIMENSION) + "). Tip: avoid --greedy or use a smaller --thickness.")
+    if out_height > MAX_DIMENSION:
+        sys.exit("Output image is too high: " + str(out_height) + " (Max: " + str(MAX_DIMENSION) + "). Tip: avoid --greedy or use a smaller --thickness.")
 
     if args.mode == "fixed":
         if vertical:
@@ -166,6 +184,8 @@ if __name__ == '__main__':
         help="Slit thickness in pixels. Default is to calculate based on number of input images.")
     parser.add_argument('-g', '--greedy', action='store_true',
         help="Use every input file even if more than the width or height")
+    parser.add_argument('--supercombo', action='store_true',
+        help="Do most of the combinations, apart from --mode all. Uses default filenames.")
     parser.add_argument('-c', '--cache', type=int,
         help="Load this many images into memory, the rest will be read on demand from disk (for: --mode all)")
     args = parser.parse_args()
@@ -173,8 +193,13 @@ if __name__ == '__main__':
 
     files = glob.glob(args.inspec)
     sanity_check(files)
-    if not args.outfile:
-        args.outfile = "out-" + args.direction + "-" + args.mode + ".jpg"
-    make_image(files)
+    if not args.supercombo:
+        make_image(files)
+    else: # Super Combo!
+        for args.mode in "eiriksmagick", "fixed":
+            for args.direction in "horizontal", "vertical":
+                for args.greedy in True, False:
+                    args.outfile = None
+                    make_image(files)
 
 # End of file

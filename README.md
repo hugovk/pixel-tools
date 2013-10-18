@@ -41,7 +41,7 @@ contact_sheet.py
 See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dcontact_sheet&ss=2&z=t">Flickr</a>.
 
 ```
-usage: contact_sheet.py [-h] [-i INSPEC] [-o OUTFILE] [-r ROWS] [-c COLS]
+usage: contact_sheet.py [-h] [-i INSPEC] [-v] [-o OUTFILE] [-r ROWS] [-c COLS]
                         [-a ASPECT_RATIO] [-t pixels] [-hs] [-qs] [-m MARGINS]
                         [-p pixels] [-q QUALITY]
 
@@ -51,6 +51,7 @@ optional arguments:
   -h, --help            show this help message and exit
   -i INSPEC, --inspec INSPEC
                         Input file spec (default: *.jpg)
+  -v, --reverse         Reverse list of input files (default: False)
   -o OUTFILE, --outfile OUTFILE
                         Output filename (default: contact_sheet.jpg)
   -r ROWS, --rows ROWS  Number of rows (default: None)
@@ -163,6 +164,31 @@ optional arguments:
   -l, --largest_first   Pack largest images first (default: False)
   -t, --tempfiles       Save temporary files to show filling (default: False)
 ```
+
+padims.py
+============
+
+See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dpadims&ss=2&z=t">Flickr</a>.
+
+```
+usage: padims.py [-h] [-i INSPEC] [-o OUTDIR] [-ha {centre,left,right}]
+                 [-va {centre,top,bottom}]
+
+Pad images
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INSPEC, --inspec INSPEC
+                        Input file spec (default: *.jpg)
+  -o OUTDIR, --outdir OUTDIR
+                        Output directory (default: out)
+  -ha {centre,left,right}, --halign {centre,left,right}
+                        Horizontal alignment (default: centre)
+  -va {centre,top,bottom}, --valign {centre,top,bottom}
+                        Vertical alignment (default: centre)
+```
+
+Python dependencies: Python Imaging Library (PIL)
 
 pixelator.py
 ============

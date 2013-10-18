@@ -5,6 +5,9 @@ Wrapper around ffmpeg to extract frames from a video.
 import argparse
 import os
 
+try: import timing # optional
+except: pass
+
 def create_dir(dir):
     if not os.path.isdir(dir):
         os.mkdir(dir)
