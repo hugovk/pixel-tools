@@ -9,12 +9,8 @@ Licensed under the PSF License
 import argparse
 import glob
 import sys
-
 from PIL import Image
-
 import factors
-try: import timing # optional
-except: pass
 
 # PIL jpeg saving: Maximum supported image dimension is 65500 pixels
 MAX_DIMENSION = 65500
@@ -126,12 +122,14 @@ def make_contact_sheet(fnames, (ncols,nrows), (photow,photoh),
     sys.stdout.write('\r\n')
     return inew
 
-def make((ncols, nrows), inspec, outfile, thumbsize, half, quarter, margins, padding, quality):
+def make((ncols, nrows), inspec, reverse, outfile, thumbsize, half, quarter, margins, padding, quality):
     files = glob.glob(inspec)
     if len(files) == 0:
         sys.exit("No input files found.")
     if outfile in files:
         files.remove(outfile) # don't include any pre-existing montage
+    if reverse:
+        files = files[::-1] 
 
     if not thumbsize:
         thumbsize = Image.open(files[0]).size
@@ -199,8 +197,11 @@ if __name__ == '__main__':
     parser.add_argument('-q', '--quality', default=90, type=int,
         help="Output image's save quality")
     args = parser.parse_args()
+
+    try: import timing # optional
+    except: pass
     print args
 
-    make((args.cols, args.rows), args.inspec, args.outfile, args.thumbsize, args.half, args.quarter, args.margins, args.padding, args.quality)
+    make((args.cols, args.rows), args.inspec, args.reverse, args.outfile, args.thumbsize, args.half, args.quarter, args.margins, args.padding, args.quality)
 
 # End of file

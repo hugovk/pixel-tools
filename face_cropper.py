@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 Find faces in images and save them to a "crop" subdirectory.
 
@@ -22,8 +22,8 @@ except: None
 
 min_size = (20, 20)
 image_scale = 2
-haar_scale = 1.2
-min_neighbors = 2
+haar_scale = 2 # 1.2
+min_neighbors = 3 # 2
 haar_flags = cv.CV_HAAR_FIND_BIGGEST_OBJECT
 
 def create_dir(dir):
@@ -36,7 +36,7 @@ def detect_and_draw(input_name, cascade, outdir):
     # Allocate temporary images
     gray = cv.CreateImage((img.width,img.height), 8, 1)
     small_img = cv.CreateImage((cv.Round(img.width / image_scale),
-			       cv.Round (img.height / image_scale)), 8, 1)
+        cv.Round (img.height / image_scale)), 8, 1)
 
     # Convert color input image to grayscale
     cv.CvtColor(img, gray, cv.CV_BGR2GRAY)
@@ -66,9 +66,12 @@ def detect_and_draw(input_name, cascade, outdir):
                 if not args.tight_crop:
                     # Widen box
                     x = int(x - w*0.5)
+                    # x = int(x - w)
                     y = int(y - h*0.5)
                     w = int(w * 2)
+                    # w = int(w * 3)
                     h = int(h * 2)
+                    # h = int(h * 3.5)
                 # Validate
                 if x < 0: x = 0
                 if y < 0: y = 0
@@ -107,7 +110,9 @@ def detect_and_draw(input_name, cascade, outdir):
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Find, crop and save faces (or other objects). Requires OpenCV.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-c', '--cascade', default='D:\\temp\\opencv\\data\\haarcascades\\haarcascade_frontalface_alt.xml',
+    parser.add_argument('-c', '--cascade', 
+#         default='D:\\temp\\opencv\\data\\haarcascades\\haarcascade_frontalface_alt.xml',
+        default='/usr/local/Cellar/opencv/2.4.5/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml',
         help='Haar cascade file')
     parser.add_argument('-i', '--inspec', default='*.jpg',
         help='Input file spec')
@@ -115,6 +120,8 @@ if __name__ == '__main__':
         help='Output directory')
     parser.add_argument('-a', '--findall', action='store_true',
         help='Find all objects in photo instead of biggest (slower)')
+    parser.add_argument('-f', '--fast', action='store_true',
+        help='Faster but less accurate detection')
     parser.add_argument('-r', '--recursive', action='store_true',
         help='Recurse directories')
     parser.add_argument('-t', '--tight_crop', action='store_true',
@@ -127,6 +134,11 @@ if __name__ == '__main__':
 
     if args.findall:
         haar_flags = 0
+
+    if args.fast:
+        haar_scale = 1.2
+        min_neighbors = 2
+        haar_flags = haar_flags | cv.CV_HAAR_DO_CANNY_PRUNING
 
     cascade = cv.Load(args.cascade)
     if args.show:
@@ -144,8 +156,11 @@ if __name__ == '__main__':
         print i+1, "/", total_files
         try:
             total_found += detect_and_draw(file, cascade, args.outdir)
-        except:
+        except Exception,e:
+            print os.getcwd()
             print "Cannot detect:", file
+            print str(e)
+            print repr(e)
             continue
 
     if args.show:

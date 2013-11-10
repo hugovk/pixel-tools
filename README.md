@@ -165,6 +165,25 @@ optional arguments:
   -t, --tempfiles       Save temporary files to show filling (default: False)
 ```
 
+mixify.py
+=========
+See some images and videos that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dmixify&ss=2&s=int">Flickr</a>.
+
+```
+usage: mixify.py [-h] [-a filename] [-v filename] [-o filename]
+
+Wrapper around ffmpeg to mix audio from one video into another video.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -a filename, --audio filename
+                        File to take audio from (default: audio.mp4)
+  -v filename, --video filename
+                        File to take video from (default: video.mp4)
+  -o filename, --outfile filename
+                        Output filename (default: mixed-video.mp4)
+```
+
 padims.py
 ============
 
