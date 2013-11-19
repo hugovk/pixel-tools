@@ -10,12 +10,8 @@ import sys
 
 from PIL import Image
 
-try: import timing # Optional, http://stackoverflow.com/a/1557906/724176
-except: None
-
 # PIL jpeg saving: Maximum supported image dimension is 65500 pixels
 MAX_DIMENSION = 65500
-
 
 def sanity_check(files):
     num_files = len(files)
@@ -62,6 +58,8 @@ def make_image(files):
         slice_thickness = args.thickness
     else:
         slice_thickness = number_of_slices / len(files)
+    if slice_thickness == 0:
+        slice_thickness = 1
 
     if vertical:
         print "Slice width:\t", slice_thickness
@@ -97,12 +95,14 @@ def make_image(files):
             upper = (in_height * args.fixedposition/100) - (slice_thickness * args.fixedposition/100)
             lower = upper + slice_thickness
 
-    if args.mode == 'all':
+    if args.mode == 'all' and args.keepfree:
         loops = number_of_slices
+        from psutil import virtual_memory # for caching
     else:
         loops = 1
 
     img_cache = []
+    cache_full = False
     for j in range(loops):
         print "Creating:\t" + str(j+1) + "/" + str(loops)
         if args.mode == 'all':
@@ -147,17 +147,22 @@ def make_image(files):
             if (crop_bbox[2] > in_width) or (crop_bbox[3] > in_height):
                 # Don't if crop_box is outside the image
                 continue
-                
+
+            if args.mode == 'all' and args.keepfree and not cache_full:
+                free_megabytes = virtual_memory().free / (1024 * 1024)
+                 if free_megabytes < args.keepfree:
+                    cache_full = True
+            
             if len(img_cache) > i:
-                # print "load from cache"
+#                 print "load from cache"
                 img = img_cache[i].crop(crop_bbox)
-            elif loops > 1 and i < args.cache:
-                # print "add to cache"
+            elif loops > 1 and not cache_full:
+#                 print "add to cache"
                 img_cache.append(Image.open(file))
                 # img = img.crop(crop_bbox)
                 img = img_cache[i].crop(crop_bbox)
             else:
-                # print "don't use cache"
+#                 print "don't use cache"
                 img = Image.open(file).crop(crop_bbox)
 
             # except:
@@ -186,9 +191,12 @@ if __name__ == '__main__':
         help="Use every input file even if more than the width or height")
     parser.add_argument('--supercombo', action='store_true',
         help="Do most of the combinations, apart from --mode all. Uses default filenames.")
-    parser.add_argument('-c', '--cache', type=int,
-        help="Load this many images into memory, the rest will be read on demand from disk (for: --mode all)")
+    parser.add_argument('-kf', '--keepfree', type=int,
+        help="Cache but keep this much MB free when initially filling cache.")
     args = parser.parse_args()
+
+    try: import timing # Optional, http://stackoverflow.com/a/1557906/724176
+    except: None
     print args
 
     files = glob.glob(args.inspec)

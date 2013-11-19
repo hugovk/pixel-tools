@@ -148,6 +148,8 @@ def normalise_files(files, normalise, temp_dir):
                     (width != widths[0] or
                     height != heights[0])):
                 normalise_needed = True
+        except (KeyboardInterrupt, SystemExit):
+            raise
         except:
             print "Ignoring problem file:", file
             # Add dummy data
@@ -260,7 +262,6 @@ def save_im(im):
     except IOError:
         print "Cannot save"
 
-
 import doctest
 doctest.testmod()   # automatically validate the embedded tests
 
@@ -268,8 +269,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Create a composite image either by averaging or selecting random pixels from input images. If images are not the same size, they can be normalised first. If there are many images to average, ImageMagick uses a lot of RAM causing very slow paging. To counter this, average in (preferably equal-sized) batches, which creates temp averages from a smaller number and then averages those. Requires PIL and ImageMagick's convert.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-i', '--inspec', default='*.jpg',
         help='Input file spec')
-    parser.add_argument('-o', '--outfile', default='out.jpg',
+    parser.add_argument('-o', '--outfile', # default='out.jpg',
         help='Output file name')
+    parser.add_argument("-nc" , "--noclobber", action="store_true", help="Don't clobber pre-exisiting output file")
     parser.add_argument('-e', '--effect', default='average', choices=('average', 'random', 'nowt'),
         help="Effect to apply")
     parser.add_argument('-n', '--normalise', nargs='?',
@@ -291,6 +293,12 @@ if __name__ == '__main__':
     inspec = args.inspec
     if os.path.isdir(inspec):
         inspec = os.path.join(inspec, "*.jpg")
+
+    if not args.outfile:
+        args.outfile = "out-" + args.effect + ".jpg"
+
+    if args.noclobber and os.path.exists(args.outfile):
+        sys.exit("Output file (" + args.outfile + ") already exists, exiting")
 
     if args.normalise:
         print "Normalise input images"

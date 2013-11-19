@@ -8,6 +8,7 @@ Licensed under the PSF License
 """
 import argparse
 import glob
+import os
 import sys
 from PIL import Image
 import factors
@@ -196,11 +197,15 @@ if __name__ == '__main__':
         help='Padding between images')
     parser.add_argument('-q', '--quality', default=90, type=int,
         help="Output image's save quality")
+    parser.add_argument("-nc" , "--noclobber", action="store_true", help="Don't clobber pre-exisiting output file")
     args = parser.parse_args()
 
     try: import timing # optional
     except: pass
     print args
+
+    if args.noclobber and os.path.exists(args.outfile):
+        sys.exit("Output file (" + args.outfile + ") already exists, exiting")
 
     make((args.cols, args.rows), args.inspec, args.reverse, args.outfile, args.thumbsize, args.half, args.quarter, args.margins, args.padding, args.quality)
 
