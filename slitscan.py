@@ -150,7 +150,7 @@ def make_image(files):
 
             if args.mode == 'all' and args.keepfree and not cache_full:
                 free_megabytes = virtual_memory().free / (1024 * 1024)
-                 if free_megabytes < args.keepfree:
+                if free_megabytes < args.keepfree:
                     cache_full = True
             
             if len(img_cache) > i:

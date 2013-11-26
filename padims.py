@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Pad images of different sizes so all are centred with black borders.
+Pad images of different sizes so all end up the same size with black borders.
 """
 import argparse
 import glob
@@ -70,7 +70,7 @@ def pad_images(files):
     
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Pad images', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description='Pad images of different sizes so all end up the same size with black borders.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-i', '--inspec', default='*.jpg',
         help='Input file spec')
     parser.add_argument('-o', '--outdir', default='out',
