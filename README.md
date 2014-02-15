@@ -36,6 +36,24 @@ optional arguments:
   -s, --show            Show image when done (default: False)
 ```
 
+colour_clock.py
+================
+See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dcolour_clock&ss=2&z=t">Flickr</a>.
+
+```
+usage: colour_clock.py [-h] [-o OUTFILE] input
+
+Make a colour clock of the five most dominant colours on each page of a book
+
+positional arguments:
+  input                 An input PDF, or file spec of images (eg *.jpg)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTFILE, --outfile OUTFILE
+                        Output filename (default: None)
+```
+
 contact_sheet.py
 ================
 See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dcontact_sheet&ss=2&z=t">Flickr</a>.
