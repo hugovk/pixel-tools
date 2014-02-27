@@ -23,7 +23,7 @@ if __name__ == "__main__":
         default='frames',
         help='Directory to save frames')
     parser.add_argument('-r', '--framerate', metavar='fps',
-         default=25, type=int,
+         default=25, type=float,
         help='Framerate')
     args = parser.parse_args()
     print args
@@ -31,6 +31,8 @@ if __name__ == "__main__":
     # REM set framesize=32x18
     # REM ffmpeg -i %1 -r 25 -s %framesize% smallframes\%%6d.jpg
 
+    if " " in args.infile:
+        args.infile = '"' + args.infile + '"'
     create_dir(args.outdir)
     output = os.path.join(args.outdir, "%6d.jpg")
     cmd = "ffmpeg -i " + args.infile + " -r " + str(args.framerate) + " -q:v 1 " + output
