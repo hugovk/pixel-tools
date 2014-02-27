@@ -33,7 +33,7 @@ def aspect_ratio(number, thumbsize, aspect_ratio):
     Find the best number of rows and columns to approximate a given aspect ratio:
 
     number          The number of images
-    thumbsize       The width and height of each image
+    thumbsize       The width and height of each image (eg 80, 100)
     aspect_ratio    The width and height of an aspect ratio (eg 16,9)
     """
     from math import sqrt
@@ -116,6 +116,8 @@ def make_contact_sheet(fnames, (ncols,nrows), (photow,photoh),
             try:
                 # Read in an image and resize appropriately
                 img = Image.open(fnames[count]).resize((photow,photoh), Image.ANTIALIAS)
+            except KeyboardInterrupt:
+                sys.exit("Keyboard interrupt")
             except:
                 break
             inew.paste(img,bbox)
@@ -130,7 +132,7 @@ def make((ncols, nrows), inspec, reverse, outfile, thumbsize, half, quarter, mar
     if outfile in files:
         files.remove(outfile) # don't include any pre-existing montage
     if reverse:
-        files = files[::-1] 
+        files = files[::-1]
 
     if not thumbsize:
         thumbsize = Image.open(files[0]).size
