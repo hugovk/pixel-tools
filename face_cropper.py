@@ -30,7 +30,7 @@ def create_dir(dir):
     if not os.path.isdir(dir):
         os.mkdir(dir)
 
-def detect_and_draw(input_name, cascade, outdir):
+def detect_and_save(input_name, cascade, outdir, tight_crop = False, show = False):
     count = 0
     img = cv.LoadImage(input_name, 1)
     # Allocate temporary images
@@ -63,7 +63,7 @@ def detect_and_draw(input_name, cascade, outdir):
                 y = int(y * image_scale)
                 x0,y0,w0,h0 = x,y,w,h
                 # print x,y,w,h
-                if not args.tight_crop:
+                if not tight_crop:
                     # Widen box
                     x = int(x - w*0.5)
                     # x = int(x - w)
@@ -80,7 +80,7 @@ def detect_and_draw(input_name, cascade, outdir):
                 # print x,y,w,h
 
                 # This code draws a box on the original around the detected face
-                if args.show:
+                if show:
                     # pt1 = (int(x * image_scale), int(y * image_scale))
                     pt1 = (x0, y0)
                     # pt2 = (int((x + w) * image_scale), int((y + h) * image_scale))
@@ -90,7 +90,7 @@ def detect_and_draw(input_name, cascade, outdir):
                 cropped = cv.CreateImage((w, h), img.depth, img.nChannels)
                 src_region = cv.GetSubRect(img, (x, y, w, h))
                 cv.Copy(src_region, cropped)
-                if args.show:
+                if show:
                     cv.ShowImage("result", cropped)
                     cv.WaitKey(0)
                 head, tail = os.path.split(input_name)
@@ -101,7 +101,7 @@ def detect_and_draw(input_name, cascade, outdir):
                 count += 1
 
     # This code is show/save the original with boxes around detected faces
-    if args.show:
+    if show:
         cv.ShowImage("result", img)
         # outfile = os.path.join(outdir, input_name)
         # cv.SaveImage(outfile, img)
@@ -155,7 +155,7 @@ if __name__ == '__main__':
     for i,file in enumerate(files):
         print i+1, "/", total_files
         try:
-            total_found += detect_and_draw(file, cascade, args.outdir)
+            total_found += detect_and_save(file, cascade, args.outdir, args.tight_crop, args.show)
         except Exception,e:
             print os.getcwd()
             print "Cannot detect:", file
