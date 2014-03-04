@@ -1,6 +1,8 @@
 Requirements
 ============
-Some of these require Python Imaging Library (PIL), Open Source Computer Vision (OpenCV) or ImageMagick's `convert` command.
+Some of these require Python Imaging Library (Pillow or PIL), Open Source Computer Vision (OpenCV) or ImageMagick's `convert` command. Some requirements can be installed via pip:
+
+`pip install -r requirements.txt`
 
 blockit.py
 ==========
