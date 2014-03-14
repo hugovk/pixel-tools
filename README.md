@@ -185,6 +185,26 @@ optional arguments:
   -t, --tempfiles       Save temporary files to show filling (default: False)
 ```
 
+kaleidoscope.py
+===============
+See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dkaleidoscope&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+
+```
+usage: kaleidoscope.py [-h] [-o OUTFILE] [-w WIDTH] infile
+
+Kaleidoscope an image
+
+positional arguments:
+  infile                An input image
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUTFILE, --outfile OUTFILE
+                        Output filename (default: None)
+  -w WIDTH, --width WIDTH
+                        Width of triangle (default: 200)
+```
+
 mixify.py
 =========
 See some images and videos that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dmixify&ss=2&s=int">Flickr</a>.
@@ -240,9 +260,9 @@ usage: pixelator.py [-h] [-i INSPEC] [-o OUTFILE]
                     [-k] [-b BATCH_SIZE] [-s]
 ```
 Create a composite image either by averaging or selecting random pixels from
-input images. 
+input images.
 
-If images are not the same size, they can be normalised first, either to the 
+If images are not the same size, they can be normalised first, either to the
 mode, mean or a specified size.
 
 If there are many images to average, ImageMagick uses a lot of RAM causing
