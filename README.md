@@ -6,7 +6,7 @@ Some of these require Python Imaging Library (Pillow or PIL), Open Source Comput
 
 blockit.py
 ==========
-See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dblockit&ss=2&z=t">Flickr</a>.
+See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dblockit&m=tags&ss=2&ct=6&mt=all&w=all&adv=1">Flickr</a>.
 
 ```
 usage: blockit.py [-h] [-i INSPEC] [-r] [-o OUTFILE] [-W pixels] [-H pixels]
@@ -40,7 +40,7 @@ optional arguments:
 
 colour_clock.py
 ================
-See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dcolour_clock&ss=2&z=t">Flickr</a>.
+See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel:tool=colour_clock&m=tags&ss=2&ct=6&mt=all&w=all&adv=1">Flickr</a>.
 
 ```
 usage: colour_clock.py [-h] [-o OUTFILE] input
@@ -58,7 +58,7 @@ optional arguments:
 
 contact_sheet.py
 ================
-See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dcontact_sheet&ss=2&z=t">Flickr</a>.
+See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dcontact_sheet&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
 usage: contact_sheet.py [-h] [-i INSPEC] [-v] [-o OUTFILE] [-r ROWS] [-c COLS]
@@ -115,7 +115,7 @@ optional arguments:
 
 face_cropper.py
 ===============
-See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dface_cropper&ss=2&z=t">Flickr</a>.
+See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dface_cropper&m=tags&ss=2&ct=6&mt=all&adv=1">Flickr</a>.
 
 
 ```
@@ -143,7 +143,7 @@ optional arguments:
 
 framify.py
 ==========
-See some images and videos that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dframify&ss=2&s=int">Flickr</a>.
+See some images and videos that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dframify&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 See also `deframify.py`.
 
@@ -165,7 +165,7 @@ optional arguments:
 
 image_packer.py
 ==========
-See some images and videos that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dimage_packer&ss=2&s=int">Flickr</a>.
+See some images and videos that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dimage_packer&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 Based on <a href="http://code.activestate.com/recipes/442299/">S W's recipe</a>.
 
@@ -207,7 +207,7 @@ optional arguments:
 
 mixify.py
 =========
-See some images and videos that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dmixify&ss=2&s=int">Flickr</a>.
+See some images and videos that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dmixify&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
 usage: mixify.py [-h] [-a filename] [-v filename] [-o filename]
@@ -227,7 +227,7 @@ optional arguments:
 padims.py
 ============
 
-See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dpadims&ss=2&z=t">Flickr</a>.
+See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dpadims&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
 usage: padims.py [-h] [-i INSPEC] [-o OUTDIR] [-ha {centre,left,right}]
@@ -252,7 +252,7 @@ Python dependencies: Python Imaging Library (PIL)
 pixelator.py
 ============
 
-See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dpixelator&ss=2&z=t">Flickr</a>.
+See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dpixelator&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
 usage: pixelator.py [-h] [-i INSPEC] [-o OUTFILE]
@@ -295,7 +295,7 @@ External dependencies: ImageMagick's `convert`
 
 slitscan.py
 ===========
-See some images that used this at <a href="http://www.flickr.com/search/?s=int&z=t&ss=2&w=all&q=pixel%3Atool%3Dslitscan&m=text">Flickr</a>.
+See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dslitscan&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 ```
 usage: slitscan.py [-h] [-i INSPEC] [-o OUTFILE]
                    [-m {eiriksmagick,central,all}]
