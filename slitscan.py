@@ -149,6 +149,7 @@ def make_image(files):
                 upper = i * slice_thickness
                 lower = upper + slice_thickness
             paste_bbox = (left, upper, right, lower)
+            print(paste_bbox) # TODO TEMP
             if args.mode == "eiriksmagick":
                 crop_bbox = paste_bbox
             # print(bbox)

@@ -32,11 +32,11 @@ if __name__ == "__main__":
         default='timelapse.mp4',
         help='Output video filename')
     args = parser.parse_args()
-    print args
+    print(args)
 
     cmd = "ffmpeg -f image2 -pattern_type glob -r " + str(args.framerate) + \
         " -i '" + args.inspec + "' -c:v libx264 " + args.outfile
-    print cmd
+    print(cmd)
     os.system(cmd)
 
 # End of file

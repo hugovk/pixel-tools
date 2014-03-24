@@ -64,8 +64,10 @@ def normalise_files(spec, files, normalise, temp_dir):
                     (width != widths[0] or
                         height != heights[0])):
                 normalise_needed = True
-        except:
+        except Exception as e:
             print("Ignoring problem file:", file)
+            print(str(e))
+            print(repr(e))
             # Add dummy data
             widths.append(0)
             heights.append(0)
