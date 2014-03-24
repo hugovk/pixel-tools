@@ -9,7 +9,8 @@ before_install:
 - curl -O https://dl.dropboxusercontent.com/u/3065276/testimages.zip
 - unzip testimages.zip
 install:
-- pip install -r requirements.txt
+# - pip install -r requirements.txt Don't need numpy or psutil yet
+- pip install Pillow
 before_script:
 - chmod +x *.py
 script: ./test_pixel_tools.py

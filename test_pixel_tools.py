@@ -6,7 +6,7 @@ import argparse
 import os
 import tempfile
 try:
-    import unittest2  # Python 2.6
+    import unittest2 as unittest  # Python 2.6
 except:
     import unittest
 
@@ -36,7 +36,7 @@ class TestPixelTools(unittest.TestCase):
         # Assumes some images in your temp directory...
         # self.inspec = os.path.join(tempfile.gettempdir(), "*.png")
         self.inspec = '"111*.jpg"'
-        self.infile = "11131315745_1924814507_o.jpg"
+        self.infile = "11132002246_2d43b85286_o.jpg"
 
     def helper_set_up(self, cmd):
         self.outfile = "out_" + cmd + ".jpg"
