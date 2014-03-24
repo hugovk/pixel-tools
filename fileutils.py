@@ -1,3 +1,14 @@
+#!/usr/bin/python
+"""
+Some file utilities
+"""
+
+
+def create_dir(dir):
+    import os
+    if not os.path.isdir(dir):
+        os.mkdir(dir)
+
 
 def nonrecursive_find(inspec):
     import glob
@@ -26,6 +37,14 @@ def find_files(inspec, recursive=False):
     else:
         files = nonrecursive_find(inspec)
     return files
+
+
+def call_cmd(cmd, add_dot=True):
+    import os
+    if add_dot and os.name != "nt":
+        cmd = "./" + cmd
+    print(cmd)
+    os.system(cmd)
 
 
 if __name__ == '__main__':

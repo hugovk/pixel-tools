@@ -8,7 +8,7 @@ Python implementation by: Roman Stanchak, James Bowman
 """
 import argparse
 import cv2.cv as cv
-import filelist
+import fileutils
 import os
 import sys
 
@@ -110,7 +110,7 @@ def detect_and_save(input_name, cascade, outdir, tight_crop = False, show = Fals
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Find, crop and save faces (or other objects). Requires OpenCV.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-c', '--cascade', 
+    parser.add_argument('-c', '--cascade',
 #         default='D:\\temp\\opencv\\data\\haarcascades\\haarcascade_frontalface_alt.xml',
         default='/usr/local/Cellar/opencv/2.4.5/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml',
         help='Haar cascade file')
@@ -144,7 +144,7 @@ if __name__ == '__main__':
     if args.show:
         cv.NamedWindow("result", 1)
 
-    files = filelist.find_files(args.inspec, args.recursive)
+    files = fileutils.find_files(args.inspec, args.recursive)
     total_files = len(files)
     if total_files == 0:
         sys.exit("No input files found.")

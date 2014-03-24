@@ -6,7 +6,7 @@ Can do a grid of squares or rectangles, or vertical or horizontal stripes.
 """
 from __future__ import print_function
 import argparse
-import filelist
+import fileutils
 from operator import itemgetter
 from PIL import Image
 import random
@@ -101,7 +101,7 @@ if __name__ == "__main__":
     args.blockwidth = min(args.blockwidth,  args.outwidth)
     args.blockheight = min(args.blockheight, args.outheight)
 
-    files = filelist.find_files(args.inspec, args.recursive)
+    files = fileutils.find_files(args.inspec, args.recursive)
     print(len(files), "files found")
     if len(files) == 0:
         sys.exit("No input files found")

@@ -14,7 +14,7 @@ def create_dir(dir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Wrapper around ffmpeg to extract frames from a video.", 
+        description="Wrapper around ffmpeg to extract frames from a video.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('infile', metavar='file',
         # default='filename.mp4',
@@ -25,6 +25,8 @@ if __name__ == "__main__":
     parser.add_argument('-r', '--framerate', metavar='fps',
          default=25, type=float,
         help='Framerate')
+    parser.add_argument('-s', '--size', metavar='WxH or abbreviation',
+        help='Set frame size')
     args = parser.parse_args()
     print args
 
@@ -35,8 +37,14 @@ if __name__ == "__main__":
         args.infile = '"' + args.infile + '"'
     create_dir(args.outdir)
     output = os.path.join(args.outdir, "%6d.jpg")
-    cmd = "ffmpeg -i " + args.infile + " -r " + str(args.framerate) + " -q:v 1 " + output
+
+    if args.size:
+        size = " -s " + args.size
+    else:
+        size = ""
+
+    cmd = "ffmpeg -i " + args.infile + size + " -r " + str(args.framerate) + " -q:v 1 " + output
     print cmd
     os.system(cmd)
-    
+
 # End of file
