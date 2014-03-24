@@ -160,6 +160,19 @@ class TestPixelTools(unittest.TestCase):
         self.assertTrue(os.path.isdir(outdir))
         self.assertTrue(os.path.isfile(first_outfile))
 
+    def test_pixelator(self):
+        """Just test with some options and check an output file is created"""
+        # Arrange
+        cmd = "pixelator.py"
+        args = " -i " + self.inspec + " -b auto -n mode "
+        self.helper_set_up(cmd)
+
+        # Act
+        self.run_cmd(cmd, args)
+
+        # Assert
+        self.assertTrue(os.path.isfile(self.outfile))
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
