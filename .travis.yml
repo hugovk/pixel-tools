@@ -1,6 +1,10 @@
 language: python
 python:
-- '2.7'
+- "2.6"
+- "2.7"
+- "3.2"
+- "3.3"
+- "pypy"
 before_install:
 - curl -O https://dl.dropboxusercontent.com/u/3065276/testimages.zip
 - unzip testimages.zip
@@ -9,3 +13,10 @@ install:
 before_script:
 - chmod +x *.py
 script: ./test_pixel_tools.py
+
+matrix:
+  allow_failures:
+    - python: "2.6"
+    - python: "3.2"
+    - python: "3.3"
+    - python: "pypy"
