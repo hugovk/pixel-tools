@@ -5,7 +5,10 @@ Tests for pixel tools
 import argparse
 import os
 import tempfile
-import unittest
+try:
+    import unittest2  # Python 2.6
+except:
+    import unittest
 
 if os.name == "nt":
     OS_CMD = ""
@@ -26,7 +29,7 @@ class TestPixelTools(unittest.TestCase):
     def run_cmd(self, cmd, args=""):
         cmd = OS_CMD + cmd + \
             " -o " + self.outfile + " " + args
-        print cmd
+        print(cmd)
         os.system(cmd)
 
     def setUp(self):

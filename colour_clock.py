@@ -3,6 +3,7 @@
 Make a colour clock/story wheel of the five most dominant colours
 on each page of a book (or jpg).
 """
+from __future__ import print_function
 from PIL import Image, ImageDraw
 from collections import namedtuple
 from math import sqrt
@@ -53,20 +54,20 @@ def colour_clock(stuff, outfile):
     for thing in stuff:
         total += thing[0]
 
-    print total
+    print(total)
     # Make total a bit bigger so we stop at about 11 o'clock
     total *= 1.1
 
     start = 0
     for thing in stuff:
         end = start + 360 * thing[0] / total
-        print start, "->", end, thing[1]
+        print(start, "->", end, thing[1])
         draw = arc(draw, (x, y), r, (start, end), thing[1])
         start = end
 
     draw = circle(draw, (x, y), r * 3 / 4, WHITE)
 
-    print "Saving to:", outfile
+    print("Saving to:", outfile)
     im.save(outfile)
 
 
@@ -191,7 +192,7 @@ if __name__ == '__main__':
         '-o', '--outfile',
         help='Output filename')
     args = parser.parse_args()
-    print args
+    print(args)
 
      # Optional, http://stackoverflow.com/a/1557906/724176
     try:
@@ -206,19 +207,19 @@ if __name__ == '__main__':
     if not args.outfile:
         head, tail = os.path.split(args.input)
         args.outfile = os.path.splitext(tail)[0] + ".png"
-        print "Outfile:", args.outfile
+        print("Outfile:", args.outfile)
 
     if args.input.lower().endswith(".pdf"):
-        print "Convert PDF:", args.input
+        print("Convert PDF:", args.input)
         basename = os.path.splitext(args.input)[0]
         outdir = os.path.join("cache", basename)
         create_dirs(outdir)
 
-        print "Converting, this is a bit slow..."
+        print("Converting, this is a bit slow...")
         cmd = 'convert -verbose -colorspace RGB -resize 800 -interlace none '
         '-density 300 -quality 80 "' + args.input + '" "' + \
             os.path.join(outdir, basename+'-%03d.jpg') + '"'
-        print cmd
+        print(cmd)
         os.system(cmd)
 
         args.input = os.path.join(outdir, basename + "*.jpg")
@@ -235,7 +236,7 @@ if __name__ == '__main__':
         sys.exit("No image files found")
 
     for file in files:
-        print file
+        print(file)
         try:
             new_weighted_colours = colorz(file, 5)
             weighted_colours.extend(sorted(new_weighted_colours, reverse=True))
@@ -243,12 +244,12 @@ if __name__ == '__main__':
         except (KeyboardInterrupt, SystemExit):
             raise
         except Exception, e:
-            print "Ignoring problem file:", file
-            print str(e)
-            print repr(e)
+            print("Ignoring problem file:", file)
+            print(str(e))
+            print(repr(e))
             continue
 
-    print weighted_colours
+    print(weighted_colours)
     colour_clock(weighted_colours, args.outfile)
 
 # End of file

@@ -44,7 +44,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if not args.outfile:
         args.outfile = args.infile + "-annotated.jpg"
-    print args
+    print(args)
 
     if args.no_box:
         cmd = (
@@ -65,7 +65,7 @@ if __name__ == '__main__':
             ' -geometry ' + args.geometry +
             '  - "' + args.infile + '" "' + args.outfile + '"')
 
-    print cmd
+    print(cmd)
     os.system(cmd)
 
 # End of file
