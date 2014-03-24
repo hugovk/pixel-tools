@@ -32,7 +32,7 @@ class TestPixelTools(unittest.TestCase):
     def setUp(self):
         # Assumes some images in your temp directory...
         # self.inspec = os.path.join(tempfile.gettempdir(), "*.png")
-        self.inspec = "111*.jpg"
+        self.inspec = '"111*.jpg"'
         self.infile = "11131315745_1924814507_o.jpg"
 
     def helper_set_up(self, cmd):
