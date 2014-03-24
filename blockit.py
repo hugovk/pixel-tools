@@ -110,7 +110,7 @@ if __name__ == "__main__":
     args.outwidth = args.outwidth - divmod(args.outwidth, args.blockwidth)[1]
     args.outheight = args.outheight - divmod(args.outheight, args.blockheight)[1]
 
-    number_of_blocks = args.outwidth * args.outheight / (args.blockwidth * args.blockheight)
+    number_of_blocks = int(args.outwidth * args.outheight / (args.blockwidth * args.blockheight))
 
     print("Number of blocks required:", number_of_blocks)
     print("Picking", number_of_blocks, "random files")

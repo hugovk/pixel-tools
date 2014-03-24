@@ -19,7 +19,7 @@ else:
 
 def is_python_2_6():
     version = sys.version_info
-    if version.major == 2 and version.minor == 6:
+    if version[0] == 2 and version[1] == 6:
         return True
     else:
         return False
