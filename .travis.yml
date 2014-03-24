@@ -1,0 +1,9 @@
+language: python
+python:
+- '2.7'
+before_install:
+- curl -O https://dl.dropboxusercontent.com/u/3065276/testimages.zip
+- unzip testimages.zip
+install:
+- pip install -r requirements.txt
+script: ./test_pixel_tools.py
