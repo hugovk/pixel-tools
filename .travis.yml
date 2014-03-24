@@ -6,4 +6,6 @@ before_install:
 - unzip testimages.zip
 install:
 - pip install -r requirements.txt
+before_script:
+- chmod +x test_pixel_tools.py
 script: ./test_pixel_tools.py
