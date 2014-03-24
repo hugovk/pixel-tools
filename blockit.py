@@ -156,7 +156,7 @@ if __name__ == "__main__":
         height, width = divmod(block_number, args.outwidth/args.blockwidth)
         width *= args.blockwidth
         height *= args.blockheight
-        new_image.paste(crop_im, (width, height))
+        new_image.paste(crop_im, (int(width), int(height)))
         width += args.blockwidth
         if (width+args.blockwidth) > args.outwidth:
             width = 0

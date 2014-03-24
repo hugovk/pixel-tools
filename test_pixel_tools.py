@@ -5,7 +5,6 @@ Tests for pixel tools
 import argparse
 import os
 import sys
-import tempfile
 try:
     import unittest2 as unittest  # Python 2.6
 except:
@@ -18,11 +17,13 @@ else:
 
 
 def is_python_2_6():
+    """Python 2.6 doesn't have failfast"""
     version = sys.version_info
     if version[0] == 2 and version[1] == 6:
         return True
     else:
         return False
+
 
 class TestPixelTools(unittest.TestCase):
 
@@ -41,8 +42,6 @@ class TestPixelTools(unittest.TestCase):
         os.system(cmd)
 
     def setUp(self):
-        # Assumes some images in your temp directory...
-        # self.inspec = os.path.join(tempfile.gettempdir(), "*.png")
         self.inspec = '"111*.jpg"'
         self.infile = "11132002246_2d43b85286_o.jpg"
 
@@ -141,9 +140,9 @@ if __name__ == '__main__':
         unittest.TextTestRunner().run(suite)
 
     else:
-        if is_python_2_6():
-            unittest.main()
-        else:
-            unittest.main(failfast=True)
+        # if is_python_2_6():
+        unittest.main()
+        # else:
+            # unittest.main(failfast=True)
 
 # End of file
