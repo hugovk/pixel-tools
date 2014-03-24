@@ -4,6 +4,7 @@ Tests for pixel tools
 """
 import argparse
 import os
+import sys
 import tempfile
 try:
     import unittest2 as unittest  # Python 2.6
@@ -15,6 +16,13 @@ if os.name == "nt":
 else:
     OS_CMD = " ./"
 
+
+def is_python_2_6():
+    version = sys.version_info
+    if version.major == 2 and version.minor == 6:
+        return True
+    else:
+        return False
 
 class TestPixelTools(unittest.TestCase):
 
@@ -133,6 +141,9 @@ if __name__ == '__main__':
         unittest.TextTestRunner().run(suite)
 
     else:
-        unittest.main(failfast=True)
+        if is_python_2_6():
+            unittest.main()
+        else:
+            unittest.main(failfast=True)
 
 # End of file
