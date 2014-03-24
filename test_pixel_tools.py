@@ -13,7 +13,7 @@ except:
 import imp
 try:
     imp.find_module("coverage")
-    COVERAGE_CMD = "coverage run --append "
+    COVERAGE_CMD = "coverage run --append --omit */PIL/* "
 except ImportError:
     COVERAGE_CMD = ""
 
@@ -127,6 +127,19 @@ class TestPixelTools(unittest.TestCase):
         self.assertEqual(mid4, 2)
         self.assertEqual(mid12, 3)
         self.assertEqual(mid100, 10)
+
+    def test_image_packer(self):
+        """Just test with some options and check an output file is created"""
+        # Arrange
+        cmd = "image_packer.py"
+        args = " --largest_first -s 5000,5000 -i " + self.inspec
+        self.helper_set_up(cmd)
+
+        # Act
+        self.run_cmd(cmd, args)
+
+        # Assert
+        self.assertTrue(os.path.isfile(self.outfile))
 
 
 if __name__ == '__main__':
