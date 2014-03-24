@@ -35,8 +35,9 @@ htmlcov/
 .project
 .pydevproject
 
-# Images
+# Images and videos
 *.gif
 *.png
 *.jpg
+*.mp4
 testimages.zip

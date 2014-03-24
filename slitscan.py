@@ -62,7 +62,7 @@ def make_image(files):
     if args.thickness:
         slice_thickness = args.thickness
     else:
-        slice_thickness = number_of_slices / len(files)
+        slice_thickness = int(number_of_slices / len(files))
     if slice_thickness == 0:
         slice_thickness = 1
 

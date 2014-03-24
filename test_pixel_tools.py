@@ -121,6 +121,21 @@ class TestPixelTools(unittest.TestCase):
         # Assert
         self.assertTrue(os.path.isfile(self.outfile))
 
+    def test_deframify(self):
+        """Just test with some options and check an output file is created"""
+        # Arrange
+        cmd = "deframify.py"
+        args = " -i " + self.inspec
+
+        self.outfile = "out-deframify.mp4"
+        self.assert_deleted(self.outfile)
+
+        # Act
+        self.run_cmd(cmd, args)
+
+        # Assert
+        self.assertTrue(os.path.isfile(self.outfile))
+
     def test_factors(self):
         # Arrange
         import factors
