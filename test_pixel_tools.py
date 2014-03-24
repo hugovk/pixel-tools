@@ -132,7 +132,7 @@ class TestPixelTools(unittest.TestCase):
         """Just test with some options and check an output file is created"""
         # Arrange
         cmd = "image_packer.py"
-        args = " --largest_first -s 5000,5000 -i " + self.inspec
+        args = " --largest_first -s 10000,10000 -i " + self.inspec
         self.helper_set_up(cmd)
 
         # Act
