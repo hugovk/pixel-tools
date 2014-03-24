@@ -99,7 +99,7 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
 
     padw = (ncols-1)*padding
     padh = (nrows-1)*padding
-    isize = (ncols*photow+marw+padw, nrows*photoh+marh+padh)
+    isize = (int(ncols*photow+marw+padw), int(nrows*photoh+marh+padh))
 
     print("Image size:", isize)
     if isize[0] > MAX_DIMENSION:
@@ -169,9 +169,9 @@ def make(
         nrows = factors.get_middleish_factor(len(files))
 
     if nrows and not ncols:
-        ncols = len(files) / nrows
+        ncols = len(files) // nrows
     elif not nrows and ncols:
-        nrows = len(files) / ncols
+        nrows = len(files) // ncols
     # print(len(files),ncols,nrows,ncols*nrows)
     print("Files:\t", len(files))
     print("Rows:\t", nrows)
