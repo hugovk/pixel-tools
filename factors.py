@@ -21,7 +21,7 @@ def get_middleish_factor(n):
     # Grab a middle-ish factor
     factors_set = factors(n)
     factors_list = list(sorted(factors_set))
-    return factors_list[(len(factors_list)/2) - 1]
+    return factors_list[int(len(factors_list)/2) - 1]
 
 
 if __name__ == '__main__':

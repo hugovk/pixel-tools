@@ -105,6 +105,22 @@ class TestPixelTools(unittest.TestCase):
         # Assert
         self.assertTrue(os.path.isfile(self.outfile))
 
+    def test_factors(self):
+        # Arrange
+        import factors
+
+        # Act
+        mid1 = factors.get_middleish_factor(1)
+        mid4 = factors.get_middleish_factor(4)
+        mid12 = factors.get_middleish_factor(12)
+        mid100 = factors.get_middleish_factor(100)
+
+        # Assert
+        self.assertEqual(mid1, 1)
+        self.assertEqual(mid4, 2)
+        self.assertEqual(mid12, 3)
+        self.assertEqual(mid100, 10)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
