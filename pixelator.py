@@ -41,7 +41,7 @@ def encode_time():
     alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     encoded = ''
     # "%S%f" is "SecondsMicroseconds"
-    n = int(datetime.datetime.now().strftime("%S%f"))/1000
+    n = int(int(datetime.datetime.now().strftime("%S%f")) / 1000)
     while n > 0:
         n, r = divmod(n, len(alphabet))
         encoded = alphabet[r] + encoded

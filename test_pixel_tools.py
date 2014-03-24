@@ -53,10 +53,13 @@ class TestPixelTools(unittest.TestCase):
         self.inspec = '"111*.jpg"'
         self.infile = "11132002246_2d43b85286_o.jpg"
 
+    def assert_deleted(self, filename):
+        self.remove_file(filename)
+        self.assertFalse(os.path.isfile(filename))
+
     def helper_set_up(self, cmd):
         self.outfile = "out_" + cmd + ".jpg"
-        self.remove_file(self.outfile)
-        self.assertFalse(os.path.isfile(self.outfile))
+        self.assert_deleted(self.outfile)
 
     def test_annotate(self):
         """Just test with some options and check an output file is created"""
@@ -161,6 +164,16 @@ class TestPixelTools(unittest.TestCase):
         self.assertTrue(os.path.isdir(outdir))
         self.assertTrue(os.path.isfile(first_outfile))
 
+    def test_pixelator_units(self):
+        # Arrange
+        import pixelator
+
+        # Act
+        text = pixelator.encode_time()
+
+        # Assert
+        self.assertGreater(len(text), 0)
+
     def test_pixelator(self):
         """Just test with some options and check an output file is created"""
         # Arrange
@@ -173,6 +186,31 @@ class TestPixelTools(unittest.TestCase):
 
         # Assert
         self.assertTrue(os.path.isfile(self.outfile))
+
+    def test_slitscan(self):
+        """Just test with some options and check an output file is created"""
+        # Arrange
+        cmd = "slitscan.py"
+        self.helper_set_up(cmd)
+        args = " -i " + self.inspec + " --supercombo "
+        filelist = [
+            "out-horizontal-eiriksmagick-greedy.jpg",
+            "out-horizontal-fixed.jpg",
+            "out-vertical-fixed-greedy.jpg",
+            "out-horizontal-eiriksmagick.jpg",
+            "out-vertical-eiriksmagick-greedy.jpg",
+            "out-vertical-fixed.jpg",
+            "out-horizontal-fixed-greedy.jpg",
+            "out-vertical-eiriksmagick.jpg"]
+        for file in filelist:
+            self.assert_deleted(file)
+
+        # Act
+        self.run_cmd(cmd, args)
+
+        # Assert
+        for file in filelist:
+            self.assertTrue(os.path.isfile(file))
 
 
 if __name__ == '__main__':
