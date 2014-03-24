@@ -10,6 +10,13 @@ try:
 except:
     import unittest
 
+import imp
+try:
+    imp.find_module("coverage")
+    COVERAGE_CMD = "coverage run --append "
+except ImportError:
+    COVERAGE_CMD = ""
+
 if os.name == "nt":
     OS_CMD = ""
 else:
@@ -36,7 +43,7 @@ class TestPixelTools(unittest.TestCase):
             os.mkdir(dir)
 
     def run_cmd(self, cmd, args=""):
-        cmd = OS_CMD + cmd + \
+        cmd = COVERAGE_CMD + OS_CMD + cmd + \
             " -o " + self.outfile + " " + args
         print(cmd)
         os.system(cmd)

@@ -12,9 +12,14 @@ before_install:
 install:
 # - pip install -r requirements.txt Don't need numpy or psutil yet
 - pip install Pillow
+- pip install coveralls
 before_script:
 - chmod +x *.py
-script: ./test_pixel_tools.py
+script:
+- coverage erase
+- coverage run ./test_pixel_tools.py
+after_success:
+  coveralls
 
 matrix:
   allow_failures:
