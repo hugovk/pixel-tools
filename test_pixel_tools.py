@@ -42,9 +42,10 @@ class TestPixelTools(unittest.TestCase):
         if not os.path.exists(dir):
             os.mkdir(dir)
 
-    def run_cmd(self, cmd, args=""):
-        cmd = COVERAGE_CMD + OS_CMD + cmd + \
-            " -o " + self.outfile + " " + args
+    def run_cmd(self, cmd, args="", include_outfile=True):
+        cmd = COVERAGE_CMD + OS_CMD + cmd + " " + args
+        if include_outfile:
+            cmd += " -o " + self.outfile
         print(cmd)
         os.system(cmd)
 
@@ -151,7 +152,7 @@ class TestPixelTools(unittest.TestCase):
         import glob
 
         # Act
-        self.run_cmd(cmd, args)
+        self.run_cmd(cmd, args, include_outfile=False)
 
         # Assert
         inspec = self.inspec.strip('"')
