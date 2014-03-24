@@ -143,8 +143,9 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
 
 
 def make(
-        (ncols, nrows), inspec, reverse, outfile, thumbsize,
+        ncols_nrows, inspec, reverse, outfile, thumbsize,
         half, quarter, margins, padding, quality):
+    ncols, nrows = ncols_nrows
     files = glob.glob(inspec)
     if len(files) == 0:
         sys.exit("No input files found.")

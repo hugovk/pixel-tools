@@ -246,7 +246,7 @@ if __name__ == '__main__':
             weighted_colours.append((10, WHITE))  # spacer
         except (KeyboardInterrupt, SystemExit):
             raise
-        except Exception, e:
+        except Exception as e:
             print("Ignoring problem file:", file)
             print(str(e))
             print(repr(e))
