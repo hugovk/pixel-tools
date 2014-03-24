@@ -9,7 +9,7 @@ python:
 before_install:
 - curl -O https://dl.dropboxusercontent.com/u/3065276/testimages.zip
 - unzip testimages.zip
-- sudo apt-get install ubuntu-restricted-extras ffmpeg
+- sudo aptitude -y -q install ffmpeg
 install:
 # - pip install -r requirements.txt Don't need numpy or psutil yet
 - pip install Pillow
