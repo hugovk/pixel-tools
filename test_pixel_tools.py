@@ -34,6 +34,11 @@ def is_python_2_6():
 
 class TestPixelTools(unittest.TestCase):
 
+    if is_python_2_6():
+        # assertGreater() introduced in 2.7
+        def assertGreater(self, a, b):
+            return self.assertTrue(a > b)
+
     def remove_file(self, file):
         if os.path.isfile(file):
             os.remove(file)

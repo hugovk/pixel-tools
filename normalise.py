@@ -28,7 +28,7 @@ def mode(values):
     d = {}
     mode, freq = 0, 0
     for i in values:
-        if d.has_key(i):
+        if i in d:
             d[i] += 1
         else:
             d[i] = 1
