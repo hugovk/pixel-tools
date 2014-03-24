@@ -20,7 +20,7 @@ def arc(draw, x_y, r, a_b, colour):
     """ Draw arc between two angles a and b, from, where 0 is 12 o'clock """
     x, y = x_y
     a, b = a_b
-    bbox = (x-r, y-r, x+r, y+r)
+    bbox = (int(x-r), int(y-r), int(x+r), int(y+r))
     draw.pieslice(bbox, int(a-90), int(b-90), fill=colour)
     return draw
 
