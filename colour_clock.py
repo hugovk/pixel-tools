@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 """
-Make a colour clock/story wheel of the five most dominant colours on each page of a book (or jpg).
+Make a colour clock/story wheel of the five most dominant colours
+on each page of a book (or jpg).
 """
-import argparse
+from PIL import Image, ImageDraw
 from collections import namedtuple
-import glob
 from math import sqrt
+import argparse
+import glob
 import os
 import random
-from PIL import Image, ImageDraw
-import os
 import sys
 
-WHITE = (255,255,255)
+WHITE = (255, 255, 255)
+
 
 def arc(draw, (x, y), r, (a, b), colour):
     """ Draw arc between two angles a and b, from, where 0 is 12 o'clock """
@@ -20,13 +21,12 @@ def arc(draw, (x, y), r, (a, b), colour):
     draw.pieslice(bbox, int(a-90), int(b-90), fill=colour)
     return draw
 
+
 def circle(draw, (x, y), r, colour):
     """ Draw a circle """
     bbox = (x-r, y-r, x+r, y+r)
     draw.ellipse(bbox, fill=colour)
     return draw
-
-
 
 # Testing:
 # stuff = [
@@ -70,13 +70,13 @@ def colour_clock(stuff, outfile):
     im.save(outfile)
 
 
-
 #########################################################
 
 # Adapted from:
 # http://charlesleifer.com/blog/using-python-and-k-means-to-find-the-dominant-colors-in-images/
 Point = namedtuple('Point', ('coords', 'n', 'ct'))
 Cluster = namedtuple('Cluster', ('points', 'center', 'n'))
+
 
 def get_points(img):
     points = []
@@ -92,8 +92,9 @@ def get_points(img):
 
 rtoh = lambda rgb: '#%s' % ''.join(('%02x' % p for p in rgb))
 
+
 def colorz(filename, n=3):
-    img = Image.open(filename) #.crop((120,140, 260, 340))
+    img = Image.open(filename)  # .crop((120,140, 260, 340))
     img.thumbnail((200, 200))
     w, h = img.size
 
@@ -117,10 +118,12 @@ def colorz(filename, n=3):
         rgbs.append((100 * len(c[0]) / total_weights, rgb))
     return rgbs
 
+
 def euclidean(p1, p2):
     return sqrt(sum([
         (p1.coords[i] - p2.coords[i]) ** 2 for i in range(p1.n)
     ]))
+
 
 def calculate_center(points, n):
     vals = [0.0 for i in range(n)]
@@ -130,6 +133,7 @@ def calculate_center(points, n):
         for i in range(n):
             vals[i] += (p.coords[i] * p.ct)
     return Point([(v / plen) for v in vals], n, 1)
+
 
 def kmeans(points, k, min_diff):
     if k > len(points):
@@ -164,27 +168,36 @@ def kmeans(points, k, min_diff):
 
 #########################################################
 
+
 def create_dir(dir):
     if not os.path.isdir(dir):
         os.mkdir(dir)
+
 
 def create_dirs(dir):
     if not os.path.isdir(dir):
         os.makedirs(dir)
 
 
-
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Make a colour clock of the five most dominant colours on each page of a book", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('input', 
+    parser = argparse.ArgumentParser(
+        description="Make a colour clock of the five most "
+        "dominant colours on each page of a book",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument(
+        'input',
         help='An input PDF, or file spec of images (eg *.jpg)')
-    parser.add_argument('-o', '--outfile', 
+    parser.add_argument(
+        '-o', '--outfile',
         help='Output filename')
     args = parser.parse_args()
     print args
 
-    try: import timing # Optional, http://stackoverflow.com/a/1557906/724176
-    except: None
+     # Optional, http://stackoverflow.com/a/1557906/724176
+    try:
+        import timing
+    except:
+        pass
 
     # Testing
 #     colour_clock(stuff, args.outfile)
@@ -202,7 +215,9 @@ if __name__ == '__main__':
         create_dirs(outdir)
 
         print "Converting, this is a bit slow..."
-        cmd = 'convert -verbose -colorspace RGB -resize 800 -interlace none -density 300 -quality 80 "' + args.input + '" "' + os.path.join(outdir, basename+'-%03d.jpg') + '"'
+        cmd = 'convert -verbose -colorspace RGB -resize 800 -interlace none '
+        '-density 300 -quality 80 "' + args.input + '" "' + \
+            os.path.join(outdir, basename+'-%03d.jpg') + '"'
         print cmd
         os.system(cmd)
 
@@ -221,9 +236,17 @@ if __name__ == '__main__':
 
     for file in files:
         print file
-        new_weighted_colours = colorz(file, 5)
-        weighted_colours.extend(sorted(new_weighted_colours, reverse=True))
-        weighted_colours.append((10, WHITE)) # spacer
+        try:
+            new_weighted_colours = colorz(file, 5)
+            weighted_colours.extend(sorted(new_weighted_colours, reverse=True))
+            weighted_colours.append((10, WHITE))  # spacer
+        except (KeyboardInterrupt, SystemExit):
+            raise
+        except Exception, e:
+            print "Ignoring problem file:", file
+            print str(e)
+            print repr(e)
+            continue
 
     print weighted_colours
     colour_clock(weighted_colours, args.outfile)

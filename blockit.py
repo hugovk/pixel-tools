@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
 Create an image from random blocks of other images.
 
@@ -11,21 +11,22 @@ from PIL import Image
 import random
 import sys
 
-try: import timing # optional
-except: pass
 
 def save_im(im):
     if args.show:
         print "Show image"
         im.show()
     if not args.outfile:
-        args.outfile = "blockit_b-" + str(args.blockwidth) + "x" + str(args.blockheight) + "_" + str(args.outwidth) + "x" + str(args.outheight) + ".jpg"
+        args.outfile = "blockit_b-" + str(args.blockwidth) + "x" + \
+            str(args.blockheight) + "_" + str(args.outwidth) + "x" + \
+            str(args.outheight) + ".jpg"
 
     print "Save image to", args.outfile
     try:
         im.save(args.outfile)
     except IOError:
         print "Cannot save"
+
 
 def get_rand_point(image_dimension, block_dimension):
     offset = image_dimension - block_dimension
@@ -39,52 +40,73 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Create image from blocks of other images. Requires PIL.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-i', '--inspec', default='2*.jpg',
+    parser.add_argument(
+        '-i', '--inspec', default='2*.jpg',
         help='Input file spec')
-    parser.add_argument('-r', '--recursive', action='store_true',
+    parser.add_argument(
+        '-r', '--recursive', action='store_true',
         help='Recurse directories')
-    parser.add_argument('-o', '--outfile', #default='blockit.jpg',
+    parser.add_argument(
+        '-o', '--outfile',  # default='blockit.jpg',
         help='Output filename')
-    parser.add_argument('-W', '--outwidth', metavar='pixels',
+    parser.add_argument(
+        '-W', '--outwidth', metavar='pixels',
         type=int, default=640,
         help='Width of output image')
-    parser.add_argument('-H', '--outheight', metavar='pixels',
+    parser.add_argument(
+        '-H', '--outheight', metavar='pixels',
         type=int, default=320,
         help='Height of output image')
-    parser.add_argument('-b', '--blocksize', metavar='pixels',
+    parser.add_argument(
+        '-b', '--blocksize', metavar='pixels',
         type=int, default=10,
         help='Size of square block')
-    parser.add_argument('-bw', '--blockwidth', metavar='pixels',
+    parser.add_argument(
+        '-bw', '--blockwidth', metavar='pixels',
         type=int,
         help='Width of block (instead of blocksize)')
-    parser.add_argument('-bh', '--blockheight', metavar='pixels',
+    parser.add_argument(
+        '-bh', '--blockheight', metavar='pixels',
         type=int,
         help='Height of block (instead of blocksize)')
-    parser.add_argument('-v', '--vertical', action='store_true',
+    parser.add_argument(
+        '-v', '--vertical', action='store_true',
         help='Vertical stripes (instead of blocksize/blockheight)')
-    parser.add_argument('-z', '--horizontal', action='store_true',
+    parser.add_argument(
+        '-z', '--horizontal', action='store_true',
         help='Horizontal stripes (instead of blocksize/blockwidth)')
-    parser.add_argument('-s', '--show', action='store_true',
+    parser.add_argument(
+        '-s', '--show', action='store_true',
         help='Show image when done')
+
+    try:
+        import timing  # optional
+    except:
+        pass
 
     args = parser.parse_args()
     print args
 
-    if not args.blockwidth:  args.blockwidth  = args.blocksize
-    if not args.blockheight: args.blockheight = args.blocksize
+    if not args.blockwidth:
+        args.blockwidth = args.blocksize
+    if not args.blockheight:
+        args.blockheight = args.blocksize
 
-    if args.vertical:       args.blockheight = args.outheight
-    elif args.horizontal:   args.blockwidth = args.outwidth
+    if args.vertical:
+        args.blockheight = args.outheight
+    elif args.horizontal:
+        args.blockwidth = args.outwidth
 
-    args.blockwidth  = min(args.blockwidth,  args.outwidth)
+    args.blockwidth = min(args.blockwidth,  args.outwidth)
     args.blockheight = min(args.blockheight, args.outheight)
 
     files = filelist.find_files(args.inspec, args.recursive)
     print len(files), "files found"
-    if len(files) == 0: sys.exit("No input files found")
+    if len(files) == 0:
+        sys.exit("No input files found")
 
     # Reduce width and height to fit full blocks
-    args.outwidth  = args.outwidth  - divmod(args.outwidth,  args.blockwidth)[1]
+    args.outwidth = args.outwidth - divmod(args.outwidth, args.blockwidth)[1]
     args.outheight = args.outheight - divmod(args.outheight, args.blockheight)[1]
 
     number_of_blocks = args.outwidth * args.outheight / (args.blockwidth * args.blockheight)
@@ -107,13 +129,15 @@ if __name__ == "__main__":
     open_index = -1
     open_im = ""
     done = 0
-    width, height = 0,0
+    width, height = 0, 0
     for index, block_number in random_indices:
         # print open_index, index
 
         if open_index != index:
             open_index = index
-            sys.stdout.write("\rBlocks done: " + str(done) + "/" + str(number_of_blocks) + ". Getting blocks from file " + str(index))
+            sys.stdout.write(
+                "\rBlocks done: " + str(done) + "/" + str(number_of_blocks) +
+                ". Getting blocks from file " + str(index))
             try:
                 open_im = Image.open(files[open_index])
             except:
@@ -122,7 +146,9 @@ if __name__ == "__main__":
 
         rand_x = get_rand_point(open_im.size[0], args.blockwidth)
         rand_y = get_rand_point(open_im.size[1], args.blockheight)
-        crop_box = (rand_x, rand_y, rand_x + args.blockwidth, rand_y + args.blockheight)
+        crop_box = (
+            rand_x, rand_y,
+            rand_x + args.blockwidth, rand_y + args.blockheight)
 
         crop_im = open_im.crop(crop_box)
         height, width = divmod(block_number, args.outwidth/args.blockwidth)
