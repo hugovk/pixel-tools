@@ -16,15 +16,18 @@ import sys
 WHITE = (255, 255, 255)
 
 
-def arc(draw, (x, y), r, (a, b), colour):
+def arc(draw, x_y, r, a_b, colour):
     """ Draw arc between two angles a and b, from, where 0 is 12 o'clock """
+    x, y = x_y
+    a, b = a_b
     bbox = (x-r, y-r, x+r, y+r)
     draw.pieslice(bbox, int(a-90), int(b-90), fill=colour)
     return draw
 
 
-def circle(draw, (x, y), r, colour):
+def circle(draw, x_y, r, colour):
     """ Draw a circle """
+    x, y = x_y
     bbox = (x-r, y-r, x+r, y+r)
     draw.ellipse(bbox, fill=colour)
     return draw

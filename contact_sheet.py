@@ -6,6 +6,7 @@ Based on Rick Muller's recipe:
 http://code.activestate.com/recipes/412982/
 Licensed under the PSF License
 """
+from __future__ import print_function
 import argparse
 import glob
 import os
@@ -43,8 +44,8 @@ def aspect_ratio(number, thumbsize, aspect_ratio):
     total_area = number * thumbsize[0] * thumbsize[1]
     ideal_width = sqrt(total_area * aspect_ratio[0] / aspect_ratio[1])
     ideal_height = total_area / ideal_width
-    print ideal_width, "x", ideal_height, "=", total_area
-    print ideal_width, "x", ideal_height, "=", ideal_width * ideal_height
+    print(ideal_width, "x", ideal_height, "=", total_area)
+    print(ideal_width, "x", ideal_height, "=", ideal_width * ideal_height)
 
     best_overlap = 0
     best_factor = None
@@ -57,16 +58,16 @@ def aspect_ratio(number, thumbsize, aspect_ratio):
         if overlap > best_overlap:
             best_overlap = overlap
             best_factor = factor
-        # print factor, "\t", overlap, "\t", best_overlap
+        # print(factor, "\t", overlap, "\t", best_overlap)
 
     cols = best_factor
     rows = number / cols
-    print cols, "cols,", rows, "rows"
+    print(cols, "cols,", rows, "rows")
     return cols, rows
 
 
-def make_contact_sheet(fnames, (ncols, nrows), (photow, photoh),
-                       (marl, mart, marr, marb),
+def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
+                       marl_mart_marr_marb,
                        padding):
     """
     Make a contact sheet from a group of filenames:
@@ -87,6 +88,9 @@ def make_contact_sheet(fnames, (ncols, nrows), (photow, photoh),
 
     returns a PIL image object.
     """
+    ncols, nrows = ncols_nrows
+    photow, photoh = photow_photoh
+    marl, mart, marr, marb = marl_mart_marr_marb
 
     # Calculate the size of the output image, based on the
     #  photo thumb sizes, margins, and padding
@@ -97,7 +101,7 @@ def make_contact_sheet(fnames, (ncols, nrows), (photow, photoh),
     padh = (nrows-1)*padding
     isize = (ncols*photow+marw+padw, nrows*photoh+marh+padh)
 
-    print "Image size:", isize
+    print("Image size:", isize)
     if isize[0] > MAX_DIMENSION:
         sys.exit(
             "Output image is too wide: " + str(isize[0]) +
@@ -167,10 +171,10 @@ def make(
         ncols = len(files) / nrows
     elif not nrows and ncols:
         nrows = len(files) / ncols
-    # print len(files),ncols,nrows,ncols*nrows
-    print "Files:\t", len(files)
-    print "Rows:\t", nrows
-    print "Cols:\t", ncols
+    # print(len(files),ncols,nrows,ncols*nrows)
+    print("Files:\t", len(files))
+    print("Rows:\t", nrows)
+    print("Cols:\t", ncols)
 
     # Don't bother reading in files we aren't going to use
     if len(files) > ncols*nrows:
@@ -178,12 +182,12 @@ def make(
 
     margins = [margins, margins, margins, margins]
 
-    print "Making contact sheet"
+    print("Making contact sheet")
     inew = make_contact_sheet(
         files, (ncols, nrows), thumbsize, margins, padding)
-    print "Saving to", outfile
+    print("Saving to", outfile)
     inew.save(outfile, quality=quality)
-    print "Done."
+    print("Done.")
     # inew.show()
 
 
@@ -238,7 +242,7 @@ if __name__ == '__main__':
         import timing  # optional
     except:
         pass
-    print args
+    print(args)
 
     if args.noclobber and os.path.exists(args.outfile):
         sys.exit("Output file (" + args.outfile + ") already exists, exiting")
