@@ -121,7 +121,7 @@ def normalise_files(spec, files, normalise, temp_dir):
                 im = Image.open(file)
                 print(2222)
                 # im = im.resize(size)
-                im = ImageOps.fit(im, size, Image.ANTIALIAS, (0.5, 0.5))
+                im = ImageOps.fit(im, size, Image.ANTIALIAS)
                 print(3333)
                 im.save(temp_file, quality=100)
                 print(4444)

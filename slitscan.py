@@ -183,6 +183,8 @@ def make_image(files):
 
             # except:
                 # break
+            print(paste_bbox) # TODO TEMP
+            print(type(paste_bbox[0]), type(paste_bbox[1]), type(paste_bbox[2]), type(paste_bbox[3])) # TODO TEMP
             inew.paste(img, paste_bbox)
             # count += 1
         sys.stdout.write('\r\n')
