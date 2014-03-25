@@ -137,7 +137,7 @@ def make_image(files):
         inew = Image.new('RGB', (out_width, out_height), white)
 
         if args.mode != "eiriksmagick":
-            crop_bbox = (left, upper, right, lower)
+            crop_bbox = (int(left), int(upper), int(right), int(lower))
 
         for i, file in enumerate(files):
             sys.stdout.write(
@@ -148,7 +148,7 @@ def make_image(files):
             elif horizontal:
                 upper = i * slice_thickness
                 lower = upper + slice_thickness
-            paste_bbox = (left, upper, right, lower)
+            paste_bbox = (int(left), int(upper), int(right), int(lower))
             print(paste_bbox) # TODO TEMP
             if args.mode == "eiriksmagick":
                 crop_bbox = paste_bbox
