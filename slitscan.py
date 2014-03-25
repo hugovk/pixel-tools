@@ -121,10 +121,10 @@ def make_image(files):
         print("Creating:\t" + str(j+1) + "/" + str(loops))
         if args.mode == 'all':
             if vertical:
-                left = in_width*j/loops - slice_thickness/2
+                left = int(in_width*j/loops - slice_thickness/2)
                 right = left + slice_thickness
             elif horizontal:
-                upper = in_height*j/loops - slice_thickness/2
+                upper = int(in_height*j/loops - slice_thickness/2)
                 lower = upper + slice_thickness
             outfile = args.outfile + "-" + str(j).zfill(6) + ".jpg"
 
