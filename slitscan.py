@@ -183,6 +183,9 @@ def make_image(files):
 
             # except:
                 # break
+            print(img)
+            print(img.size)
+            print(crop_bbox) # TODO TEMP
             print(paste_bbox) # TODO TEMP
             print(type(paste_bbox[0]), type(paste_bbox[1]), type(paste_bbox[2]), type(paste_bbox[3])) # TODO TEMP
             inew.paste(img, paste_bbox)

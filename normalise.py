@@ -13,7 +13,7 @@ from PIL import Image, ImageOps
 def mean(values):
     """Computes the arithmetic mean of a list of numbers.
 
-    >>> print mean([20, 30, 70])
+    >>> print(mean([20, 30, 70]))
     40.0
     """
     return sum(values, 0.0) / len(values)
@@ -22,7 +22,7 @@ def mean(values):
 def mode(values):
     """Computes the mode of a list of numbers.
 
-    >>> print mode([1, 2, 2, 3, 70])
+    >>> print(mode([1, 2, 2, 3, 70]))
     2
     """
     d = {}
@@ -55,16 +55,10 @@ def normalise_files(spec, files, normalise, temp_dir):
     for i, file in enumerate(files):
         print(file)
         try:
-            print(i)
-            print(type(i))
             width, height = Image.open(file).size
-            print(width, height)
-            print(type(width), type(height))
             # print(width, "x, height, height * 1.0/width, file)
             widths.append(width)
             heights.append(height)
-            print(widths[0], heights[0])
-            print(type(widths[0]), type(heights[0]))
             if (not normalise_needed and
                     i > 0 and
                     (width != widths[0] or
@@ -117,14 +111,10 @@ def normalise_files(spec, files, normalise, temp_dir):
             temp_file = os.path.join(temp_dir, filename)
 
             try:
-                print(1111)
                 im = Image.open(file)
-                print(2222)
                 # im = im.resize(size)
                 im = ImageOps.fit(im, size, Image.ANTIALIAS)
-                print(3333)
                 im.save(temp_file, quality=100)
-                print(4444)
             except Exception as e:
                 print("Ignoring problem file:", filename)
                 print(str(e))
