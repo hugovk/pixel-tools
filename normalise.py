@@ -55,10 +55,16 @@ def normalise_files(spec, files, normalise, temp_dir):
     for i, file in enumerate(files):
         print(file)
         try:
+            print(i)
+            print(type(i))
             width, height = Image.open(file).size
+            print(width, height)
+            print(type(width), type(height))
             # print(width, "x, height, height * 1.0/width, file)
             widths.append(width)
             heights.append(height)
+            print(widths[0], heights[0])
+            print(type(widths[0]), type(heights[0]))
             if (not normalise_needed and
                     i > 0 and
                     (width != widths[0] or
