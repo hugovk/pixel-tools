@@ -136,7 +136,26 @@ class TestPixelTools(unittest.TestCase):
         # Assert
         self.assertTrue(os.path.isfile(self.outfile))
 
-    def test_factors(self):
+    def test_face_cropper(self):
+        # Arrange
+        """Just test with some options and check an output file is created"""
+        # Arrange
+        cmd = "face_cropper.py"
+        outdir = "face_cropper"
+        args = " -c haarcascade_frontalface_alt.xml -i " + self.inspec + \
+            " -o " + outdir
+        self.helper_set_up(cmd)
+        outspec = os.path.join(outdir, self.inspec.strip('"'))
+        import glob
+
+        # Act
+        self.run_cmd(cmd, args, include_outfile=False)
+
+        # Assert
+        outfiles = glob.glob(outspec)
+        self.assertGreater(len(outfiles), 0)
+
+    def test_factors_unit(self):
         # Arrange
         import factors
 

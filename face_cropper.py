@@ -6,63 +6,72 @@ Based on opencv/samples/python/facedetect.py
 Original C implementation by:  ?
 Python implementation by: Roman Stanchak, James Bowman
 """
+from __future__ import print_function
 import argparse
+import cv2
 import cv2.cv as cv
 import fileutils
 import os
 import sys
 
-try: import timing # Optional, http://stackoverflow.com/a/1557906/724176
-except: None
+# Optional, http://stackoverflow.com/a/1557906/724176
+try:
+    import timing
+except:
+    pass
 
 # Parameters for Haar detection. From the API:
-# The default parameters (scale_factor=2, min_neighbors=3, flags=0) are tuned for accurate yet slow object detection. For a faster operation on real video images the settings are:
+# The default parameters (scale_factor=2, min_neighbors=3, flags=0) are tuned
+# for accurate yet slow object detection.
+# For a faster operation on real video images the settings are:
 # scale_factor=1.2, min_neighbors=2, flags=CV_HAAR_DO_CANNY_PRUNING,
 # min_size=<minimum possible face size
 
 min_size = (20, 20)
 image_scale = 2
-haar_scale = 2 # 1.2
-min_neighbors = 3 # 2
+haar_scale = 1.2  # 1.2
+min_neighbors = 3  # 2
 haar_flags = cv.CV_HAAR_FIND_BIGGEST_OBJECT
+
 
 def create_dir(dir):
     if not os.path.isdir(dir):
         os.mkdir(dir)
 
-def detect_and_save(input_name, cascade, outdir, tight_crop = False, show = False):
+
+def detect_and_save(
+        input_name, cascade, outdir, tight_crop=False, show=False):
     count = 0
-    img = cv.LoadImage(input_name, 1)
-    # Allocate temporary images
-    gray = cv.CreateImage((img.width,img.height), 8, 1)
-    small_img = cv.CreateImage((cv.Round(img.width / image_scale),
-        cv.Round (img.height / image_scale)), 8, 1)
+    img = cv2.imread(input_name)
 
     # Convert color input image to grayscale
-    cv.CvtColor(img, gray, cv.CV_BGR2GRAY)
+    gray = cv2.cvtColor(img, cv.CV_RGB2GRAY)
 
     # Scale input image for faster processing
-    cv.Resize(gray, small_img, cv.CV_INTER_LINEAR)
+    fx = fy = 1.0/image_scale
+    small_img = cv2.resize(
+        gray, (0, 0), fx=fx, fy=fy, interpolation=cv.CV_INTER_LINEAR)
 
-    cv.EqualizeHist(small_img, small_img)
+    gray = cv2.equalizeHist(gray, cv.CV_RGB2GRAY)
 
     if(cascade):
         t = cv.GetTickCount()
-        faces = cv.HaarDetectObjects(small_img, cascade, cv.CreateMemStorage(0),
-                                     haar_scale, min_neighbors, haar_flags, min_size)
+        faces = cascade.detectMultiScale(
+            small_img, scaleFactor=haar_scale, minNeighbors=min_neighbors,
+            minSize=min_size, flags=haar_flags)
         t = cv.GetTickCount() - t
-        print "detection time = %gms" % (t/(cv.GetTickFrequency()*1000.))
-        if faces:
-            for ((x, y, w, h), n) in faces:
-                # The input to cv.HaarDetectObjects was resized, so scale the
-                # bounding box of each face and convert it to two CvPoints
+        print("detection time = %gms" % (t/(cv.GetTickFrequency()*1000.)))
+        if len(faces):
+            for ((x, y, w, h)) in faces:
+                # The input to was resized, so scale the bounding box
+                # of each face and convert it to two CvPoints
 
                 w = int(w * image_scale)
                 h = int(h * image_scale)
                 x = int(x * image_scale)
                 y = int(y * image_scale)
-                x0,y0,w0,h0 = x,y,w,h
-                # print x,y,w,h
+                x0, y0, w0, h0 = x, y, w, h
+                # print(x, y, w, h)
                 if not tight_crop:
                     # Widen box
                     x = int(x - w*0.5)
@@ -73,64 +82,86 @@ def detect_and_save(input_name, cascade, outdir, tight_crop = False, show = Fals
                     h = int(h * 2)
                     # h = int(h * 3.5)
                 # Validate
-                if x < 0: x = 0
-                if y < 0: y = 0
-                if x + w > img.width: w = img.width - x
-                if y + h > img.height: h = img.height - y
-                # print x,y,w,h
+                img_height, img_width, depth = img.shape
+                if x < 0:
+                    x = 0
+                if y < 0:
+                    y = 0
+                if x + w > img_width:
+                    w = img_width - x
+                if y + h > img_height:
+                    h = img_height - y
+                # print(x, y, w, h)
 
-                # This code draws a box on the original around the detected face
+                # This code draws a box on the original image
+                # around the detected face
                 if show:
                     # pt1 = (int(x * image_scale), int(y * image_scale))
                     pt1 = (x0, y0)
-                    # pt2 = (int((x + w) * image_scale), int((y + h) * image_scale))
+                    # pt2 = (
+                        # int((x + w) * image_scale),
+                        # int((y + h) * image_scale))
                     pt2 = ((x0 + w0), (y0 + h0))
-                    cv.Rectangle(img, pt1, pt2, cv.RGB(255, 0, 0), 3, 8, 0)
+                    cv2.rectangle(img, pt1, pt2, cv.RGB(255, 0, 0), 3, 8, 0)
 
-                cropped = cv.CreateImage((w, h), img.depth, img.nChannels)
-                src_region = cv.GetSubRect(img, (x, y, w, h))
-                cv.Copy(src_region, cropped)
+                cropped = img[y: y + h, x: x + w]
                 if show:
-                    cv.ShowImage("result", cropped)
-                    cv.WaitKey(0)
+                    cv2.imshow("result", cropped)
+                    cv2.waitKey(0)
                 head, tail = os.path.split(input_name)
-                outfile = os.path.join(outdir, tail + "_" + str(count) + ".jpg")
+                outfile = os.path.join(
+                    outdir, tail + "_" + str(count) + ".jpg")
                 if not os.path.isfile(outfile):
-                    print "Save to", outfile
-                    cv.SaveImage(outfile, cropped)
+                    print("Save to", outfile)
+                    cv2.imwrite(
+                        outfile, cropped, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
                 count += 1
 
     # This code is show/save the original with boxes around detected faces
     if show:
-        cv.ShowImage("result", img)
+        cv2.imshow("result", img)
         # outfile = os.path.join(outdir, input_name)
-        # cv.SaveImage(outfile, img)
+        # cv2.imwrite(outfile, img, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
     return count
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description='Find, crop and save faces (or other objects). Requires OpenCV.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-c', '--cascade',
-#         default='D:\\temp\\opencv\\data\\haarcascades\\haarcascade_frontalface_alt.xml',
-        default='/usr/local/Cellar/opencv/2.4.5/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml',
+    parser = argparse.ArgumentParser(
+        description='Find, crop and save faces (or other objects). '
+        'Requires OpenCV.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument(
+        '-c', '--cascade',
+        # default='D:\\temp\\opencv\\data\\haarcascades\\'
+        # 'haarcascade_frontalface_alt.xml',
+        default='/usr/local/Cellar/opencv/2.4.5/share/OpenCV/haarcascades/'
+        'haarcascade_frontalface_alt.xml',
         help='Haar cascade file')
-    parser.add_argument('-i', '--inspec', default='*.jpg',
+    parser.add_argument(
+        '-i', '--inspec', default='*.jpg',
         help='Input file spec')
-    parser.add_argument('-o', '--outdir', default='crop',
+    parser.add_argument(
+        '-o', '--outdir', default='crop',
         help='Output directory')
-    parser.add_argument('-a', '--findall', action='store_true',
+    parser.add_argument(
+        '-a', '--findall', action='store_true',
         help='Find all objects in photo instead of biggest (slower)')
-    parser.add_argument('-f', '--fast', action='store_true',
+    parser.add_argument(
+        '-f', '--fast', action='store_true',
         help='Faster but less accurate detection')
-    parser.add_argument('-r', '--recursive', action='store_true',
+    parser.add_argument(
+        '-r', '--recursive', action='store_true',
         help='Recurse directories')
-    parser.add_argument('-t', '--tight_crop', action='store_true',
-        help='Crop image tight around detected feature (otherwise a margin is added)')
-    parser.add_argument('-s', '--show', action='store_true',
+    parser.add_argument(
+        '-t', '--tight_crop', action='store_true',
+        help='Crop image tight around detected feature '
+        '(otherwise a margin is added)')
+    parser.add_argument(
+        '-s', '--show', action='store_true',
         help='Show detected image with box')
 
     args = parser.parse_args()
-    print args
+    print(args)
 
     if args.findall:
         haar_flags = 0
@@ -140,7 +171,7 @@ if __name__ == '__main__':
         min_neighbors = 2
         haar_flags = haar_flags | cv.CV_HAAR_DO_CANNY_PRUNING
 
-    cascade = cv.Load(args.cascade)
+    cascade = cv2.CascadeClassifier(args.cascade)
     if args.show:
         cv.NamedWindow("result", 1)
 
@@ -149,24 +180,27 @@ if __name__ == '__main__':
     if total_files == 0:
         sys.exit("No input files found.")
 
-    print total_files, " files found."
+    print(total_files, " files found.")
     total_found = 0
     create_dir(args.outdir)
-    for i,file in enumerate(files):
-        print i+1, "/", total_files
-        try:
-            total_found += detect_and_save(file, cascade, args.outdir, args.tight_crop, args.show)
-        except Exception,e:
-            print os.getcwd()
-            print "Cannot detect:", file
-            print str(e)
-            print repr(e)
-            continue
+    for i, file in enumerate(files):
+        print(i+1, "/", total_files)
+        # try:
+        total_found += detect_and_save(
+            file, cascade, args.outdir, args.tight_crop, args.show)
+            # total_found += detect_and_save(
+                # file, cascade, args.outdir, args.tight_crop, args.show)
+        # except Exception as e:
+            # print(os.getcwd())
+            # print("Cannot detect:", file)
+            # print(str(e))
+            # print(repr(e))
+            # continue
 
     if args.show:
-        cv.WaitKey(0)
-        cv.DestroyWindow("result")
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
-    print "Total found:", total_found
+    print("Total found:", total_found)
 
 # End of file

@@ -149,7 +149,6 @@ def make_image(files):
                 upper = i * slice_thickness
                 lower = upper + slice_thickness
             paste_bbox = (int(left), int(upper), int(right), int(lower))
-            print(paste_bbox) # TODO TEMP
             if args.mode == "eiriksmagick":
                 crop_bbox = paste_bbox
             # print(bbox)
@@ -183,11 +182,6 @@ def make_image(files):
 
             # except:
                 # break
-            print(img)
-            print(img.size)
-            print(crop_bbox) # TODO TEMP
-            print(paste_bbox) # TODO TEMP
-            print(type(paste_bbox[0]), type(paste_bbox[1]), type(paste_bbox[2]), type(paste_bbox[3])) # TODO TEMP
             inew.paste(img, paste_bbox)
             # count += 1
         sys.stdout.write('\r\n')

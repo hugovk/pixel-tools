@@ -12,6 +12,7 @@ before_install:
 - curl -O https://dl.dropboxusercontent.com/u/3065276/ffmpeg-2.1.3-64bit-static.tar.bz2
 - tar jxf ffmpeg-2.1.3-64bit-static.tar.bz2
 - sudo cp ffmpeg-2.1.3-64bit-static/ffmpeg /usr/bin
+- curl -O https://dl.dropboxusercontent.com/u/3065276/haarcascade_frontalface_alt.xml
 install:
 # - pip install -r requirements.txt Don't need numpy or psutil yet
 - pip install Pillow
