@@ -6,6 +6,10 @@ Some of these require Python Imaging Library (Pillow or PIL), Open Source Comput
 
 blockit.py
 ==========
+
+[![](https://farm9.staticflickr.com/8230/8419697276_d1b73743c7_n.jpg)](https://www.flickr.com/photos/hugovk/8419697276/)
+ [![](https://farm9.staticflickr.com/8328/8418636329_435c2520cf_n.jpg)](https://www.flickr.com/photos/hugovk/8418636329/)
+
 See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dblockit&m=tags&ss=2&ct=6&mt=all&w=all&adv=1">Flickr</a>.
 
 ```
