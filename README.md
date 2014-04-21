@@ -44,6 +44,9 @@ optional arguments:
 
 colour_clock.py
 ================
+
+<a href="https://www.flickr.com/photos/hugovk/12548247524/" title="Abroad by hugovk, on Flickr"><img src="https://farm6.staticflickr.com/5530/12548247524_469440a329_m.jpg" width="240" height="240" alt="Abroad"></a><a href="https://www.flickr.com/photos/hugovk/12547743955/" title="The Lorax by Dr. Seuss by hugovk, on Flickr"><img src="https://farm4.staticflickr.com/3730/12547743955_37630df4d4_m.jpg" width="240" height="240" alt="The Lorax by Dr. Seuss"></a><a href="https://www.flickr.com/photos/hugovk/12548247834/" title="Cinderella by hugovk, on Flickr"><img src="https://farm3.staticflickr.com/2891/12548247834_aa4fb026ed_m.jpg" width="240" height="240" alt="Cinderella"></a>
+
 See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel:tool=colour_clock&m=tags&ss=2&ct=6&mt=all&w=all&adv=1">Flickr</a>.
 
 ```
