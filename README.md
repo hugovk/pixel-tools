@@ -65,6 +65,9 @@ optional arguments:
 
 contact_sheet.py
 ================
+
+<a href="https://www.flickr.com/photos/hugovk/8095019379" title="2012 Helsinki municipal elections by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8048/8095019379_7eccb87c54_m.jpg" width="161" height="240" alt="2012 Helsinki municipal elections"></a> <a href="https://www.flickr.com/photos/hugovk/8006067282" title="234 portraits of trees by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8457/8006067282_39a8c5ab27_m.jpg" width="240" height="147" alt="234 portraits of trees"></a> <a href="https://www.flickr.com/photos/hugovk/12030586174" title="3pm Tromsø triptych by hugovk, on Flickr"><img src="https://farm4.staticflickr.com/3829/12030586174_65bfb7cbd2_m.jpg" width="240" height="48" alt="3pm Tromsø triptych"></a>
+
 See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dcontact_sheet&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
