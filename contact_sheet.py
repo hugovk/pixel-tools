@@ -114,8 +114,7 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
             "(or --half or --quarter).")
 
     # Create the new image. The background doesn't have to be white
-    white = (255, 255, 255)
-    inew = Image.new('RGB', isize, white)
+    inew = Image.new('RGB', isize, 'white')
 
     count = 0
     # Insert each thumb:
@@ -134,7 +133,8 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
                     fnames[count]).resize((photow, photoh), Image.ANTIALIAS)
             except KeyboardInterrupt:
                 sys.exit("Keyboard interrupt")
-            except:
+            except Exception as e:
+                print("Error: %s" % repr(e))
                 break
             inew.paste(img, bbox)
             count += 1
