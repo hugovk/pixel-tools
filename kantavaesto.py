@@ -3,17 +3,20 @@
 """
 Make a collage of photos inspired by Nana & Felix's Kanta|Väestö
 http://www.nana-felix.com/
-https://www.facebook.com/nanaandfelix/
+http://www.hippolyte.fi/nana-felix-3/?lang=en
 """
 from __future__ import print_function
 import argparse
 import glob
 from PIL import Image
+import sys
 
 
 def kantavaesto(inspec, outfile):
 
     files = glob.glob(inspec)
+    if len(files) == 0:
+        sys.exit("No input files")
 
     im = Image.open(files[0])
 
@@ -44,7 +47,7 @@ def kantavaesto(inspec, outfile):
             im.paste(next, bbox)
 #             im.show()
 
-    im.show()
+#     im.show()
     print("Saving to", outfile)
     im.save(outfile, quality=100)
 
