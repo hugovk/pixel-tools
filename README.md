@@ -215,6 +215,24 @@ optional arguments:
                         Width of triangle (default: 200)
 ```
 
+kantavaesto.py
+=========
+See some images and videos that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dkantavaesto&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+
+```
+usage: kantavaesto.py [-h] [-i INSPEC] [-o OUTFILE]
+
+Make a collage of photos inspired by Nana & Felix's Kanta|Väestö
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INSPEC, --inspec INSPEC
+                        Input image file spec, must all be the same size
+                        (default: *.jpg)
+  -o OUTFILE, --outfile OUTFILE
+                        Output filename (default: kantavaesto.jpg)
+```
+
 mixify.py
 =========
 See some images and videos that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dmixify&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
