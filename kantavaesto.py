@@ -49,7 +49,7 @@ def kantavaesto(inspec, outfile):
 
 #     im.show()
     print("Saving to", outfile)
-    im.save(outfile, quality=100)
+    im.save(outfile, quality=95)
 
 
 if __name__ == '__main__':

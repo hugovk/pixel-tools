@@ -202,7 +202,7 @@ def save_im(im):
         im.show()
     print("Save to", args.outfile)
     try:
-        im.save(args.outfile, quality=100)
+        im.save(args.outfile, quality=95)
     except IOError:
         print("Cannot save")
 

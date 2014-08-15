@@ -187,7 +187,7 @@ def make_image(files):
         sys.stdout.write('\r\n')
 
         print("Saving to", outfile)
-        inew.save(outfile, quality=100)
+        inew.save(outfile, quality=95)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(

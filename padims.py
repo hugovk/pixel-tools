@@ -69,7 +69,7 @@ def pad_images(files):
         inew.paste(img, bbox)
         outfile = os.path.join(args.outdir, file)
         print("Saving to", outfile)
-        inew.save(outfile, quality=100)
+        inew.save(outfile, quality=95)
 
         # sys.stdout.write('\rProcessing file ' + str(i))
     # sys.stdout.write('\r\n')
