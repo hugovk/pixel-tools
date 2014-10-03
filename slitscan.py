@@ -169,15 +169,15 @@ def make_image(files):
                     cache_full = True
 
             if len(img_cache) > i:
-#                 print("load from cache")
+                # print("load from cache")
                 img = img_cache[i].crop(crop_bbox)
             elif loops > 1 and not cache_full:
-#                 print("add to cache")
+                # print("add to cache")
                 img_cache.append(Image.open(file))
                 # img = img.crop(crop_bbox)
                 img = img_cache[i].crop(crop_bbox)
             else:
-#                 print("don't use cache")
+                # print("don't use cache")
                 img = Image.open(file).crop(crop_bbox)
 
             # except:
@@ -196,6 +196,9 @@ if __name__ == '__main__':
     parser.add_argument(
         '-i', '--inspec', default='*.jpg',
         help='Input file spec')
+    parser.add_argument(
+        '-v', '--reverse', action='store_true',
+        help='Reverse list of input files')
     parser.add_argument(
         '-o', '--outfile', help='Output file name')
     parser.add_argument(
@@ -233,12 +236,14 @@ if __name__ == '__main__':
     # Optional, http://stackoverflow.com/a/1557906/724176
     try:
         import timing
-    except:
+    except ImportError:
         pass
     print(args)
 
     files = glob.glob(args.inspec)
     sanity_check(files)
+    if args.reverse:
+        files = files[::-1]
     if not args.supercombo:
         make_image(files)
     else:  # Super Combo!

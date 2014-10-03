@@ -335,6 +335,7 @@ Slice input files into an output file. Requires PIL.
 optional arguments:
   -h, --help            show this help message and exit
   -i INSPEC, --inspec INSPEC
+  -v, --reverse         Reverse list of input files (default: False)
                         Input file spec (default: *.jpg)
   -o OUTFILE, --outfile OUTFILE
                         Output file name (default: None)
