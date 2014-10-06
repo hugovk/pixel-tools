@@ -1,3 +1,6 @@
+
+[![Build Status](https://travis-ci.org/hugovk/pixel-tools.svg?branch=master)](https://travis-ci.org/hugovk/pixel-tools)
+
 Requirements
 ============
 Some of these require Python Imaging Library (Pillow or PIL), Open Source Computer Vision (OpenCV) or ImageMagick's `convert` command. Some requirements can be installed via pip:
@@ -323,6 +326,9 @@ External dependencies: ImageMagick's `convert`
 
 slitscan.py
 ===========
+
+<a href="https://www.flickr.com/photos/hugovk/8619861336" title="Easter Sunday stroll (IIIa) by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8384/8619861336_d04f6fe674_n.jpg" width="320" height="149" alt="Easter Sunday stroll (IIIa)"></a> <a href="https://www.flickr.com/photos/hugovk/8618756693" title="Easter Sunday stroll (IIId) by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8116/8618756693_58119556b4_n.jpg" width="320" height="183" alt="Easter Sunday stroll (IIId)"></a>
+
 See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dslitscan&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 ```
 usage: slitscan.py [-h] [-i INSPEC] [-o OUTFILE]
