@@ -6,6 +6,8 @@ python:
 - "3.3"
 - "3.4"
 - "pypy"
+- "pypy3"
+
 before_install:
 - curl -O https://dl.dropboxusercontent.com/u/3065276/testimages.zip
 - unzip testimages.zip
@@ -37,3 +39,4 @@ matrix:
     - python: "3.3"
     - python: "3.4"
     - python: "pypy"
+    - python: "pypy3"
