@@ -112,7 +112,7 @@ class TestPixelTools(unittest.TestCase):
         """Just test with some options and check an output file is created"""
         # Arrange
         cmd = "contact_sheet.py"
-        args = " --quarter -i " + self.inspec
+        args = " --quarter -i " + self.inspec + " -aspect_ratio 16,9"
         self.helper_set_up(cmd)
 
         # Act
@@ -184,7 +184,18 @@ class TestPixelTools(unittest.TestCase):
         # Assert
         self.assertTrue(os.path.isfile(self.outfile))
 
-    def test_padims(self):
+    def test_normalise_mean(self):
+        """Just test with some options and check an output file is created"""
+        # Arrange
+        from normalise import mean
+
+        # Act
+        out = mean([1, 2, 3])
+
+        # Assert
+        self.assertEqual(out, 2)
+
+        def test_padims(self):
         """Just test with some options and check an output file is created"""
         # Arrange
         cmd = "padims.py"
@@ -218,6 +229,19 @@ class TestPixelTools(unittest.TestCase):
         # Arrange
         cmd = "pixelator.py"
         args = " -i " + self.inspec + " -b auto -n mode "
+        self.helper_set_up(cmd)
+
+        # Act
+        self.run_cmd(cmd, args)
+
+        # Assert
+        self.assertTrue(os.path.isfile(self.outfile))
+
+    def test_pixelator_random(self):
+        """Just test with some options and check an output file is created"""
+        # Arrange
+        cmd = "pixelator.py"
+        args = " -i " + self.inspec + " -b auto -n mode -e random"
         self.helper_set_up(cmd)
 
         # Act
