@@ -13,7 +13,8 @@ except:
 import imp
 try:
     imp.find_module("coverage")
-    COVERAGE_CMD = 'coverage run --append --omit */site-packages/* '
+    COVERAGE_CMD = ('coverage run --append '
+                   '--omit */site-packages/* --omit *pypy* ')
 except ImportError:
     COVERAGE_CMD = ""
 
