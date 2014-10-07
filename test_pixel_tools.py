@@ -195,7 +195,7 @@ class TestPixelTools(unittest.TestCase):
         # Assert
         self.assertEqual(out, 2)
 
-        def test_padims(self):
+    def test_padims(self):
         """Just test with some options and check an output file is created"""
         # Arrange
         cmd = "padims.py"
