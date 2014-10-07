@@ -241,7 +241,7 @@ if __name__ == '__main__':
 
     try:
         import timing  # optional
-    except:
+    except ImportError:
         pass
     print(args)
 

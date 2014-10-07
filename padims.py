@@ -15,7 +15,7 @@ import fileutils
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
-except:
+except ImportError:
     pass
 
 
@@ -29,8 +29,8 @@ def sanity_check(files):
 def pad_images(files):
     # Find max width and height
     max_width, max_height = 0, 0
-    for file in files:
-        width, height = Image.open(file).size
+    for f in files:
+        width, height = Image.open(f).size
         if width > max_width:
             max_width = width
         if height > max_height:
@@ -42,10 +42,10 @@ def pad_images(files):
     fileutils.create_dir(args.outdir)
     black = (0, 0, 0)
     # white = (255, 255, 255)
-    for file in files:
+    for f in files:
         # Create a new blank image
         inew = Image.new('RGB', (max_width, max_height), black)
-        img = Image.open(file)
+        img = Image.open(f)
         width, height = img.size
         # Calculate offsets
         if args.halign == "centre":
@@ -67,7 +67,7 @@ def pad_images(files):
         bbox = (left, upper, right, lower)
 
         inew.paste(img, bbox)
-        outfile = os.path.join(args.outdir, file)
+        outfile = os.path.join(args.outdir, f)
         print("Saving to", outfile)
         inew.save(outfile, quality=95)
 

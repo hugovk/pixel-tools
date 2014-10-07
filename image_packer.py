@@ -15,7 +15,7 @@ from PIL import Image
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
-except:
+except ImportError:
     pass
 
 
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
 
-    format = 'RGBA'
+    im_format = 'RGBA'
     #get a list of PNG files in the current directory
     names = glob.glob(args.inspec)
     if args.outfile in names:
@@ -106,11 +106,11 @@ if __name__ == "__main__":
 
     #create a list of PIL Image objects, sorted by size
     print("Create a list of PIL Image objects, sorted by size")
-    images = sorted([(i.size[0]*i.size[1], name, i) for name, i in ((x, Image.open(x).convert(format)) for x in names)], reverse=args.largest_first)
+    images = sorted([(i.size[0]*i.size[1], name, i) for name, i in ((x, Image.open(x).convert(im_format)) for x in names)], reverse=args.largest_first)
 
     print("Create tree")
     tree = PackNode(args.size)
-    image = Image.new(format, args.size)
+    image = Image.new(im_format, args.size)
 
     #insert each image into the PackNode area
     for i, (area, name, img) in enumerate(images):

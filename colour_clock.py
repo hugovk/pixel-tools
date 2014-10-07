@@ -173,14 +173,14 @@ def kmeans(points, k, min_diff):
 #########################################################
 
 
-def create_dir(dir):
-    if not os.path.isdir(dir):
-        os.mkdir(dir)
+def create_dir(directory):
+    if not os.path.isdir(directory):
+        os.mkdir(directory)
 
 
-def create_dirs(dir):
-    if not os.path.isdir(dir):
-        os.makedirs(dir)
+def create_dirs(directory):
+    if not os.path.isdir(directory):
+        os.makedirs(directory)
 
 
 if __name__ == '__main__':
@@ -200,7 +200,7 @@ if __name__ == '__main__':
      # Optional, http://stackoverflow.com/a/1557906/724176
     try:
         import timing
-    except:
+    except ImportError:
         pass
 
     # Testing
@@ -238,16 +238,16 @@ if __name__ == '__main__':
     if len(files) == 0:
         sys.exit("No image files found")
 
-    for file in files:
-        print(file)
+    for f in files:
+        print(f)
         try:
-            new_weighted_colours = colorz(file, 5)
+            new_weighted_colours = colorz(f, 5)
             weighted_colours.extend(sorted(new_weighted_colours, reverse=True))
             weighted_colours.append((10, WHITE))  # spacer
         except (KeyboardInterrupt, SystemExit):
             raise
         except Exception as e:
-            print("Ignoring problem file:", file)
+            print("Ignoring problem file:", f)
             print(str(e))
             print(repr(e))
             continue

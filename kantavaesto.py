@@ -33,7 +33,7 @@ def kantavaesto(inspec, outfile):
 
     last_bbox = None
 
-    for file in files[1:]:
+    for f in files[1:]:
         left += delta
         upper += delta
         right -= delta
@@ -42,9 +42,9 @@ def kantavaesto(inspec, outfile):
         if last_bbox != bbox:
             last_bbox = bbox
             print(bbox)
-            next = Image.open(file).crop(bbox)
-#             next.show()
-            im.paste(next, bbox)
+            next_im = Image.open(f).crop(bbox)
+#             next_im.show()
+            im.paste(next_im, bbox)
 #             im.show()
 
 #     im.show()
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
     try:  # Optional, http://stackoverflow.com/a/1557906/724176
         import timing
-    except:
+    except ImportError:
         pass
 
     kantavaesto(args.inspec, args.outfile)

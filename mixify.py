@@ -7,7 +7,7 @@ import os
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Wrapper around ffmpeg to mix audio from one video into another video.", 
+        description="Wrapper around ffmpeg to mix audio from one video into another video.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-a', '--audio', metavar='filename',
         default='audio.mp4',
@@ -20,9 +20,11 @@ if __name__ == "__main__":
         help='Output filename')
     args = parser.parse_args()
 
-    try: import timing # optional
-    except: pass
-    
+    try:
+        import timing  # optional
+    except ImportError:
+        pass
+
     print args
 
     if not os.path.isfile(args.audio) and not os.path.isfile(args.video):
@@ -34,9 +36,9 @@ if __name__ == "__main__":
     elif not os.path.isfile(args.video):
         import sys
         sys.exit("Cannot find video file")
-    
+
     cmd = "ffmpeg -i " + args.video + " -i " + args.audio + ' -map 0:v:0 -map 1:a:0 -codec copy -shortest     -af "afade=t=out:st=3:30:d=2" ' + args.outfile
     print cmd
     os.system(cmd)
-    
+
 # End of file

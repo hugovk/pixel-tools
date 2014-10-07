@@ -17,7 +17,7 @@ import sys
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
-except:
+except ImportError:
     pass
 
 # Parameters for Haar detection. From the API:
@@ -34,9 +34,9 @@ min_neighbors = 3  # 2
 haar_flags = cv.CV_HAAR_FIND_BIGGEST_OBJECT
 
 
-def create_dir(dir):
-    if not os.path.isdir(dir):
-        os.mkdir(dir)
+def create_dir(directory):
+    if not os.path.isdir(directory):
+        os.mkdir(directory)
 
 
 def detect_and_save(

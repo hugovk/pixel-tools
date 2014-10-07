@@ -23,7 +23,7 @@ import normalise
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
-except:
+except ImportError:
     pass
 
 # From a bunch of images, make a composite from average or random pixels
@@ -61,8 +61,8 @@ def create_temp_dir():
 def remove_temp_dirs():
     if len(temp_dirs) > 0:
         print("Deleting temp directories")
-        for dir in temp_dirs:
-            shutil.rmtree(dir)
+        for directory in temp_dirs:
+            shutil.rmtree(directory)
 
 
 def sanity_check(files):
@@ -131,10 +131,10 @@ def create_average_in_batches(inspec):
 
     temp_dir = create_temp_dir()
 
-    for file in files:
+    for f in files:
         if i < (args.batch_size):
             # print(i)
-            batch += '"' + file + '" '
+            batch += '"' + f + '" '
             i += 1
         else:
             temp_file = os.path.join(

@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
     try:
         import timing  # optional
-    except:
+    except ImportError:
         pass
 
     args = parser.parse_args()

@@ -52,11 +52,11 @@ def normalise_files(spec, files, normalise, temp_dir):
 
     normalise_needed = False
     print("Checking sizes")
-    for i, file in enumerate(files):
-        print(file)
+    for i, f in enumerate(files):
+        print(f)
         try:
-            width, height = Image.open(file).size
-            # print(width, "x, height, height * 1.0/width, file)
+            width, height = Image.open(f).size
+            # print(width, "x, height, height * 1.0/width, f)
             widths.append(width)
             heights.append(height)
             if (not normalise_needed and
@@ -65,7 +65,7 @@ def normalise_files(spec, files, normalise, temp_dir):
                         height != heights[0])):
                 normalise_needed = True
         except Exception as e:
-            print("Ignoring problem file:", file)
+            print("Ignoring problem file:", f)
             print(str(e))
             print(repr(e))
             # Add dummy data
@@ -95,23 +95,23 @@ def normalise_files(spec, files, normalise, temp_dir):
     if not os.path.isdir(temp_dir):
         os.mkdir(temp_dir)
 
-    for i, file in enumerate(files):
+    for i, f in enumerate(files):
         if widths[i] == 0 and heights[i] == 0:
             # Ignore problem file
             continue
-        print(widths[i], "x", heights[i], file)
+        print(widths[i], "x", heights[i], f)
         progress = str(i) + "/" + str(len(files))
 
         if ((widths[i], heights[i]) == size):
             print(progress, "Don't need to convert")
-            shutil.copy2(file, temp_dir)
+            shutil.copy2(f, temp_dir)
         else:
             print(progress, "Need to convert")
-            filename = remove_non_ascii(os.path.split(file)[1])
+            filename = remove_non_ascii(os.path.split(f)[1])
             temp_file = os.path.join(temp_dir, filename)
 
             try:
-                im = Image.open(file)
+                im = Image.open(f)
                 # im = im.resize(size)
                 im = ImageOps.fit(im, size, Image.ANTIALIAS)
                 im.save(temp_file, quality=95)
