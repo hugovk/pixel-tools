@@ -1,5 +1,7 @@
 
 [![Build Status](https://travis-ci.org/hugovk/pixel-tools.svg?branch=master)](https://travis-ci.org/hugovk/pixel-tools)
+[![Coverage Status](https://coveralls.io/repos/hugovk/pixel-tools/badge.png?branch=master)](https://coveralls.io/r/hugovk/pixel-tools?branch=master)
+[![Code Health](https://landscape.io/github/hugovk/pixel-tools/master/landscape.png)](https://landscape.io/github/hugovk/pixel-tools/master)
 
 Requirements
 ============
