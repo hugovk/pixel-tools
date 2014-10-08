@@ -112,7 +112,7 @@ class TestPixelTools(unittest.TestCase):
         """Just test with some options and check an output file is created"""
         # Arrange
         cmd = "contact_sheet.py"
-        args = " --quarter -i " + self.inspec + " -aspect_ratio 16,9"
+        args = " --quarter -i " + self.inspec + " --aspect_ratio 16,9"
         self.helper_set_up(cmd)
 
         # Act
