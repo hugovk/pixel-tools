@@ -60,8 +60,8 @@ def aspect_ratio(number, thumbsize, aspect_ratio):
             best_factor = factor
         # print(factor, "\t", overlap, "\t", best_overlap)
 
-    cols = best_factor
-    rows = number / cols
+    cols = int(best_factor)
+    rows = int(number / cols)
     print(cols, "cols,", rows, "rows")
     return cols, rows
 
