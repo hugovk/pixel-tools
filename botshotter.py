@@ -7,6 +7,7 @@ Requirements:
  * Python 2 (tested on 2.7)
  * pip install pillow selenium
  * ChromeDriver https://code.google.com/p/selenium/wiki/ChromeDriver
+ * Or PhantomJS http://phantomjs.org/
 """
 from __future__ import print_function, unicode_literals
 import argparse
@@ -69,11 +70,12 @@ def take_shot(url):
     delete_element_by_class_name('trends')
     delete_element_by_class_name('user-actions-follow-button')
 
-    # Scroll to the profile image
-    element = driver.find_element_by_class_name('ProfileCanopy-avatar')
-    driver.execute_script("return arguments[0].scrollIntoView();", element)
-    # ... and back a bit
-    driver.execute_script("window.scrollBy(0, -10);")
+    if not args.headless:
+        # Scroll to the profile image
+        element = driver.find_element_by_class_name('ProfileCanopy-avatar')
+        driver.execute_script("return arguments[0].scrollIntoView();", element)
+        # ... and back a bit
+        driver.execute_script("window.scrollBy(0, -10);")
 
     # Bit of extra time to let it finish loading/removing
     time.sleep(0.5)
@@ -96,6 +98,9 @@ def crop_image(im):
     top = 0
     right = im.width - 20
     bottom = im.height
+    if args.headless:
+        top = 90
+        bottom = 700
 
     # Now centre in 900px
     width = right - left
@@ -108,18 +113,23 @@ def crop_image(im):
     return im
 
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Take a screenshot of a Twitter profile.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('url', help="Username or URL to screenshot. "
                                     "Or a comma-separated list.")
+    parser.add_argument('--headless', action='store_true',
+                        help="Run in headless browser.")
     args = parser.parse_args()
 
-    options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized")
-    driver = webdriver.Chrome(chrome_options=options)
+    if args.headless:
+        import os.path
+        driver = webdriver.PhantomJS(service_log_path=os.path.devnull)
+    else:
+        options = webdriver.ChromeOptions()
+        options.add_argument("--start-maximized")
+        driver = webdriver.Chrome(chrome_options=options)
     driver.maximize_window()
     driver.set_window_size(1000, 750)
 
@@ -127,7 +137,6 @@ if __name__ == "__main__":
         urls = args.url.split(",")
     else:
         urls = [args.url]
-    print(urls)
 
     for url in urls:
         print(url)
