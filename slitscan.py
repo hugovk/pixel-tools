@@ -139,7 +139,7 @@ def make_image(files):
         if args.mode != "eiriksmagick":
             crop_bbox = (int(left), int(upper), int(right), int(lower))
 
-        for i, file in enumerate(files):
+        for i, filename in enumerate(files):
             sys.stdout.write(
                 '\rProcessing file ' + str(i+1) + "/" + str(len(files)))
             if vertical:
@@ -173,12 +173,12 @@ def make_image(files):
                 img = img_cache[i].crop(crop_bbox)
             elif loops > 1 and not cache_full:
                 # print("add to cache")
-                img_cache.append(Image.open(file))
+                img_cache.append(Image.open(filename))
                 # img = img.crop(crop_bbox)
                 img = img_cache[i].crop(crop_bbox)
             else:
                 # print("don't use cache")
-                img = Image.open(file).crop(crop_bbox)
+                img = Image.open(filename).crop(crop_bbox)
 
             # except:
                 # break
@@ -236,6 +236,7 @@ if __name__ == '__main__':
     # Optional, http://stackoverflow.com/a/1557906/724176
     try:
         import timing
+        assert timing  #silence warnings
     except ImportError:
         pass
     print(args)

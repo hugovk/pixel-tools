@@ -15,6 +15,7 @@ from PIL import Image
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
+    assert timing  # silence warnings
 except ImportError:
     pass
 

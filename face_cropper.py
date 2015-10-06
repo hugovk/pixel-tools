@@ -17,6 +17,7 @@ import sys
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
+    assert timing  # silence warnings
 except ImportError:
     pass
 
@@ -183,16 +184,16 @@ if __name__ == '__main__':
     print(total_files, " files found.")
     total_found = 0
     create_dir(args.outdir)
-    for i, file in enumerate(files):
+    for i, filename in enumerate(files):
         print(i+1, "/", total_files)
         # try:
         total_found += detect_and_save(
-            file, cascade, args.outdir, args.tight_crop, args.show)
+            filename, cascade, args.outdir, args.tight_crop, args.show)
             # total_found += detect_and_save(
-                # file, cascade, args.outdir, args.tight_crop, args.show)
+                # filename, cascade, args.outdir, args.tight_crop, args.show)
         # except Exception as e:
             # print(os.getcwd())
-            # print("Cannot detect:", file)
+            # print("Cannot detect:", filename)
             # print(str(e))
             # print(repr(e))
             # continue

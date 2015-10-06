@@ -191,6 +191,7 @@ if __name__ == '__main__':
 
     try:  # Optional, http://stackoverflow.com/a/1557906/724176
         import timing
+        assert timing  # silence warnings
     except ImportError:
         pass
 

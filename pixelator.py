@@ -23,6 +23,7 @@ import normalise
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
+    assert timing  # silence warnings
 except ImportError:
     pass
 
@@ -49,13 +50,13 @@ def encode_time():
 
 
 def create_temp_dir():
-    dir = TEMP_DIR + encode_time()
-    if os.path.isdir(dir):
-        shutil.rmtree(dir)
-    if not os.path.isdir(dir):
-        os.mkdir(dir)
-    temp_dirs.append(dir)
-    return dir
+    directory = TEMP_DIR + encode_time()
+    if os.path.isdir(directory):
+        shutil.rmtree(directory)
+    if not os.path.isdir(directory):
+        os.mkdir(directory)
+    temp_dirs.append(directory)
+    return directory
 
 
 def remove_temp_dirs():

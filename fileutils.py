@@ -4,10 +4,10 @@ Some file utilities
 """
 
 
-def create_dir(dir):
+def create_dir(directory):
     import os
-    if not os.path.isdir(dir):
-        os.mkdir(dir)
+    if not os.path.isdir(directory):
+        os.mkdir(directory)
 
 
 def nonrecursive_find(inspec):
@@ -47,11 +47,18 @@ def call_cmd(cmd, add_dot=True):
     os.system(cmd)
 
 
+def get_extension(filename):
+    import os
+    filename, extension = os.path.splitext(filename)
+    return extension
+
+
 if __name__ == '__main__':
     import argparse
 
     try:
         import timing  # optional
+        assert timing  # silence warnings
     except:
         pass
 

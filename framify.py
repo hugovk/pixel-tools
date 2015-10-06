@@ -6,7 +6,8 @@ import argparse
 import os
 
 try:
-    import timing # optional
+    import timing  # optional
+    assert timing  # silence warnings
 except ImportError:
     pass
 
