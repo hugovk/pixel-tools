@@ -33,7 +33,7 @@ def get_url(url_or_username):
     return https://twitter.com/gutendelight
     """
     if url_or_username.startswith("http"):
-        return url
+        return url_or_username
     else:
         return "https://twitter.com/" + url_or_username.lstrip("@")
 
