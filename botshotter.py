@@ -16,6 +16,16 @@ import StringIO
 import time
 
 
+def do_one_account(url_or_username):
+    """ Process a single Twitter account """
+    url = get_url(url_or_username)
+    im = take_shot(url)
+    im = crop_image(im)
+
+    outfile = username_from_url(url) + ".png"
+    im.save(outfile)
+
+
 def get_url(url_or_username):
     """
     Given https://twitter.com/gutendelight, @gutendelight or gutendelight,
@@ -98,12 +108,13 @@ def crop_image(im):
     return im
 
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Take a screenshot of a Twitter profile.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('url', help="Username or URL to screenshot")
-    parser.add_argument('-o', '--outfile', help="Output filename")
+    parser.add_argument('url', help="Username or URL to screenshot. "
+                                    "Or a comma-separated list.")
     args = parser.parse_args()
 
     options = webdriver.ChromeOptions()
@@ -112,13 +123,15 @@ if __name__ == "__main__":
     driver.maximize_window()
     driver.set_window_size(1000, 750)
 
-    url = get_url(args.url)
-    im = take_shot(url)
-    im = crop_image(im)
+    if "," in args.url:
+        urls = args.url.split(",")
+    else:
+        urls = args.url
+    print(urls)
 
-    if not args.outfile:
-        args.outfile = username_from_url(url) + ".png"
-    im.save(args.outfile)
+    for url in urls:
+        print(url)
+        do_one_account(url)
 
     driver.quit()
 
