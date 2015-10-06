@@ -126,7 +126,7 @@ if __name__ == "__main__":
     if "," in args.url:
         urls = args.url.split(",")
     else:
-        urls = args.url
+        urls = [args.url]
     print(urls)
 
     for url in urls:
