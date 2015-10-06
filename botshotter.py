@@ -59,6 +59,12 @@ def take_shot(url):
     delete_element_by_class_name('trends')
     delete_element_by_class_name('user-actions-follow-button')
 
+    # Scroll to the profile image
+    element = driver.find_element_by_class_name('ProfileCanopy-avatar')
+    driver.execute_script("return arguments[0].scrollIntoView();", element)
+    # ... and back a bit
+    driver.execute_script("window.scrollBy(0, -10);")
+
     # Bit of extra time to let it finish loading/removing
     time.sleep(0.5)
 
@@ -75,10 +81,9 @@ def take_shot(url):
 def crop_image(im):
     """ Crop and return the image """
     # Crop:
-    #  * 90px from top for header and down to just above profile image
     #  * 20px from right for scrollbars
     left = 0
-    top = 90
+    top = 0
     right = im.width - 20
     bottom = im.height
 
@@ -105,7 +110,7 @@ if __name__ == "__main__":
     options.add_argument("--start-maximized")
     driver = webdriver.Chrome(chrome_options=options)
     driver.maximize_window()
-    driver.set_window_size(1000, 800)
+    driver.set_window_size(1000, 750)
 
     url = get_url(args.url)
     im = take_shot(url)
