@@ -180,6 +180,9 @@ optional arguments:
 
 image_packer.py
 ==========
+
+<a href="https://www.flickr.com/photos/hugovk/9150635285/in/photolist-eWBp4T" title="All the Free News (and Ads) That’s Fit to Print"><img src="https://farm4.staticflickr.com/3788/9150635285_e8d66283cb_m.jpg" width="212" height="240" alt="All the Free News (and Ads) That’s Fit to Print"></a>
+
 See some images and videos that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dimage_packer&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 Based on <a href="http://code.activestate.com/recipes/442299/">S W's recipe</a>.
