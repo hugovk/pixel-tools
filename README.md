@@ -205,6 +205,9 @@ optional arguments:
 
 kaleidoscope.py
 ===============
+
+<a href="https://www.flickr.com/photos/hugovk/13142941153/in/photolist-m2p1vF-m2pQyf-m1wyjz-m2p1tB-m2omgM-m2omb6-m2p1eD-m2om6M-m1y2Eo-m2p15F-m1xc8c-m1xbD6-m1y3tY" title="Chrysanthemum_kaleidoscope"><img src="https://farm8.staticflickr.com/7317/13142941153_7f93c2e31f_m.jpg" width="240" height="180" alt="Chrysanthemum_kaleidoscope"></a> <a href="https://www.flickr.com/photos/hugovk/13142812185/in/photolist-m1wyjz-m2p1vF-m2pQyf-m1xbD6-m2p1tB-m2omgM-m1y3tY-m2p15F-m2p1eD-m2om6M-m1y2Eo-m2omb6-m1xc8c" title="Koala_kaleidoscope"><img src="https://farm8.staticflickr.com/7309/13142812185_8f075c76a8_m.jpg" width="240" height="180" alt="Koala_kaleidoscope"></a> <a href="https://www.flickr.com/photos/hugovk/13142939703/in/photolist-m1wyjz-m2p1vF-m2pQyf-m1xbD6-m2p1tB-m2omgM-m1y3tY-m2p15F-m2p1eD-m2om6M-m1y2Eo-m2omb6-m1xc8c" title="Tulips_kaleidoscope"><img src="https://farm4.staticflickr.com/3833/13142939703_50e21e4f51_m.jpg" width="240" height="180" alt="Tulips_kaleidoscope"></a> 
+
 See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dkaleidoscope&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
