@@ -14,16 +14,23 @@ import argparse
 from PIL import Image  # pip install pillow
 from selenium import webdriver  # pip install selenium
 import StringIO
+import os.path
 import time
 
 
-def do_one_account(url_or_username):
+def do_one_account(driver, url_or_username, outdir, headless):
     """ Process a single Twitter account """
     url = get_url(url_or_username)
-    im = take_shot(url)
-    im = crop_image(im)
 
     outfile = username_from_url(url) + ".png"
+    if outdir:
+        outfile = os.path.join(outdir, outfile)
+    if os.path.isfile(outfile):
+        return  # Don't overwrite existing
+
+    im = take_shot(driver, url, headless)
+    im = crop_image(im, headless)
+
     im.save(outfile)
 
 
@@ -40,13 +47,11 @@ def get_url(url_or_username):
 
 def username_from_url(url):
     """ Given https://twitter.com/gutendelight, return gutendelight """
-    pos = url.rfind("/")
-    return url[pos+1:]
+    return url.rsplit('/', 1)[-1]
 
 
-def delete_element_by_class_name(class_name):
+def delete_element_by_class_name(driver, class_name):
     """ Delete an element from the page """
-
     element = driver.find_element_by_class_name(class_name)
     driver.execute_script("""
         var element = arguments[0];
@@ -54,7 +59,7 @@ def delete_element_by_class_name(class_name):
         """, element)
 
 
-def take_shot(url):
+def take_shot(driver, url, headless):
     """
     Load the page, remove some clutter and
     return a screenshot as a Pillow image
@@ -64,13 +69,13 @@ def take_shot(url):
     driver.get(url)
 
     # Remove some clutter
-    delete_element_by_class_name('BannersContainer')
-    delete_element_by_class_name('topbar')
-    delete_element_by_class_name('SignupCallOut')
-    delete_element_by_class_name('trends')
-    delete_element_by_class_name('user-actions-follow-button')
+    delete_element_by_class_name(driver, 'BannersContainer')
+    delete_element_by_class_name(driver, 'topbar')
+    delete_element_by_class_name(driver, 'SignupCallOut')
+    delete_element_by_class_name(driver, 'trends')
+    delete_element_by_class_name(driver, 'user-actions-follow-button')
 
-    if not args.headless:
+    if not headless:
         # Scroll to the profile image
         element = driver.find_element_by_class_name('ProfileCanopy-avatar')
         driver.execute_script("return arguments[0].scrollIntoView();", element)
@@ -90,7 +95,7 @@ def take_shot(url):
     return im
 
 
-def crop_image(im):
+def crop_image(im, headless):
     """ Crop and return the image """
     # Crop:
     #  * 20px from right for scrollbars
@@ -98,7 +103,7 @@ def crop_image(im):
     top = 0
     right = im.width - 20
     bottom = im.height
-    if args.headless:
+    if headless:
         top = 90
         bottom = 700
 
@@ -113,17 +118,9 @@ def crop_image(im):
     return im
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Take a screenshot of a Twitter profile.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('url', help="Username or URL to screenshot. "
-                                    "Or a comma-separated list.")
-    parser.add_argument('--headless', action='store_true',
-                        help="Run in headless browser.")
-    args = parser.parse_args()
-
-    if args.headless:
+def botshotter(url, outdir, headless=False):
+    """ Main bit """
+    if headless:
         import os.path
         driver = webdriver.PhantomJS(service_log_path=os.path.devnull)
     else:
@@ -133,15 +130,29 @@ if __name__ == "__main__":
     driver.maximize_window()
     driver.set_window_size(1000, 750)
 
-    if "," in args.url:
-        urls = args.url.split(",")
+    if "," in url:
+        urls = url.split(",")
     else:
-        urls = [args.url]
+        urls = [url]
 
     for url in urls:
         print(url)
-        do_one_account(url)
+        do_one_account(driver, url, outdir, headless)
 
     driver.quit()
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Take a screenshot of a Twitter profile.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('url', help="Username or URL to screenshot. "
+                                    "Or a comma-separated list.")
+    parser.add_argument('-o', '--outdir', help="Output directory.")
+    parser.add_argument('--headless', action='store_true',
+                        help="Run in headless browser.")
+    args = parser.parse_args()
+
+    botshotter(args.url, args.outdir, args.headless)
 
 # End of file
