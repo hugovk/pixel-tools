@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
-Pad images of different sizes so all end up the same size with black borders.
+Pad images of different sizes so all end up the same size
+with the same colour borders.
 """
 from __future__ import print_function
 import argparse
@@ -41,11 +42,9 @@ def pad_images(files):
     print("Max height:\t", max_height)
 
     fileutils.create_dir(args.outdir)
-    black = (0, 0, 0)
-    # white = (255, 255, 255)
     for f in files:
         # Create a new blank image
-        inew = Image.new('RGB', (max_width, max_height), black)
+        inew = Image.new('RGB', (max_width, max_height), args.bgcolour)
         img = Image.open(f)
         width, height = img.size
         # Calculate offsets
@@ -79,7 +78,7 @@ def pad_images(files):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Pad images of different sizes so all end up '
-        'the same size with black borders.',
+        'the same size with the same colour borders.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
         '-i', '--inspec', default='*.jpg',
@@ -87,6 +86,9 @@ if __name__ == '__main__':
     parser.add_argument(
         '-o', '--outdir', default='out',
         help='Output directory')
+    parser.add_argument(
+        '-bg', '--bgcolour', default='black',
+        help='Background colour')
     parser.add_argument(
         '-ha', '--halign', default='centre',
         choices=('centre', 'left', 'right'),
