@@ -1,21 +1,19 @@
 language: python
 python:
-- "2.6"
 - "2.7"
-- "3.2"
-- "3.3"
-- "3.4"
+- "3.6"
 - "3.5"
+- "3.4"
 - "pypy"
 - "pypy3"
 
 before_install:
-- curl -O https://dl.dropboxusercontent.com/u/3065276/testimages.zip
+- curl -O http://hugovk.github.io/test/pixel-tools/testimages.zip
 - unzip testimages.zip
-- curl -O https://dl.dropboxusercontent.com/u/3065276/ffmpeg-2.1.3-64bit-static.tar.bz2
+- curl -O http://hugovk.github.io/test/pixel-tools/ffmpeg-2.1.3-64bit-static.tar.bz2
 - tar jxf ffmpeg-2.1.3-64bit-static.tar.bz2
 - sudo cp ffmpeg-2.1.3-64bit-static/ffmpeg /usr/bin
-- curl -O https://dl.dropboxusercontent.com/u/3065276/haarcascade_frontalface_alt.xml
+- curl -O http://hugovk.github.io/test/pixel-tools/haarcascade_frontalface_alt.xml
 # - sudo add-apt-repository ppa:gijzelaar/opencv2.4 -y
 # - sudo apt-get update --allow-unauthenticated
 # - sudo apt-get install --allow-unauthenticated libopencv-dev
@@ -24,10 +22,7 @@ before_install:
 install:
 # - pip install -r requirements.txt Don't need numpy or psutil yet
 
-# Coverage 4.0 doesn't support Python 3.2
-- if [ "$TRAVIS_PYTHON_VERSION" == "3.2" ]; then pip install "coverage<4"; fi
-- if [ "$TRAVIS_PYTHON_VERSION" != "3.2" ]; then pip install coverage; fi
-
+- pip install coverage
 - pip install Pillow
 - pip install coveralls
 before_script:
@@ -43,11 +38,9 @@ after_success:
 
 matrix:
   allow_failures:
-    - python: "2.6"
-    - python: "3.2"
-    - python: "3.3"
-    - python: "3.4"
+    - python: "3.6"
     - python: "3.5"
+    - python: "3.4"
     - python: "pypy"
     - python: "pypy3"
   fast_finish: true
