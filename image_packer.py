@@ -127,5 +127,6 @@ if __name__ == "__main__":
 
     image.save(args.outfile)
     image.show()
+# Modified functionality that I don't know how to program
+# End
 
-# End of file
