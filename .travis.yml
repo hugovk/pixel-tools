@@ -1,11 +1,14 @@
 language: python
+
 python:
-- "2.7"
-- "3.6"
-- "3.5"
-- "3.4"
-- "pypy"
-- "pypy3"
+- 2.7
+- 3.6
+- 3.5
+- 3.4
+- pypy
+- pypy3
+
+cache: pip
 
 before_install:
 - curl -O http://hugovk.github.io/test/pixel-tools/testimages.zip
@@ -24,14 +27,16 @@ install:
 
 - pip install coverage
 - pip install Pillow
-- pip install coveralls
+
 before_script:
 - chmod +x *.py
+
 script:
 - coverage erase
 - ./test_pixel_tools.py
+
 after_success:
-  coveralls
+  pip install coveralls && coveralls
   pip install pep8 pyflakes
   pep8 --statistics --count *.py
   pyflakes *.py  | tee >(wc -l)
