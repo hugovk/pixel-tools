@@ -5,10 +5,7 @@ Tests for pixel tools
 import argparse
 import os
 import sys
-try:
-    import unittest2 as unittest  # Python 2.6
-except:
-    import unittest
+import unittest
 
 import imp
 try:
@@ -23,21 +20,7 @@ else:
     OS_CMD = " ./"
 
 
-def is_python_2_6():
-    """Python 2.6 doesn't have failfast"""
-    version = sys.version_info
-    if version[0] == 2 and version[1] == 6:
-        return True
-    else:
-        return False
-
-
 class TestPixelTools(unittest.TestCase):
-
-    if is_python_2_6():
-        # assertGreater() introduced in 2.7
-        def assertGreater(self, a, b):
-            return self.assertTrue(a > b)
 
     def remove_file(self, file):
         if os.path.isfile(file):
@@ -310,9 +293,7 @@ if __name__ == '__main__':
         unittest.TextTestRunner().run(suite)
 
     else:
-        # if is_python_2_6():
         unittest.main()
-        # else:
-            # unittest.main(failfast=True)
+        # unittest.main(failfast=True)
 
 # End of file
