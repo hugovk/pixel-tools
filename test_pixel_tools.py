@@ -4,7 +4,6 @@ Tests for pixel tools
 """
 import argparse
 import os
-import sys
 import unittest
 
 import imp
@@ -126,7 +125,7 @@ class TestPixelTools(unittest.TestCase):
         # cmd = "face_cropper.py"
         # outdir = "face_cropper"
         # args = " -c haarcascade_frontalface_alt.xml -i " + self.inspec + \
-            # " -o " + outdir
+        #    " -o " + outdir
         # self.helper_set_up(cmd)
         # outspec = os.path.join(outdir, self.inspec.strip('"'))
         # import glob
@@ -166,6 +165,25 @@ class TestPixelTools(unittest.TestCase):
 
         # Assert
         self.assertTrue(os.path.isfile(self.outfile))
+
+    def test_image_packer_tuple_arg(self):
+        """Test tuple_arg works as expected"""
+        # Arrange
+        from image_packer import tuple_arg
+
+        # Act
+        out1 = tuple_arg("12, 34")
+        out2 = tuple_arg("12,34")
+        out3 = tuple_arg("12:34")
+        out4 = tuple_arg("12x34")
+
+        # Assert
+        self.assertEqual(out1, (12, 34))
+        self.assertEqual(out2, (12, 34))
+        self.assertEqual(out3, (12, 34))
+        self.assertEqual(out4, (12, 34))
+        with self.assertRaises(argparse.ArgumentTypeError):
+            tuple_arg("1234")
 
     def test_normalise_mean(self):
         """Just test with some options and check an output file is created"""
