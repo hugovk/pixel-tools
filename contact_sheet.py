@@ -95,6 +95,8 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
     """
     ncols, nrows = ncols_nrows
     photow, photoh = photow_photoh
+    photow = int(photow)
+    photoh = int(photoh)
     marl, mart, marr, marb = marl_mart_marr_marb
 
     # Calculate the size of the output image, based on the
