@@ -1,12 +1,12 @@
 language: python
 
 python:
-- 2.7
-- 3.6
-- 3.5
-- 3.4
-- pypy
-- pypy3
+- "2.7"
+- "3.6"
+- "3.5"
+- "3.4"
+- "pypy"
+- "pypy3"
 
 cache: pip
 
@@ -43,9 +43,6 @@ after_success:
 
 matrix:
   allow_failures:
-    - python: "3.6"
-    - python: "3.5"
-    - python: "3.4"
     - python: "pypy"
     - python: "pypy3"
   fast_finish: true
