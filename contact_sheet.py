@@ -68,7 +68,8 @@ def aspect_ratio(number, thumbsize, aspect_ratio):
 
 def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
                        marl_mart_marr_marb,
-                       padding):
+                       padding,
+                       bgcolour="white", thumbnail=False, flip=False):
     """
     Make a contact sheet from a group of filenames:
 
@@ -86,10 +87,16 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
 
     padding      The padding between images in pixels
 
+    bgcolour     Background colour
+    thumbnail    Thumbnail/crop images instead of resizing
+    flip         Flip the images left-to-right
+
     returns a PIL image object.
     """
     ncols, nrows = ncols_nrows
     photow, photoh = photow_photoh
+    photow = int(photow)
+    photoh = int(photoh)
     marl, mart, marr, marb = marl_mart_marr_marb
 
     # Calculate the size of the output image, based on the
@@ -113,8 +120,11 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
             " (Max: " + str(MAX_DIMENSION) + "). Tip: use --thumbsize "
             "(or --half or --quarter).")
 
-    # Create the new image. The background doesn't have to be white
-    inew = Image.new('RGB', isize, 'white')
+    # Create the new image
+    inew = Image.new('RGB', isize, bgcolour)
+
+    if thumbnail or flip:
+        from PIL import ImageOps
 
     count = 0
     # Insert each thumb:
@@ -129,8 +139,13 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
             bbox = (left, upper, right, lower)
             try:
                 # Read in an image and resize appropriately
-                img = Image.open(
-                    fnames[count]).resize((photow, photoh), Image.ANTIALIAS)
+                img = Image.open(fnames[count])
+                if thumbnail:
+                    img = ImageOps.fit(img, (photow, photoh), Image.ANTIALIAS)
+                else:
+                    img = img.resize((photow, photoh), Image.ANTIALIAS)
+                if flip:
+                    img = ImageOps.mirror(img)
             except KeyboardInterrupt:
                 sys.exit("Keyboard interrupt")
             except Exception as e:
@@ -144,7 +159,8 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
 
 def make(
         ncols_nrows, inspec, reverse, outfile, thumbsize,
-        half, quarter, margins, padding, quality):
+        half, quarter, margins, padding, quality,
+        bgcolour="white", thumbnail=False, flip=False):
     ncols, nrows = ncols_nrows
     files = glob.glob(inspec)
     if len(files) == 0:
@@ -185,7 +201,8 @@ def make(
 
     print("Making contact sheet")
     inew = make_contact_sheet(
-        files, (ncols, nrows), thumbsize, margins, padding)
+        files, (ncols, nrows), thumbsize, margins, padding, bgcolour,
+        thumbnail, flip)
     print("Saving to", outfile)
     inew.save(outfile, quality=quality)
     print("Done.")
@@ -203,6 +220,12 @@ if __name__ == '__main__':
         '-v', '--reverse', action='store_true',
         help='Reverse list of input files')
     parser.add_argument(
+        '-tn', '--thumbnail', action='store_true',
+        help='Thumbnail/crop images instead of resizing')
+    parser.add_argument(
+        '-f', '--flip', action='store_true',
+        help='Flip input images left-to-right')
+    parser.add_argument(
         '-o', '--outfile', default='contact_sheet.jpg',
         help='Output filename')
     parser.add_argument(
@@ -211,6 +234,9 @@ if __name__ == '__main__':
     parser.add_argument(
         '-c', '--cols', type=int,
         help='Number of columns')
+    parser.add_argument(
+        '-bg', '--bgcolour', default='white',
+        help='Background colour')
     parser.add_argument(
         '-a', '--aspect_ratio', type=tuple_arg,
         help='Calculate rows and columns to approximate this '
@@ -252,6 +278,6 @@ if __name__ == '__main__':
     make(
         (args.cols, args.rows), args.inspec, args.reverse, args.outfile,
         args.thumbsize, args.half, args.quarter, args.margins,
-        args.padding, args.quality)
+        args.padding, args.quality, args.bgcolour, args.thumbnail, args.flip)
 
 # End of file
