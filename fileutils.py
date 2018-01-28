@@ -4,10 +4,14 @@ Some file utilities
 """
 
 
-def create_dir(directory):
+def mkdir(directory):
     import os
     if not os.path.isdir(directory):
         os.mkdir(directory)
+
+
+def create_dir(directory):
+    mkdir(directory)
 
 
 def nonrecursive_find(inspec):
