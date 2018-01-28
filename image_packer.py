@@ -35,7 +35,7 @@ def tuple_arg(s):
         elif 'x' in s:
             w, h = map(int, s.split('x'))
         return w, h
-    except:
+    except Exception:
         raise argparse.ArgumentTypeError("Value must be w,h or w:h or wxh")
 
 

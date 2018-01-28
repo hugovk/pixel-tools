@@ -10,7 +10,10 @@ import os
 
 # To use mencoder:
 # http://www.trevorshp.com/photography/timelapse_videos/timelapse_howto.htm
-# call "C:\Program Files\MPlayer\mencoder" mf://*.jpg -mf fps=%framerate%:type=jpeg -noskip -of lavf -lavfopts format=%outformat% -ovc lavc -lavcopts vglobal=1:coder=0:vcodec=libx264:vbitrate=%bitrate% -vf eq2=1.2:0.9:0.0:1.0 -o %outfile%-%framerate%fps.%outformat%
+# call "C:\Program Files\MPlayer\mencoder" mf://*.jpg -mf
+#   fps=%framerate%:type=jpeg -noskip -of lavf -lavfopts format=%outformat%
+#   -ovc lavc -lavcopts vglobal=1:coder=0:vcodec=libx264:vbitrate=%bitrate%
+#   -vf eq2=1.2:0.9:0.0:1.0 -o %outfile%-%framerate%fps.%outformat%
 
 # Example for Windows if no glob:
 # ffmpeg -f image2 -i %4d.jpg -r 25 -c:v libx264 ..\outfile.mp4
