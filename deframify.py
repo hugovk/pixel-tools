@@ -4,6 +4,7 @@ Wrapper around ffmpeg to animate frames into a video.
 """
 import argparse
 import os
+from sys import platform as _platform
 
 # This uses ffmpeg:
 # http://ffmpeg.org/trac/ffmpeg/wiki/Create%20a%20video%20slideshow%20from%20images
@@ -36,6 +37,17 @@ if __name__ == "__main__":
         help='Output video filename')
     args = parser.parse_args()
     print(args)
+
+    if _platform == "win32":
+        import sys
+        sys.exit("\nWindows does not support glob option. You can try "
+                 "something like:\n\n    "
+                 "ffmpeg -f image2 -i %4d.jpg -r 25 -c:v libx264 ..\out.mp4"
+                 "\n\nwhere the input images are numbered sequentially without "
+                 "gaps. In Powershell try this:\n\n    "
+                 "dir *.jpg | %{$x=0} {Rename-Item $_ -NewName \"Base$x\"; $x++ }"
+                 "\n\nhttp://superuser.com/a/858571/83235"
+        )
 
     cmd = "ffmpeg -f image2 -pattern_type glob -r " + str(args.framerate) + \
         " -i '" + args.inspec + "' -c:v libx264 " + args.outfile
