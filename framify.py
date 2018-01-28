@@ -2,6 +2,7 @@
 """
 Wrapper around ffmpeg to extract frames from a video.
 """
+from __future__ import print_function
 import argparse
 import os
 
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     parser.add_argument('-s', '--size', metavar='WxH or abbreviation',
         help='Set frame size')
     args = parser.parse_args()
-    print args
+    print(args)
 
     # REM set framesize=32x18
     # REM ffmpeg -i %1 -r 25 -s %framesize% smallframes\%%6d.jpg
@@ -47,7 +48,7 @@ if __name__ == "__main__":
         size = ""
 
     cmd = "ffmpeg -i " + args.infile + size + " -r " + str(args.framerate) + " -q:v 1 " + output
-    print cmd
+    print(cmd)
     os.system(cmd)
 
 # End of file

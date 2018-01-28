@@ -2,6 +2,7 @@
 """
 Wrapper around ffmpeg to mix audio from one video into another video.
 """
+from __future__ import print_function
 import argparse
 import os
 
@@ -26,7 +27,7 @@ if __name__ == "__main__":
     except ImportError:
         pass
 
-    print args
+    print(args)
 
     if not os.path.isfile(args.audio) and not os.path.isfile(args.video):
         import sys
@@ -39,7 +40,7 @@ if __name__ == "__main__":
         sys.exit("Cannot find video file")
 
     cmd = "ffmpeg -i " + args.video + " -i " + args.audio + ' -map 0:v:0 -map 1:a:0 -codec copy -shortest     -af "afade=t=out:st=3:30:d=2" ' + args.outfile
-    print cmd
+    print(cmd)
     os.system(cmd)
 
 # End of file
