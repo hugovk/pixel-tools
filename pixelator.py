@@ -207,8 +207,6 @@ def save_im(im):
     except IOError:
         print("Cannot save")
 
-import doctest
-doctest.testmod()   # automatically validate the embedded tests
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -240,6 +238,9 @@ if __name__ == '__main__':
     parser.add_argument(
         '-k', '--keep_normals', action="store_true",
         help="Keep normalised images")
+
+    import doctest
+    doctest.testmod()  # automatically validate the embedded tests
 
     # For averaged composites:
     parser.add_argument(

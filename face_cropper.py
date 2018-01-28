@@ -100,8 +100,8 @@ def detect_and_save(
                     # pt1 = (int(x * image_scale), int(y * image_scale))
                     pt1 = (x0, y0)
                     # pt2 = (
-                        # int((x + w) * image_scale),
-                        # int((y + h) * image_scale))
+                    #     int((x + w) * image_scale),
+                    #     int((y + h) * image_scale))
                     pt2 = ((x0 + w0), (y0 + h0))
                     cv2.rectangle(img, pt1, pt2, cv.RGB(255, 0, 0), 3, 8, 0)
 
@@ -124,6 +124,7 @@ def detect_and_save(
         # outfile = os.path.join(outdir, input_name)
         # cv2.imwrite(outfile, img, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
     return count
+
 
 if __name__ == '__main__':
 
@@ -189,14 +190,14 @@ if __name__ == '__main__':
         # try:
         total_found += detect_and_save(
             filename, cascade, args.outdir, args.tight_crop, args.show)
-            # total_found += detect_and_save(
-                # filename, cascade, args.outdir, args.tight_crop, args.show)
+        #     total_found += detect_and_save(
+        #         filename, cascade, args.outdir, args.tight_crop, args.show)
         # except Exception as e:
-            # print(os.getcwd())
-            # print("Cannot detect:", filename)
-            # print(str(e))
-            # print(repr(e))
-            # continue
+        #     print(os.getcwd())
+        #     print("Cannot detect:", filename)
+        #     print(str(e))
+        #     print(repr(e))
+        #     continue
 
     if args.show:
         cv2.waitKey(0)

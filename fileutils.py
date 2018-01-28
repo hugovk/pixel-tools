@@ -59,7 +59,7 @@ if __name__ == '__main__':
     try:
         import timing  # optional
         assert timing  # silence warnings
-    except:
+    except ImportError:
         pass
 
     parser = argparse.ArgumentParser(description='List files.')
@@ -78,6 +78,6 @@ if __name__ == '__main__':
         print("Non-recursive:")
 
     files = find_files(args.inspec, args.recursive)
-    print (len(files), "files found")
+    print(len(files), "files found")
 
 # End of file

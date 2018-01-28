@@ -189,6 +189,7 @@ def make_image(files):
         print("Saving to", outfile)
         inew.save(outfile, quality=95)
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Slice input files into an output file. Requires PIL.',
@@ -236,7 +237,7 @@ if __name__ == '__main__':
     # Optional, http://stackoverflow.com/a/1557906/724176
     try:
         import timing
-        assert timing  #silence warnings
+        assert timing  # silence warnings
     except ImportError:
         pass
     print(args)

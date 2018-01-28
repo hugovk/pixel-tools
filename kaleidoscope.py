@@ -2,6 +2,7 @@
 """
 Make a kaleidoscope
 """
+from __future__ import print_function
 import argparse
 import os
 import numpy
@@ -53,24 +54,24 @@ def kaleidoscope(triangle_width, infile, outfile):
 
     img = Image.open(infile).convert('RGBA')
     width, height = img.size
-    print width, height
+    print(width, height)
     centre_point = (width/2, height/2)
-    print "Centre:", centre_point
+    print("Centre:", centre_point)
     top_of_triangle = (height/2) - (triangle_height/2)
-    print top_of_triangle
+    print(top_of_triangle)
     bottom_of_triangle = top_of_triangle + triangle_height
     left_of_triangle = (width/2) - (triangle_width/2)
     right_of_triangle = left_of_triangle + triangle_width
-    print "Top:", top_of_triangle
-    print "Bottom:", bottom_of_triangle
-    print "Left:", left_of_triangle
-    print "Right:", right_of_triangle
+    print("Top:", top_of_triangle)
+    print("Bottom:", bottom_of_triangle)
+    print("Left:", left_of_triangle)
+    print("Right:", right_of_triangle)
 
     # Triangle zero
     a = (centre_point[0], top_of_triangle)
     b = (right_of_triangle, bottom_of_triangle)
     c = (left_of_triangle, bottom_of_triangle)
-    print a, b, c
+    print(a, b, c)
 
     # x is leftmost point of next triangle
     x = centre_point[0]
@@ -85,10 +86,10 @@ def kaleidoscope(triangle_width, infile, outfile):
     # These three flips could also be cached.)
 
     # Fill to the right
-    print "Fill to the right"
+    print("Fill to the right")
     while(x < width):
         i += 1
-        print i, x, width
+        print(i, x, width)
 
         if is_odd(i):
             new_y = top_of_triangle
@@ -114,10 +115,10 @@ def kaleidoscope(triangle_width, infile, outfile):
     new_c = c
 
     # Fill to the left
-    print "Fill to the left"
+    print("Fill to the left")
     while(x > 0):
         i += 1
-        print i, x, width
+        print(i, x, width)
 
         if is_odd(i):
             new_y = top_of_triangle
@@ -140,11 +141,11 @@ def kaleidoscope(triangle_width, infile, outfile):
     flip = ImageOps.flip(strip)
 
     # Fill down
-    print "Fill down"
+    print("Fill down")
     y = bottom_of_triangle
     i = 0
     while(y < height):
-        print y, height
+        print(y, height)
         i += 1
         if is_odd(i):
             img.paste(flip, (0, y))
@@ -154,11 +155,11 @@ def kaleidoscope(triangle_width, infile, outfile):
         y += triangle_height
 
     # Fill up
-    print "Fill up"
+    print("Fill up")
     y = top_of_triangle
     i = 0
     while(y > 0):
-        print y, 0
+        print(y, 0)
         i += 1
         if is_odd(i):
             img.paste(flip, (0, y - triangle_height))
@@ -168,7 +169,7 @@ def kaleidoscope(triangle_width, infile, outfile):
         y -= triangle_height
 
     img.show()
-    print "Saving to", outfile
+    print("Saving to", outfile)
     img.save(outfile, quality=100)
 
 
@@ -187,7 +188,7 @@ if __name__ == '__main__':
         default=200, type=int,
         help='Width of triangle')
     args = parser.parse_args()
-    print args
+    print(args)
 
     try:  # Optional, http://stackoverflow.com/a/1557906/724176
         import timing
@@ -198,7 +199,7 @@ if __name__ == '__main__':
     if not args.outfile:
         name, ext = os.path.splitext(args.infile)
         args.outfile = name + "_kaleidoscope" + ext
-        print args.outfile
+        print(args.outfile)
 
     kaleidoscope(args.width, args.infile, args.outfile)
 

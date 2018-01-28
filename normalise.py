@@ -126,6 +126,7 @@ def normalise_files(spec, files, normalise, temp_dir):
     spec = os.path.join(temp_dir, "*")
     return spec
 
+
 if __name__ == '__main__':
     import argparse
 

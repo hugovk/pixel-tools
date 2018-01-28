@@ -94,7 +94,9 @@ def get_points(img):
         points.append(Point(color, 3, count))
     return points
 
-rtoh = lambda rgb: '#%s' % ''.join(('%02x' % p for p in rgb))
+
+def rtoh(rgb):
+    return '#%s' % ''.join(('%02x' % p for p in rgb))
 
 
 def colorz(filename, n=3):
@@ -124,9 +126,9 @@ def colorz(filename, n=3):
 
 
 def euclidean(p1, p2):
-    return sqrt(sum([
+    return sqrt(sum(
         (p1.coords[i] - p2.coords[i]) ** 2 for i in range(p1.n)
-    ]))
+    ))
 
 
 def calculate_center(points, n):
@@ -197,7 +199,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(args)
 
-     # Optional, http://stackoverflow.com/a/1557906/724176
+    # Optional, http://stackoverflow.com/a/1557906/724176
     try:
         import timing
         assert timing  # silence warnings

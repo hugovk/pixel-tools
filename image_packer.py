@@ -35,7 +35,7 @@ def tuple_arg(s):
         elif 'x' in s:
             w, h = map(int, s.split('x'))
         return w, h
-    except:
+    except Exception:
         raise argparse.ArgumentTypeError("Value must be w,h or w:h or wxh")
 
 
@@ -97,9 +97,9 @@ def image_packer(inspec=DEFAULT_INSPEC,
 
     # Create a list of PIL Image objects, sorted by size
     print("Create a list of PIL Image objects, sorted by size")
-    images = sorted([(i.size[0]*i.size[1], name, i) for name, i in (
-                        (x,
-                         Image.open(x).convert(im_format)) for x in names)],
+    images = sorted(((i.size[0]*i.size[1], name, i) for name, i in (
+        (x,
+         Image.open(x).convert(im_format)) for x in names)),
                     reverse=largest_first)
 
     print("Create tree")

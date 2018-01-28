@@ -37,6 +37,7 @@ def get_rand_point(image_dimension, block_dimension):
         rand_point = random.randrange(0, offset)
     return rand_point
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Create image from blocks of other images. Requires PIL.",
@@ -109,9 +110,11 @@ if __name__ == "__main__":
 
     # Reduce width and height to fit full blocks
     args.outwidth = args.outwidth - divmod(args.outwidth, args.blockwidth)[1]
-    args.outheight = args.outheight - divmod(args.outheight, args.blockheight)[1]
+    args.outheight = (args.outheight -
+                      divmod(args.outheight, args.blockheight)[1])
 
-    number_of_blocks = int(args.outwidth * args.outheight / (args.blockwidth * args.blockheight))
+    number_of_blocks = int(args.outwidth * args.outheight /
+                           (args.blockwidth * args.blockheight))
 
     print("Number of blocks required:", number_of_blocks)
     print("Picking", number_of_blocks, "random files")
@@ -143,7 +146,7 @@ if __name__ == "__main__":
                 ". Getting blocks from file " + str(index))
             try:
                 open_im = Image.open(files[open_index])
-            except:
+            except Exception:
                 print("Problem with file", files[open_index])
                 continue
 
