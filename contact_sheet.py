@@ -262,7 +262,7 @@ if __name__ == '__main__':
         help="Output image's save quality")
     parser.add_argument(
         '-nc', '--noclobber', action='store_true',
-        help="Don't clobber pre-exisiting output file")
+        help="Don't clobber pre-existing output file")
     args = parser.parse_args()
 
     try:

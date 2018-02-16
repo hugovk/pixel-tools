@@ -226,7 +226,7 @@ if __name__ == '__main__':
         help='Output file name')
     parser.add_argument(
         '-nc', '--noclobber', action='store_true',
-        help="Don't clobber pre-exisiting output file")
+        help="Don't clobber pre-existing output file")
     parser.add_argument(
         '-e', '--effect', default='average',
         choices=('average', 'random', 'nowt'),
