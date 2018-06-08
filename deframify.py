@@ -42,7 +42,7 @@ if __name__ == "__main__":
         import sys
         sys.exit("\nWindows does not support glob option. You can try "
                  "something like:\n\n    "
-                 "ffmpeg -f image2 -i %4d.jpg -r 25 -c:v libx264 ..\out.mp4"
+                 "ffmpeg -f image2 -i %4d.jpg -r 25 -c:v libx264 ..\\out.mp4"
                  "\n\nwhere the input images are numbered sequentially "
                  "without gaps. In Powershell try this:\n\n    dir *.jpg | "
                  "%{$x=0} {Rename-Item $_ -NewName \"Base$x\"; $x++ }\n\n"
