@@ -162,7 +162,8 @@ def make(
         half, quarter, margins, padding, quality,
         bgcolour="white", thumbnail=False, flip=False):
     ncols, nrows = ncols_nrows
-    files = glob.glob(inspec)
+    files = sorted(glob.glob(inspec))
+
     if len(files) == 0:
         sys.exit("No input files found.")
     if outfile in files:
