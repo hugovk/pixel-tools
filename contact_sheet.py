@@ -214,7 +214,7 @@ def make(
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Make a contact sheet. Requires PIL.',
+        description='Make a contact sheet. Requires Pillow.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
         '-i', '--inspec', default='*.jpg',
