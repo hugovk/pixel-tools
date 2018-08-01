@@ -9,7 +9,6 @@ Python implementation by: Roman Stanchak, James Bowman
 from __future__ import print_function
 import argparse
 import cv2
-import cv2.cv as cv
 import fileutils
 import os
 import sys
@@ -32,7 +31,7 @@ min_size = (20, 20)
 image_scale = 2
 haar_scale = 1.2  # 1.2
 min_neighbors = 3  # 2
-haar_flags = cv.CV_HAAR_FIND_BIGGEST_OBJECT
+haar_flags = cv2.CASCADE_SCALE_IMAGE
 
 
 def create_dir(directory):
@@ -46,22 +45,22 @@ def detect_and_save(
     img = cv2.imread(input_name)
 
     # Convert color input image to grayscale
-    gray = cv2.cvtColor(img, cv.CV_RGB2GRAY)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Scale input image for faster processing
     fx = fy = 1.0/image_scale
     small_img = cv2.resize(
-        gray, (0, 0), fx=fx, fy=fy, interpolation=cv.CV_INTER_LINEAR)
+        gray, (0, 0), fx=fx, fy=fy)
 
-    gray = cv2.equalizeHist(gray, cv.CV_RGB2GRAY)
+    gray = cv2.equalizeHist(gray, cv2.COLOR_BGR2GRAY)
 
     if(cascade):
-        t = cv.GetTickCount()
+        t = cv2.getTickCount()
         faces = cascade.detectMultiScale(
             small_img, scaleFactor=haar_scale, minNeighbors=min_neighbors,
             minSize=min_size, flags=haar_flags)
-        t = cv.GetTickCount() - t
-        print("detection time = %gms" % (t/(cv.GetTickFrequency()*1000.)))
+        t = cv2.getTickCount() - t
+        print("detection time = %gms" % (t/(cv2.getTickFrequency()*1000.)))
         if len(faces):
             for ((x, y, w, h)) in faces:
                 # The input to was resized, so scale the bounding box
@@ -136,8 +135,8 @@ if __name__ == '__main__':
         '-c', '--cascade',
         # default='D:\\temp\\opencv\\data\\haarcascades\\'
         # 'haarcascade_frontalface_alt.xml',
-        default='/usr/local/Cellar/opencv/2.4.5/share/OpenCV/haarcascades/'
-        'haarcascade_frontalface_alt.xml',
+        default='/usr/local/Cellar/opencv/3.4.1_2/share/OpenCV/haarcascades/'
+                'haarcascade_frontalface_alt.xml',
         help='Haar cascade file')
     parser.add_argument(
         '-i', '--inspec', default='*.jpg',
