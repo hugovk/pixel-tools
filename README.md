@@ -1,7 +1,8 @@
 
 [![Build Status](https://travis-ci.org/hugovk/pixel-tools.svg?branch=master)](https://travis-ci.org/hugovk/pixel-tools)
-[![Coverage Status](https://coveralls.io/repos/hugovk/pixel-tools/badge.png?branch=master)](https://coveralls.io/r/hugovk/pixel-tools?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/hugovk/pixel-tools/badge.svg?branch=master)](https://coveralls.io/github/hugovk/pixel-tools?branch=master)
 [![Code Health](https://landscape.io/github/hugovk/pixel-tools/master/landscape.png)](https://landscape.io/github/hugovk/pixel-tools/master)
+[![Python: 2.7, 3.4+](https://img.shields.io/badge/python-2.7,_3.4+-blue.svg)](https://www.python.org/downloads/)
 
 Requirements
 ============
