@@ -11,6 +11,7 @@ from __future__ import print_function
 import argparse
 import glob
 import os
+import random
 import sys
 
 import factors
@@ -160,7 +161,7 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
 
 
 def make(
-        ncols_nrows, inspec, reverse, outfile, thumbsize,
+        ncols_nrows, inspec, reverse, shuffle, outfile, thumbsize,
         half, quarter, margins, padding, quality,
         bgcolour="white", thumbnail=False, flip=False):
     ncols, nrows = ncols_nrows
@@ -172,6 +173,8 @@ def make(
         files.remove(outfile)  # don't include any pre-existing montage
     if reverse:
         files = files[::-1]
+    if shuffle:
+        random.shuffle(files)
 
     if not thumbsize:
         thumbsize = Image.open(files[0]).size
@@ -222,6 +225,9 @@ if __name__ == '__main__':
     parser.add_argument(
         '-v', '--reverse', action='store_true',
         help='Reverse list of input files')
+    parser.add_argument(
+        '-s', '--shuffle', action='store_true',
+        help='Shuffle list of input files')
     parser.add_argument(
         '-tn', '--thumbnail', action='store_true',
         help='Thumbnail/crop images instead of resizing')
@@ -279,7 +285,7 @@ if __name__ == '__main__':
         sys.exit("Output file (" + args.outfile + ") already exists, exiting")
 
     make(
-        (args.cols, args.rows), args.inspec, args.reverse, args.outfile,
+        (args.cols, args.rows), args.inspec, args.reverse, args.shuffle, args.outfile,
         args.thumbsize, args.half, args.quarter, args.margins,
         args.padding, args.quality, args.bgcolour, args.thumbnail, args.flip)
 
