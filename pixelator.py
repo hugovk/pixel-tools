@@ -69,11 +69,11 @@ def remove_temp_dirs():
 def sanity_check(files):
     num_files = len(files)
     print("Number of input images:", num_files)
-    if num_files is 0:
+    if num_files == 0:
         sys.exit("Not enough input images")
 
     # If only one input image, just copy it to output!
-    if num_files is 1:
+    if num_files == 1:
         shutil.copy2(files[0], args.outfile)
         sys.exit()
 
@@ -125,7 +125,7 @@ def create_average_in_batches(inspec):
     print("Number of batches:", number_of_batches)
     remainder = number % args.batch_size
     print("Remainder:", remainder)
-    if remainder is not 0:
+    if remainder != 0:
         print(
             "Warning: Get better results when batches are "
             "all the same size with zero remainder")

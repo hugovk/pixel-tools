@@ -47,7 +47,7 @@ if __name__ == "__main__":
                  "gaps. In Powershell try this:\n\n    "
                  "dir *.jpg | %{$x=0} {Rename-Item $_ -NewName \"Base$x\"; $x++ }"
                  "\n\nhttp://superuser.com/a/858571/83235"
-        )
+                 )
 
     cmd = "ffmpeg -f image2 -pattern_type glob -r " + str(args.framerate) + \
         " -i '" + args.inspec + "' -c:v libx264 " + args.outfile
