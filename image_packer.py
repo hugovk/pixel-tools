@@ -52,7 +52,7 @@ class PackNode(object):
         self.area = area
 
     def __repr__(self):
-        return "<%s %s>" % (self.__class__.__name__, str(self.area))
+        return "<{} {}>".format(self.__class__.__name__, str(self.area))
 
     def get_width(self):
         return self.area[2] - self.area[0]

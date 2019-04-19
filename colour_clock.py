@@ -96,7 +96,7 @@ def get_points(img):
 
 
 def rtoh(rgb):
-    return '#%s' % ''.join(('%02x' % p for p in rgb))
+    return '#%s' % ''.join('%02x' % p for p in rgb)
 
 
 def colorz(filename, n=3):
@@ -120,7 +120,7 @@ def colorz(filename, n=3):
     rgbs = []
     for c in clusters:
         rgb = map(int, c.center.coords)
-        rgb = '#%s' % ''.join(('%02x' % p for p in rgb))
+        rgb = '#%s' % ''.join('%02x' % p for p in rgb)
         rgbs.append((100 * len(c[0]) / total_weights, rgb))
     return rgbs
 
