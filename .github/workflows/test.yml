@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["pypy-3.8", "3.7", "3.8", "3.9", "3.10", "3.11-dev"]
+        python-version: ["pypy3.8", "3.7", "3.8", "3.9", "3.10", "3.11-dev"]
 
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +35,6 @@ jobs:
         run: |
           python -m pip install -U pip
           python -m pip install -U wheel
-          python -m pip install -U tox
           python -m pip install -U coverage flake8 pillow pytest
 
       - name: Test
