@@ -11,12 +11,7 @@ try:
     imp.find_module("coverage")
     COVERAGE_CMD = ('coverage run --append --omit */site-packages/*,*pypy* ')
 except ImportError:
-    COVERAGE_CMD = ""
-
-if os.name == "nt":
-    OS_CMD = ""
-else:
-    OS_CMD = " ./"
+    COVERAGE_CMD = "python3 "
 
 
 class TestPixelTools(unittest.TestCase):
@@ -30,7 +25,7 @@ class TestPixelTools(unittest.TestCase):
             os.mkdir(dir)
 
     def run_cmd(self, cmd, args="", include_outfile=True):
-        cmd = COVERAGE_CMD + OS_CMD + cmd + " " + args
+        cmd = COVERAGE_CMD + cmd + " " + args
         if include_outfile:
             cmd += " -o " + self.outfile
         print(cmd)
