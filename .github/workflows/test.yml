@@ -35,7 +35,6 @@ jobs:
         run: |
           python -m pip install -U pip
           python -m pip install -U wheel
-          python -m pip install -U tox
           python -m pip install -U coverage flake8 pillow pytest
 
       - name: Test

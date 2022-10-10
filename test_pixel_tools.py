@@ -45,8 +45,8 @@ class TestPixelTools(unittest.TestCase):
         remove_file(filename)
         self.assertFalse(os.path.isfile(filename))
 
-    def helper_set_up(self, cmd):
-        self.outfile = "out_" + cmd + ".jpg"
+    def helper_set_up(self, cmd, extension="jpg"):
+        self.outfile = f"out_{cmd}.{extension}"
         self.assert_deleted(self.outfile)
 
     @pytest.mark.skipif(sys.platform == "linux", reason="No Helvetica font")
@@ -195,6 +195,18 @@ class TestPixelTools(unittest.TestCase):
 
         # Assert
         self.assertEqual(out, 2)
+
+    def test_og_image(self):
+        """Check an output file is created"""
+        # Arrange
+        cmd = "og_image.py --logo tests/python-logo.png"
+        self.helper_set_up("og-image", extension="png")
+
+        # Act
+        self.run_cmd(cmd, include_outfile=True)
+
+        # Assert
+        self.assertTrue(os.path.isfile(self.outfile))
 
     def test_padims(self):
         """Just test with some options and check an output file is created"""
