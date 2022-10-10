@@ -58,10 +58,11 @@ def normalise_files(spec, files, normalise, temp_dir):
             # print(width, "x, height, height * 1.0/width, f)
             widths.append(width)
             heights.append(height)
-            if (not normalise_needed and
-                    i > 0 and
-                    (width != widths[0] or
-                        height != heights[0])):
+            if (
+                not normalise_needed
+                and i > 0
+                and (width != widths[0] or height != heights[0])
+            ):
                 normalise_needed = True
         except Exception as e:
             print("Ignoring problem file:", f)
@@ -77,18 +78,18 @@ def normalise_files(spec, files, normalise, temp_dir):
         return spec
 
     # Else we need to normalise
-    if normalise == 'mode':
+    if normalise == "mode":
         width = mode(widths)
         height = mode(heights)
         print("Mode:", width, "x", height)
         size = (width, height)
-    elif normalise == 'mean':
+    elif normalise == "mean":
         width = int(mean(widths))
         height = int(mean(heights))
         print("Mean:", width, "x", height)
         size = (width, height)
     else:
-        width, height = normalise.split(',')
+        width, height = normalise.split(",")
         size = (int(width), int(height))
 
     if not os.path.isdir(temp_dir):
@@ -101,7 +102,7 @@ def normalise_files(spec, files, normalise, temp_dir):
         print(widths[i], "x", heights[i], f)
         progress = str(i) + "/" + str(len(files))
 
-        if ((widths[i], heights[i]) == size):
+        if (widths[i], heights[i]) == size:
             print(progress, "Don't need to convert")
             shutil.copy2(f, temp_dir)
         else:
@@ -126,22 +127,24 @@ def normalise_files(spec, files, normalise, temp_dir):
     return spec
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(
-        description='Normalise images.',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        description="Normalise images.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("-i", "--inspec", default="*.jpg", help="Input file spec")
     parser.add_argument(
-        '-i', '--inspec', default='*.jpg',
-        help='Input file spec')
+        "-o", "--outdir", default="temp_normalised", help="Output directory"
+    )
     parser.add_argument(
-        '-o', '--outdir', default='temp_normalised',
-        help='Output directory')
-    parser.add_argument(
-        '-n', '--normalise', default='mode',
+        "-n",
+        "--normalise",
+        default="mode",
         help="If images are different sizes, normalise them first. "
-        "[mode|mean|width,height]")
+        "[mode|mean|width,height]",
+    )
     args = parser.parse_args()
     print(args)
 

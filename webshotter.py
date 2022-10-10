@@ -14,9 +14,10 @@ def take_shot(url, outfile):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Take a screenshot of a website",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('url', help="URL to screenshot")
-    parser.add_argument('-o', '--outfile', help="Output filename")
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("url", help="URL to screenshot")
+    parser.add_argument("-o", "--outfile", help="Output filename")
     args = parser.parse_args()
 
     options = webdriver.ChromeOptions()

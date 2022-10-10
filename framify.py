@@ -7,6 +7,7 @@ import os
 
 try:
     import timing  # optional
+
     assert timing  # silence warnings
 except ImportError:
     pass
@@ -20,18 +21,27 @@ def create_dir(directory):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Wrapper around ffmpeg to extract frames from a video.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('infile', metavar='file',
-                        # default='filename.mp4',
-                        help='Video file to extract')
-    parser.add_argument('-o', '--outdir', metavar='directory',
-                        default='frames',
-                        help='Directory to save frames')
-    parser.add_argument('-r', '--framerate', metavar='fps',
-                        default=25, type=float,
-                        help='Framerate')
-    parser.add_argument('-s', '--size', metavar='WxH or abbreviation',
-                        help='Set frame size')
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "infile",
+        metavar="file",
+        # default='filename.mp4',
+        help="Video file to extract",
+    )
+    parser.add_argument(
+        "-o",
+        "--outdir",
+        metavar="directory",
+        default="frames",
+        help="Directory to save frames",
+    )
+    parser.add_argument(
+        "-r", "--framerate", metavar="fps", default=25, type=float, help="Framerate"
+    )
+    parser.add_argument(
+        "-s", "--size", metavar="WxH or abbreviation", help="Set frame size"
+    )
     args = parser.parse_args()
     print(args)
 
@@ -49,7 +59,8 @@ if __name__ == "__main__":
         size = ""
 
     cmd = "ffmpeg -i {} {} -r {} -q:v 1 {}".format(
-        args.infile, size, str(args.framerate), output)
+        args.infile, size, str(args.framerate), output
+    )
     print(cmd)
     os.system(cmd)
 

@@ -16,20 +16,21 @@ WHITE = (255, 255, 255)
 
 
 def arc(draw, x_y, r, a_b, colour):
-    """ Draw arc between two angles a and b, from, where 0 is 12 o'clock """
+    """Draw arc between two angles a and b, from, where 0 is 12 o'clock"""
     x, y = x_y
     a, b = a_b
-    bbox = (int(x-r), int(y-r), int(x+r), int(y+r))
-    draw.pieslice(bbox, int(a-90), int(b-90), fill=colour)
+    bbox = (int(x - r), int(y - r), int(x + r), int(y + r))
+    draw.pieslice(bbox, int(a - 90), int(b - 90), fill=colour)
     return draw
 
 
 def circle(draw, x_y, r, colour):
-    """ Draw a circle """
+    """Draw a circle"""
     x, y = x_y
-    bbox = (x-r, y-r, x+r, y+r)
+    bbox = (x - r, y - r, x + r, y + r)
     draw.ellipse(bbox, fill=colour)
     return draw
+
 
 # Testing:
 # stuff = [
@@ -40,16 +41,16 @@ def circle(draw, x_y, r, colour):
 
 
 def colour_clock(stuff, outfile):
-    """ Make and save the colour clock """
+    """Make and save the colour clock"""
     width = 1000
     height = width
     isize = (width, height)
 
-    x = width/2
-    y = height/2
-    r = min(x, y) * 9/10
+    x = width / 2
+    y = height / 2
+    r = min(x, y) * 9 / 10
 
-    im = Image.new('RGB', isize, WHITE)
+    im = Image.new("RGB", isize, WHITE)
     draw = ImageDraw.Draw(im)
 
     total = 0
@@ -77,8 +78,8 @@ def colour_clock(stuff, outfile):
 
 # Adapted from:
 # http://charlesleifer.com/blog/using-python-and-k-means-to-find-the-dominant-colors-in-images/
-Point = namedtuple('Point', ('coords', 'n', 'ct'))
-Cluster = namedtuple('Cluster', ('points', 'center', 'n'))
+Point = namedtuple("Point", ("coords", "n", "ct"))
+Cluster = namedtuple("Cluster", ("points", "center", "n"))
 
 
 def get_points(img):
@@ -95,7 +96,7 @@ def get_points(img):
 
 
 def rtoh(rgb):
-    return '#%s' % ''.join('%02x' % p for p in rgb)
+    return "#%s" % "".join("%02x" % p for p in rgb)
 
 
 def colorz(filename, n=3):
@@ -105,8 +106,8 @@ def colorz(filename, n=3):
 
     points = get_points(img)
     clusters = kmeans(points, n, 1)
-#     rgbs = [map(int, c.center.coords) for c in clusters]
-#     return map(rtoh, rgbs)
+    # rgbs = [map(int, c.center.coords) for c in clusters]
+    # return map(rtoh, rgbs)
 
     # clusters[i][0] contains all the points in a cluster,
     # so its size is a rough measure of it's dominance.
@@ -119,15 +120,13 @@ def colorz(filename, n=3):
     rgbs = []
     for c in clusters:
         rgb = map(int, c.center.coords)
-        rgb = '#%s' % ''.join('%02x' % p for p in rgb)
+        rgb = "#%s" % "".join("%02x" % p for p in rgb)
         rgbs.append((100 * len(c[0]) / total_weights, rgb))
     return rgbs
 
 
 def euclidean(p1, p2):
-    return sqrt(sum(
-        (p1.coords[i] - p2.coords[i]) ** 2 for i in range(p1.n)
-    ))
+    return sqrt(sum((p1.coords[i] - p2.coords[i]) ** 2 for i in range(p1.n)))
 
 
 def calculate_center(points, n):
@@ -136,7 +135,7 @@ def calculate_center(points, n):
     for p in points:
         plen += p.ct
         for i in range(n):
-            vals[i] += (p.coords[i] * p.ct)
+            vals[i] += p.coords[i] * p.ct
     return Point([(v / plen) for v in vals], n, 1)
 
 
@@ -150,7 +149,7 @@ def kmeans(points, k, min_diff):
         plists = [[] for i in range(k)]
 
         for p in points:
-            smallest_distance = float('Inf')
+            smallest_distance = float("Inf")
             for i in range(k):
                 distance = euclidean(p, clusters[i].center)
                 if distance < smallest_distance:
@@ -171,6 +170,7 @@ def kmeans(points, k, min_diff):
 
     return clusters
 
+
 #########################################################
 
 
@@ -184,30 +184,28 @@ def create_dirs(directory):
         os.makedirs(directory)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Make a colour clock of the five most "
         "dominant colours on each page of a book",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument(
-        'input',
-        help='An input PDF, or file spec of images (eg *.jpg)')
-    parser.add_argument(
-        '-o', '--outfile',
-        help='Output filename')
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("input", help="An input PDF, or file spec of images (eg *.jpg)")
+    parser.add_argument("-o", "--outfile", help="Output filename")
     args = parser.parse_args()
     print(args)
 
     # Optional, http://stackoverflow.com/a/1557906/724176
     try:
         import timing
+
         assert timing  # silence warnings
     except ImportError:
         pass
 
     # Testing
-#     colour_clock(stuff, args.outfile)
-#     sys.exit()
+    # colour_clock(stuff, args.outfile)
+    # sys.exit()
 
     if not args.outfile:
         head, tail = os.path.split(args.input)
@@ -221,9 +219,14 @@ if __name__ == '__main__':
         create_dirs(outdir)
 
         print("Converting, this is a bit slow...")
-        cmd = 'convert -verbose -colorspace RGB -resize 800 -interlace none '
-        '-density 300 -quality 80 "' + args.input + '" "' + \
-            os.path.join(outdir, basename+'-%03d.jpg') + '"'
+        cmd = "convert -verbose -colorspace RGB -resize 800 -interlace none "
+        (
+            '-density 300 -quality 80 "'
+            + args.input
+            + '" "'
+            + os.path.join(outdir, basename + "-%03d.jpg")
+            + '"'
+        )
         print(cmd)
         os.system(cmd)
 

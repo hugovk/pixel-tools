@@ -22,35 +22,45 @@ from sys import platform as _platform
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Wrapper around ffmpeg to animate frames into a video.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
     parser.add_argument(
-        '-i', '--inspec', metavar='spec',
-        default='*.jpg',
-        help='Image files to animate')
+        "-i", "--inspec", metavar="spec", default="*.jpg", help="Image files to animate"
+    )
     parser.add_argument(
-        '-r', '--framerate', metavar='fps',
-        default=25, type=int,
-        help='Framerate')
+        "-r", "--framerate", metavar="fps", default=25, type=int, help="Framerate"
+    )
     parser.add_argument(
-        '-o', '--outfile', metavar='filename',
-        default='timelapse.mp4',
-        help='Output video filename')
+        "-o",
+        "--outfile",
+        metavar="filename",
+        default="timelapse.mp4",
+        help="Output video filename",
+    )
     args = parser.parse_args()
     print(args)
 
     if _platform == "win32":
         import sys
-        sys.exit("\nWindows does not support glob option. You can try "
-                 "something like:\n\n    "
-                 r"ffmpeg -f image2 -i %4d.jpg -r 25 -c:v libx264 ..\out.mp4"
-                 "\n\nwhere the input images are numbered sequentially without "
-                 "gaps. In Powershell try this:\n\n    "
-                 "dir *.jpg | %{$x=0} {Rename-Item $_ -NewName \"Base$x\"; $x++ }"
-                 "\n\nhttp://superuser.com/a/858571/83235"
-                 )
 
-    cmd = "ffmpeg -f image2 -pattern_type glob -r " + str(args.framerate) + \
-        " -i '" + args.inspec + "' -c:v libx264 " + args.outfile
+        sys.exit(
+            "\nWindows does not support glob option. You can try "
+            "something like:\n\n    "
+            r"ffmpeg -f image2 -i %4d.jpg -r 25 -c:v libx264 ..\out.mp4"
+            "\n\nwhere the input images are numbered sequentially without "
+            "gaps. In Powershell try this:\n\n    "
+            'dir *.jpg | %{$x=0} {Rename-Item $_ -NewName "Base$x"; $x++ }'
+            "\n\nhttp://superuser.com/a/858571/83235"
+        )
+
+    cmd = (
+        "ffmpeg -f image2 -pattern_type glob -r "
+        + str(args.framerate)
+        + " -i '"
+        + args.inspec
+        + "' -c:v libx264 "
+        + args.outfile
+    )
     print(cmd)
     os.system(cmd)
 

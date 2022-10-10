@@ -18,7 +18,7 @@ import time
 
 
 def do_one_account(driver, url_or_username, outdir, headless):
-    """ Process a single Twitter account """
+    """Process a single Twitter account"""
     url = get_url(url_or_username)
 
     outfile = username_from_url(url) + ".png"
@@ -45,17 +45,20 @@ def get_url(url_or_username):
 
 
 def username_from_url(url):
-    """ Given https://twitter.com/gutendelight, return gutendelight """
-    return url.rsplit('/', 1)[-1]
+    """Given https://twitter.com/gutendelight, return gutendelight"""
+    return url.rsplit("/", 1)[-1]
 
 
 def delete_element_by_class_name(driver, class_name):
-    """ Delete an element from the page """
+    """Delete an element from the page"""
     element = driver.find_element_by_class_name(class_name)
-    driver.execute_script("""
+    driver.execute_script(
+        """
         var element = arguments[0];
         element.parentNode.removeChild(element);
-        """, element)
+        """,
+        element,
+    )
 
 
 def take_shot(driver, url, headless):
@@ -68,15 +71,15 @@ def take_shot(driver, url, headless):
     driver.get(url)
 
     # Remove some clutter
-    delete_element_by_class_name(driver, 'BannersContainer')
-    delete_element_by_class_name(driver, 'topbar')
-    delete_element_by_class_name(driver, 'SignupCallOut')
-    delete_element_by_class_name(driver, 'trends')
-    delete_element_by_class_name(driver, 'user-actions-follow-button')
+    delete_element_by_class_name(driver, "BannersContainer")
+    delete_element_by_class_name(driver, "topbar")
+    delete_element_by_class_name(driver, "SignupCallOut")
+    delete_element_by_class_name(driver, "trends")
+    delete_element_by_class_name(driver, "user-actions-follow-button")
 
     if not headless:
         # Scroll to the profile image
-        element = driver.find_element_by_class_name('ProfileCanopy-avatar')
+        element = driver.find_element_by_class_name("ProfileCanopy-avatar")
         driver.execute_script("return arguments[0].scrollIntoView();", element)
         # ... and back a bit
         driver.execute_script("window.scrollBy(0, -10);")
@@ -95,7 +98,7 @@ def take_shot(driver, url, headless):
 
 
 def crop_image(im, headless):
-    """ Crop and return the image """
+    """Crop and return the image"""
     # Crop:
     #  * 20px from right for scrollbars
     left = 0
@@ -109,7 +112,7 @@ def crop_image(im, headless):
     # Now centre in 900px
     width = right - left
     if width > 900:
-        gap = (width - 900)/2
+        gap = (width - 900) / 2
         left += gap
         right -= gap
 
@@ -118,9 +121,10 @@ def crop_image(im, headless):
 
 
 def botshotter(url, outdir, headless=False):
-    """ Main bit """
+    """Main bit"""
     if headless:
         import os.path
+
         driver = webdriver.PhantomJS(service_log_path=os.path.devnull)
     else:
         options = webdriver.ChromeOptions()
@@ -144,12 +148,15 @@ def botshotter(url, outdir, headless=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Take a screenshot of a Twitter profile.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('url', help="Username or URL to screenshot. "
-                                    "Or a comma-separated list.")
-    parser.add_argument('-o', '--outdir', help="Output directory.")
-    parser.add_argument('--headless', action='store_true',
-                        help="Run in headless browser.")
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "url", help="Username or URL to screenshot. Or a comma-separated list."
+    )
+    parser.add_argument("-o", "--outdir", help="Output directory.")
+    parser.add_argument(
+        "--headless", action="store_true", help="Run in headless browser."
+    )
     args = parser.parse_args()
 
     botshotter(args.url, args.outdir, args.headless)

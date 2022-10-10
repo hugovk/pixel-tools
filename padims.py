@@ -15,6 +15,7 @@ import fileutils
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
+
     assert timing  # silence warnings
 except ImportError:
     pass
@@ -43,7 +44,7 @@ def pad_images(files):
     fileutils.create_dir(args.outdir)
     for f in files:
         # Create a new blank image
-        inew = Image.new('RGB', (max_width, max_height), args.bgcolour)
+        inew = Image.new("RGB", (max_width, max_height), args.bgcolour)
         img = Image.open(f)
         width, height = img.size
         # Calculate offsets
@@ -74,28 +75,29 @@ def pad_images(files):
     # sys.stdout.write('\r\n')
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description='Pad images of different sizes so all end up '
-        'the same size with the same colour borders.',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        description="Pad images of different sizes so all end up "
+        "the same size with the same colour borders.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("-i", "--inspec", default="*.jpg", help="Input file spec")
+    parser.add_argument("-o", "--outdir", default="out", help="Output directory")
+    parser.add_argument("-bg", "--bgcolour", default="black", help="Background colour")
     parser.add_argument(
-        '-i', '--inspec', default='*.jpg',
-        help='Input file spec')
+        "-ha",
+        "--halign",
+        default="centre",
+        choices=("centre", "left", "right"),
+        help="Horizontal alignment",
+    )
     parser.add_argument(
-        '-o', '--outdir', default='out',
-        help='Output directory')
-    parser.add_argument(
-        '-bg', '--bgcolour', default='black',
-        help='Background colour')
-    parser.add_argument(
-        '-ha', '--halign', default='centre',
-        choices=('centre', 'left', 'right'),
-        help="Horizontal alignment")
-    parser.add_argument(
-        '-va', '--valign', default='centre',
-        choices=('centre', 'top', 'bottom'),
-        help="Vertical alignment")
+        "-va",
+        "--valign",
+        default="centre",
+        choices=("centre", "top", "bottom"),
+        help="Vertical alignment",
+    )
     args = parser.parse_args()
     print(args)
 

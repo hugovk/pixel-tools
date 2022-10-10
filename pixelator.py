@@ -22,6 +22,7 @@ import normalise
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
+
     assert timing  # silence warnings
 except ImportError:
     pass
@@ -39,7 +40,7 @@ temp_dirs = []
 def encode_time():
     # Return a short, unique-ish string for creating a temp dir
     alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-    encoded = ''
+    encoded = ""
     # "%S%f" is "SecondsMicroseconds"
     n = int(int(datetime.datetime.now().strftime("%S%f")) / 1000)
     while n > 0:
@@ -84,7 +85,7 @@ def get_file_list(spec):
 
 
 def imagemagick_average(inspec, outfile):
-    if ' ' in outfile:
+    if " " in outfile:
         outfile = '"' + outfile + '"'
     command = "convert " + inspec + " -evaluate-sequence mean " + outfile
     print(command)
@@ -93,7 +94,7 @@ def imagemagick_average(inspec, outfile):
 
 def create_average_in_one_go(inspec):
     # Create with one IM call
-    if ' ' in inspec:
+    if " " in inspec:
         inspec = '"' + inspec + '"'
     imagemagick_average(inspec, args.outfile)
 
@@ -108,8 +109,9 @@ def create_average_in_batches(inspec):
     files = get_file_list(inspec)
     number = len(files)
 
-    if args.batch_size == 'auto':
+    if args.batch_size == "auto":
         import factors
+
         args.batch_size = factors.get_middleish_factor(number)
         print("Auto batch size:", args.batch_size)
     else:
@@ -119,7 +121,7 @@ def create_average_in_batches(inspec):
         create_average_in_one_go(inspec)
         return
 
-    number_of_batches = number/args.batch_size
+    number_of_batches = number / args.batch_size
     print("Number of files:", number)
     print("Number of batches:", number_of_batches)
     remainder = number % args.batch_size
@@ -127,7 +129,8 @@ def create_average_in_batches(inspec):
     if remainder != 0:
         print(
             "Warning: Get better results when batches are "
-            "all the same size with zero remainder")
+            "all the same size with zero remainder"
+        )
 
     temp_dir = create_temp_dir()
 
@@ -138,9 +141,10 @@ def create_average_in_batches(inspec):
             i += 1
         else:
             temp_file = os.path.join(
-                temp_dir, TEMP_PREFIX + str(batch_number) + TEMP_SUFFIX)
+                temp_dir, TEMP_PREFIX + str(batch_number) + TEMP_SUFFIX
+            )
 
-            print("Batch number:", batch_number+1, "/", number_of_batches)
+            print("Batch number:", batch_number + 1, "/", number_of_batches)
             print("Number in batch:", i)
             imagemagick_average(batch, temp_file)
             batch_number += 1
@@ -150,8 +154,9 @@ def create_average_in_batches(inspec):
         # print(batch)
         # print(i)
     # Now make an average from the temp files
-    imagemagick_average(os.path.join(
-        temp_dir, TEMP_PREFIX + "*" + TEMP_SUFFIX), args.outfile)
+    imagemagick_average(
+        os.path.join(temp_dir, TEMP_PREFIX + "*" + TEMP_SUFFIX), args.outfile
+    )
 
 
 def create_randomised_image(files):
@@ -162,7 +167,7 @@ def create_randomised_image(files):
     print("Mode:", first_image.mode)
     print(width, "x", height)
     # Create new blank image
-    new_image = Image.new('RGB', (width, height))
+    new_image = Image.new("RGB", (width, height))
     new_pix = new_image.load()
 
     # For each pixel, pick a random image and store its index
@@ -207,7 +212,7 @@ def save_im(im):
         print("Cannot save")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Create a composite image either by averaging or "
         "selecting random pixels from input images. If images are not the "
@@ -216,41 +221,56 @@ if __name__ == '__main__':
         "To counter this, average in (preferably equal-sized) batches, which "
         "creates temp averages from a smaller number and then averages those. "
         "Requires PIL and ImageMagick's convert.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("-i", "--inspec", default="*.jpg", help="Input file spec")
     parser.add_argument(
-        '-i', '--inspec', default='*.jpg',
-        help='Input file spec')
+        "-o", "--outfile", help="Output file name"  # default='out.jpg',
+    )
     parser.add_argument(
-        '-o', '--outfile',  # default='out.jpg',
-        help='Output file name')
+        "-nc",
+        "--noclobber",
+        action="store_true",
+        help="Don't clobber pre-existing output file",
+    )
     parser.add_argument(
-        '-nc', '--noclobber', action='store_true',
-        help="Don't clobber pre-existing output file")
+        "-e",
+        "--effect",
+        default="average",
+        choices=("average", "random", "nowt"),
+        help="Effect to apply",
+    )
     parser.add_argument(
-        '-e', '--effect', default='average',
-        choices=('average', 'random', 'nowt'),
-        help="Effect to apply")
-    parser.add_argument(
-        '-n', '--normalise', nargs='?',
+        "-n",
+        "--normalise",
+        nargs="?",
         help="If images are different sizes, normalise them first. "
-        "[mode|mean|width,height]")
+        "[mode|mean|width,height]",
+    )
     parser.add_argument(
-        '-k', '--keep_normals', action="store_true",
-        help="Keep normalised images")
+        "-k", "--keep_normals", action="store_true", help="Keep normalised images"
+    )
 
     import doctest
+
     doctest.testmod()  # automatically validate the embedded tests
 
     # For averaged composites:
     parser.add_argument(
-        '-b', '--batch-size',  # type=int,
+        "-b",
+        "--batch-size",  # type=int,
         help="For average: Batch size. For best results, should be a "
-        "factor of the total number. Use 'auto' to calculate size.")
+        "factor of the total number. Use 'auto' to calculate size.",
+    )
 
     # For random-pixel composites:
     parser.add_argument(
-        '-s', '--show', action="store_true", default=False,
-        help='For random: Show the output image')
+        "-s",
+        "--show",
+        action="store_true",
+        default=False,
+        help="For random: Show the output image",
+    )
     args = parser.parse_args()
     print(args)
 
@@ -276,18 +296,17 @@ if __name__ == '__main__':
             temp_dir = create_temp_dir()
 
         files = get_file_list(inspec)
-        inspec = normalise.normalise_files(
-            inspec, files, args.normalise, temp_dir)
+        inspec = normalise.normalise_files(inspec, files, args.normalise, temp_dir)
         print(inspec)
 
     print("Effect:", args.effect)
-    if args.effect == 'average':
+    if args.effect == "average":
         if args.batch_size:
             create_average_in_batches(inspec)
         else:
             create_average_in_one_go(inspec)
 
-    elif args.effect == 'random':
+    elif args.effect == "random":
         create_randomised_image(get_file_list(inspec))
 
     remove_temp_dirs()
