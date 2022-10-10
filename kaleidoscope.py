@@ -2,9 +2,11 @@
 """
 Make a kaleidoscope
 """
-from __future__ import print_function
+from __future__ import annotations
+
 import argparse
 import os
+
 import numpy
 from PIL import Image, ImageDraw, ImageOps
 
@@ -19,14 +21,16 @@ def transformblit(src_tri, dst_tri, src_img, dst_img):
     ((x11, x12), (x21, x22), (x31, x32)) = src_tri
     ((y11, y12), (y21, y22), (y31, y32)) = dst_tri
 
-    M = numpy.array([
-        [y11, y12, 1, 0, 0, 0],
-        [y21, y22, 1, 0, 0, 0],
-        [y31, y32, 1, 0, 0, 0],
-        [0, 0, 0, y11, y12, 1],
-        [0, 0, 0, y21, y22, 1],
-        [0, 0, 0, y31, y32, 1]
-    ])
+    M = numpy.array(
+        [
+            [y11, y12, 1, 0, 0, 0],
+            [y21, y22, 1, 0, 0, 0],
+            [y31, y32, 1, 0, 0, 0],
+            [0, 0, 0, y11, y12, 1],
+            [0, 0, 0, y21, y22, 1],
+            [0, 0, 0, y31, y32, 1],
+        ]
+    )
 
     y = numpy.array([x11, x21, x31, x12, x22, x32])
 
@@ -35,16 +39,16 @@ def transformblit(src_tri, dst_tri, src_img, dst_img):
     src_copy = src_img.copy()
     srcdraw = ImageDraw.Draw(src_copy)
     srcdraw.polygon(src_tri)
-#     src_copy.show()
+    # src_copy.show()
     transformed = src_img.transform(dst_img.size, Image.AFFINE, A)
 
-    mask = Image.new('1', dst_img.size)
+    mask = Image.new("1", dst_img.size)
     maskdraw = ImageDraw.Draw(mask)
     maskdraw.polygon(dst_tri, fill=255)
 
     dstdraw = ImageDraw.Draw(dst_img)
-    dstdraw.polygon(dst_tri, fill='white')
-#     dst_img.show()
+    dstdraw.polygon(dst_tri, fill="white")
+    # dst_img.show()
     dst_img.paste(transformed, mask=mask)
     # dst_img.show()
 
@@ -52,15 +56,15 @@ def transformblit(src_tri, dst_tri, src_img, dst_img):
 def kaleidoscope(triangle_width, infile, outfile):
     triangle_height = int(triangle_width * numpy.sqrt(3) / 2)
 
-    img = Image.open(infile).convert('RGBA')
+    img = Image.open(infile).convert("RGBA")
     width, height = img.size
     print(width, height)
-    centre_point = (width/2, height/2)
+    centre_point = (width / 2, height / 2)
     print("Centre:", centre_point)
-    top_of_triangle = (height/2) - (triangle_height/2)
+    top_of_triangle = (height / 2) - (triangle_height / 2)
     print(top_of_triangle)
     bottom_of_triangle = top_of_triangle + triangle_height
-    left_of_triangle = (width/2) - (triangle_width/2)
+    left_of_triangle = (width / 2) - (triangle_width / 2)
     right_of_triangle = left_of_triangle + triangle_width
     print("Top:", top_of_triangle)
     print("Bottom:", bottom_of_triangle)
@@ -87,7 +91,7 @@ def kaleidoscope(triangle_width, infile, outfile):
 
     # Fill to the right
     print("Fill to the right")
-    while(x < width):
+    while x < width:
         i += 1
         print(i, x, width)
 
@@ -105,7 +109,7 @@ def kaleidoscope(triangle_width, infile, outfile):
         tri2 = [new_a, new_b, new_c]
         transformblit(tri1, tri2, img, img)
 
-        x += triangle_width/2
+        x += triangle_width / 2
 
     # x is rightmost point of next triangle
     x = centre_point[0]
@@ -116,7 +120,7 @@ def kaleidoscope(triangle_width, infile, outfile):
 
     # Fill to the left
     print("Fill to the left")
-    while(x > 0):
+    while x > 0:
         i += 1
         print(i, x, width)
 
@@ -134,7 +138,7 @@ def kaleidoscope(triangle_width, infile, outfile):
         tri2 = [new_a, new_b, new_c]
         transformblit(tri1, tri2, img, img)
 
-        x -= triangle_width/2
+        x -= triangle_width / 2
 
     # Flip strip
     strip = img.crop((0, top_of_triangle, width, bottom_of_triangle))
@@ -144,7 +148,7 @@ def kaleidoscope(triangle_width, infile, outfile):
     print("Fill down")
     y = bottom_of_triangle
     i = 0
-    while(y < height):
+    while y < height:
         print(y, height)
         i += 1
         if is_odd(i):
@@ -158,7 +162,7 @@ def kaleidoscope(triangle_width, infile, outfile):
     print("Fill up")
     y = top_of_triangle
     i = 0
-    while(y > 0):
+    while y > 0:
         print(y, 0)
         i += 1
         if is_odd(i):
@@ -173,25 +177,22 @@ def kaleidoscope(triangle_width, infile, outfile):
     img.save(outfile, quality=100)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Kaleidoscope an image",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("infile", help="An input image")
+    parser.add_argument("-o", "--outfile", help="Output filename")
     parser.add_argument(
-        'infile',
-        help='An input image')
-    parser.add_argument(
-        '-o', '--outfile',
-        help='Output filename')
-    parser.add_argument(
-        '-w', '--width',
-        default=200, type=int,
-        help='Width of triangle')
+        "-w", "--width", default=200, type=int, help="Width of triangle"
+    )
     args = parser.parse_args()
     print(args)
 
     try:  # Optional, http://stackoverflow.com/a/1557906/724176
         import timing
+
         assert timing  # silence warnings
     except ImportError:
         pass

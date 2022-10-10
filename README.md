@@ -1,22 +1,23 @@
-
 [![GitHub Actions status](https://github.com/hugovk/pixel-tools/workflows/Test/badge.svg)](https://github.com/hugovk/pixel-tools/actions)
 [![Codecov](https://codecov.io/gh/hugovk/pixel-tools/branch/main/graph/badge.svg)](https://codecov.io/gh/hugovk/pixel-tools)
 [![Code Health](https://landscape.io/github/hugovk/pixel-tools/master/landscape.png)](https://landscape.io/github/hugovk/pixel-tools/master)
-[![Python: 2.7, 3.5+](https://img.shields.io/badge/python-2.7,_3.5+-blue.svg)](https://www.python.org/downloads/)
+[![Python: 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
 
-Requirements
-============
-Some of these require Python Imaging Library (Pillow or PIL), Open Source Computer Vision (OpenCV) or ImageMagick's `convert` command. Some requirements can be installed via pip:
+# Requirements
+
+Some of these require Python Imaging Library (Pillow or PIL), Open Source Computer
+Vision (OpenCV) or ImageMagick's `convert` command. Some requirements can be installed
+via pip:
 
 `pip install -r requirements.txt`
 
-blockit.py
-==========
+# blockit.py
 
 [![](https://farm9.staticflickr.com/8230/8419697276_d1b73743c7_n.jpg)](https://www.flickr.com/photos/hugovk/8419697276/)
- [![](https://farm9.staticflickr.com/8328/8418636329_435c2520cf_n.jpg)](https://www.flickr.com/photos/hugovk/8418636329/)
+[![](https://farm9.staticflickr.com/8328/8418636329_435c2520cf_n.jpg)](https://www.flickr.com/photos/hugovk/8418636329/)
 
-See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dblockit&m=tags&ss=2&ct=6&mt=all&w=all&adv=1">Flickr</a>.
+See some images that used this at
+<a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dblockit&m=tags&ss=2&ct=6&mt=all&w=all&adv=1">Flickr</a>.
 
 ```
 usage: blockit.py [-h] [-i INSPEC] [-r] [-o OUTFILE] [-W pixels] [-H pixels]
@@ -48,12 +49,12 @@ optional arguments:
   -s, --show            Show image when done (default: False)
 ```
 
-colour_clock.py
-================
+# colour_clock.py
 
 <a href="https://www.flickr.com/photos/hugovk/12548247524/" title="Abroad by hugovk, on Flickr"><img src="https://farm6.staticflickr.com/5530/12548247524_469440a329_m.jpg" width="240" height="240" alt="Abroad"></a><a href="https://www.flickr.com/photos/hugovk/12547743955/" title="The Lorax by Dr. Seuss by hugovk, on Flickr"><img src="https://farm4.staticflickr.com/3730/12547743955_37630df4d4_m.jpg" width="240" height="240" alt="The Lorax by Dr. Seuss"></a><a href="https://www.flickr.com/photos/hugovk/12548247834/" title="Cinderella by hugovk, on Flickr"><img src="https://farm3.staticflickr.com/2891/12548247834_aa4fb026ed_m.jpg" width="240" height="240" alt="Cinderella"></a>
 
-See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel:tool=colour_clock&m=tags&ss=2&ct=6&mt=all&w=all&adv=1">Flickr</a>.
+See some images that used this at
+<a href="https://secure.flickr.com/search/?q=pixel:tool=colour_clock&m=tags&ss=2&ct=6&mt=all&w=all&adv=1">Flickr</a>.
 
 ```
 usage: colour_clock.py [-h] [-o OUTFILE] input
@@ -69,12 +70,14 @@ optional arguments:
                         Output filename (default: None)
 ```
 
-contact_sheet.py
-================
+# contact_sheet.py
 
-<a href="https://www.flickr.com/photos/hugovk/8095019379" title="2012 Helsinki municipal elections by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8048/8095019379_7eccb87c54_m.jpg" width="161" height="240" alt="2012 Helsinki municipal elections"></a> <a href="https://www.flickr.com/photos/hugovk/8006067282" title="234 portraits of trees by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8457/8006067282_39a8c5ab27_m.jpg" width="240" height="147" alt="234 portraits of trees"></a> <a href="https://www.flickr.com/photos/hugovk/12030586174" title="3pm Tromsø triptych by hugovk, on Flickr"><img src="https://farm4.staticflickr.com/3829/12030586174_65bfb7cbd2_m.jpg" width="240" height="48" alt="3pm Tromsø triptych"></a>
+<a href="https://www.flickr.com/photos/hugovk/8095019379" title="2012 Helsinki municipal elections by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8048/8095019379_7eccb87c54_m.jpg" width="161" height="240" alt="2012 Helsinki municipal elections"></a>
+<a href="https://www.flickr.com/photos/hugovk/8006067282" title="234 portraits of trees by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8457/8006067282_39a8c5ab27_m.jpg" width="240" height="147" alt="234 portraits of trees"></a>
+<a href="https://www.flickr.com/photos/hugovk/12030586174" title="3pm Tromsø triptych by hugovk, on Flickr"><img src="https://farm4.staticflickr.com/3829/12030586174_65bfb7cbd2_m.jpg" width="240" height="48" alt="3pm Tromsø triptych"></a>
 
-See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dcontact_sheet&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+See some images that used this at
+<a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dcontact_sheet&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
 usage: contact_sheet.py [-h] [-i INSPEC] [-v] [-o OUTFILE] [-r ROWS] [-c COLS]
@@ -109,8 +112,7 @@ optional arguments:
                         Output image's save quality (default: 90)
 ```
 
-deframify.py
-============
+# deframify.py
 
 See also `framify.py`.
 
@@ -129,10 +131,10 @@ optional arguments:
                         Output video filename (default: timelapse.mp4)
 ```
 
-face_cropper.py
-===============
-See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dface_cropper&m=tags&ss=2&ct=6&mt=all&adv=1">Flickr</a>.
+# face_cropper.py
 
+See some images that used this at
+<a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dface_cropper&m=tags&ss=2&ct=6&mt=all&adv=1">Flickr</a>.
 
 ```
 usage: face_cropper.py [-h] [-c CASCADE] [-i INSPEC] [-o OUTDIR] [-a] [-r]
@@ -157,9 +159,10 @@ optional arguments:
   -s, --show            Show detected image with box (default: False)
 ```
 
-framify.py
-==========
-See some images and videos that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dframify&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+# framify.py
+
+See some images and videos that used this at
+<a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dframify&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 See also `deframify.py`.
 
@@ -179,12 +182,12 @@ optional arguments:
                         Framerate (default: 25)
 ```
 
-image_packer.py
-==========
+# image_packer.py
 
 <a href="https://www.flickr.com/photos/hugovk/9150635285/in/photolist-eWBp4T" title="All the Free News (and Ads) That’s Fit to Print"><img src="https://farm4.staticflickr.com/3788/9150635285_e8d66283cb_m.jpg" width="212" height="240" alt="All the Free News (and Ads) That’s Fit to Print"></a>
 
-See some images and videos that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dimage_packer&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+See some images and videos that used this at
+<a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dimage_packer&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 Based on <a href="http://code.activestate.com/recipes/442299/">S W's recipe</a>.
 
@@ -204,12 +207,14 @@ optional arguments:
   -t, --tempfiles       Save temporary files to show filling (default: False)
 ```
 
-kaleidoscope.py
-===============
+# kaleidoscope.py
 
-<a href="https://www.flickr.com/photos/hugovk/13142941153/in/photolist-m2p1vF-m2pQyf-m1wyjz-m2p1tB-m2omgM-m2omb6-m2p1eD-m2om6M-m1y2Eo-m2p15F-m1xc8c-m1xbD6-m1y3tY" title="Chrysanthemum_kaleidoscope"><img src="https://farm8.staticflickr.com/7317/13142941153_7f93c2e31f_m.jpg" width="240" height="180" alt="Chrysanthemum_kaleidoscope"></a> <a href="https://www.flickr.com/photos/hugovk/13142812185/in/photolist-m1wyjz-m2p1vF-m2pQyf-m1xbD6-m2p1tB-m2omgM-m1y3tY-m2p15F-m2p1eD-m2om6M-m1y2Eo-m2omb6-m1xc8c" title="Koala_kaleidoscope"><img src="https://farm8.staticflickr.com/7309/13142812185_8f075c76a8_m.jpg" width="240" height="180" alt="Koala_kaleidoscope"></a> <a href="https://www.flickr.com/photos/hugovk/13142939703/in/photolist-m1wyjz-m2p1vF-m2pQyf-m1xbD6-m2p1tB-m2omgM-m1y3tY-m2p15F-m2p1eD-m2om6M-m1y2Eo-m2omb6-m1xc8c" title="Tulips_kaleidoscope"><img src="https://farm4.staticflickr.com/3833/13142939703_50e21e4f51_m.jpg" width="240" height="180" alt="Tulips_kaleidoscope"></a> 
+<a href="https://www.flickr.com/photos/hugovk/13142941153/in/photolist-m2p1vF-m2pQyf-m1wyjz-m2p1tB-m2omgM-m2omb6-m2p1eD-m2om6M-m1y2Eo-m2p15F-m1xc8c-m1xbD6-m1y3tY" title="Chrysanthemum_kaleidoscope"><img src="https://farm8.staticflickr.com/7317/13142941153_7f93c2e31f_m.jpg" width="240" height="180" alt="Chrysanthemum_kaleidoscope"></a>
+<a href="https://www.flickr.com/photos/hugovk/13142812185/in/photolist-m1wyjz-m2p1vF-m2pQyf-m1xbD6-m2p1tB-m2omgM-m1y3tY-m2p15F-m2p1eD-m2om6M-m1y2Eo-m2omb6-m1xc8c" title="Koala_kaleidoscope"><img src="https://farm8.staticflickr.com/7309/13142812185_8f075c76a8_m.jpg" width="240" height="180" alt="Koala_kaleidoscope"></a>
+<a href="https://www.flickr.com/photos/hugovk/13142939703/in/photolist-m1wyjz-m2p1vF-m2pQyf-m1xbD6-m2p1tB-m2omgM-m1y3tY-m2p15F-m2p1eD-m2om6M-m1y2Eo-m2omb6-m1xc8c" title="Tulips_kaleidoscope"><img src="https://farm4.staticflickr.com/3833/13142939703_50e21e4f51_m.jpg" width="240" height="180" alt="Tulips_kaleidoscope"></a>
 
-See some images that used this at <a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dkaleidoscope&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+See some images that used this at
+<a href="http://www.flickr.com/search/?q=pixel%3Atool%3Dkaleidoscope&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
 usage: kaleidoscope.py [-h] [-o OUTFILE] [-w WIDTH] infile
@@ -227,9 +232,10 @@ optional arguments:
                         Width of triangle (default: 200)
 ```
 
-kantavaesto.py
-=========
-See some images and videos that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dkantavaesto&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+# kantavaesto.py
+
+See some images and videos that used this at
+<a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dkantavaesto&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
 usage: kantavaesto.py [-h] [-i INSPEC] [-o OUTFILE]
@@ -245,9 +251,10 @@ optional arguments:
                         Output filename (default: kantavaesto.jpg)
 ```
 
-mixify.py
-=========
-See some images and videos that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dmixify&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+# mixify.py
+
+See some images and videos that used this at
+<a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dmixify&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
 usage: mixify.py [-h] [-a filename] [-v filename] [-o filename]
@@ -264,10 +271,10 @@ optional arguments:
                         Output filename (default: mixed-video.mp4)
 ```
 
-padims.py
-============
+# padims.py
 
-See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dpadims&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+See some images that used this at
+<a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dpadims&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
 usage: padims.py [-h] [-i INSPEC] [-o OUTDIR] [-ha {centre,left,right}]
@@ -289,26 +296,26 @@ optional arguments:
 
 Python dependencies: Python Imaging Library (PIL)
 
-pixelator.py
-============
+# pixelator.py
 
-See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dpixelator&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+See some images that used this at
+<a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dpixelator&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
 
 ```
 usage: pixelator.py [-h] [-i INSPEC] [-o OUTFILE]
                     [-e {average,random,nowt,test,test2}] [-n [NORMALISE]]
                     [-k] [-b BATCH_SIZE] [-s]
 ```
-Create a composite image either by averaging or selecting random pixels from
-input images.
 
-If images are not the same size, they can be normalised first, either to the
-mode, mean or a specified size.
+Create a composite image either by averaging or selecting random pixels from input
+images.
 
-If there are many images to average, ImageMagick uses a lot of RAM causing
-very slow paging. To counter this, average in (preferably equal-sized)
-batches, which creates temp averages from a smaller number and then averages
-those.
+If images are not the same size, they can be normalised first, either to the mode, mean
+or a specified size.
+
+If there are many images to average, ImageMagick uses a lot of RAM causing very slow
+paging. To counter this, average in (preferably equal-sized) batches, which creates temp
+averages from a smaller number and then averages those.
 
 ```
 optional arguments:
@@ -330,15 +337,17 @@ optional arguments:
   -s, --show            For random: Show the output image (default: False)
 ```
 
-Python dependencies: Python Imaging Library (PIL)
-External dependencies: ImageMagick's `convert`
+Python dependencies: Python Imaging Library (PIL) External dependencies: ImageMagick's
+`convert`
 
-slitscan.py
-===========
+# slitscan.py
 
-<a href="https://www.flickr.com/photos/hugovk/8619861336" title="Easter Sunday stroll (IIIa) by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8384/8619861336_d04f6fe674_n.jpg" width="320" height="149" alt="Easter Sunday stroll (IIIa)"></a> <a href="https://www.flickr.com/photos/hugovk/8618756693" title="Easter Sunday stroll (IIId) by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8116/8618756693_58119556b4_n.jpg" width="320" height="183" alt="Easter Sunday stroll (IIId)"></a>
+<a href="https://www.flickr.com/photos/hugovk/8619861336" title="Easter Sunday stroll (IIIa) by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8384/8619861336_d04f6fe674_n.jpg" width="320" height="149" alt="Easter Sunday stroll (IIIa)"></a>
+<a href="https://www.flickr.com/photos/hugovk/8618756693" title="Easter Sunday stroll (IIId) by hugovk, on Flickr"><img src="https://farm9.staticflickr.com/8116/8618756693_58119556b4_n.jpg" width="320" height="183" alt="Easter Sunday stroll (IIId)"></a>
 
-See some images that used this at <a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dslitscan&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+See some images that used this at
+<a href="https://secure.flickr.com/search/?q=pixel%3Atool%3Dslitscan&m=tags&ss=2&ct=6&mt=all&adv=1&s=int">Flickr</a>.
+
 ```
 usage: slitscan.py [-h] [-i INSPEC] [-o OUTFILE]
                    [-m {eiriksmagick,central,all}]
@@ -374,7 +383,6 @@ optional arguments:
                         None)
 ```
 
+# Utilities
 
-Utilities
-=======================
 factors.py, filelist.py

@@ -1,15 +1,16 @@
 #!/usr/bin/env python
-# encoding: utf-8
 """
 Make a collage of photos inspired by Nana & Felix's Kanta|Väestö
 http://www.nana-felix.com/
 http://www.hippolyte.fi/nana-felix-3/?lang=en
 """
-from __future__ import print_function
+from __future__ import annotations
+
 import argparse
 import glob
-from PIL import Image
 import sys
+
+from PIL import Image
 
 
 def kantavaesto(inspec, outfile):
@@ -43,31 +44,36 @@ def kantavaesto(inspec, outfile):
             last_bbox = bbox
             print(bbox)
             next_im = Image.open(f).crop(bbox)
-#             next_im.show()
+            # next_im.show()
             im.paste(next_im, bbox)
-#             im.show()
+            # im.show()
 
-#     im.show()
+    # im.show()
     print("Saving to", outfile)
     im.save(outfile, quality=95)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Make a collage of photos inspired by "
         "Nana & Felix's Kanta|Väestö",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
     parser.add_argument(
-        '-i', '--inspec', default='*.jpg',
-        help='Input image file spec, must all be the same size')
+        "-i",
+        "--inspec",
+        default="*.jpg",
+        help="Input image file spec, must all be the same size",
+    )
     parser.add_argument(
-        '-o', '--outfile',  default='kantavaesto.jpg',
-        help='Output filename')
+        "-o", "--outfile", default="kantavaesto.jpg", help="Output filename"
+    )
     args = parser.parse_args()
     print(args)
 
     try:  # Optional, http://stackoverflow.com/a/1557906/724176
         import timing
+
         assert timing  # silence warnings
     except ImportError:
         pass

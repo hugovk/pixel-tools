@@ -6,16 +6,20 @@ Based on opencv/samples/python/facedetect.py
 Original C implementation by:  ?
 Python implementation by: Roman Stanchak, James Bowman
 """
-from __future__ import print_function
+from __future__ import annotations
+
 import argparse
-import cv2
-import fileutils
 import os
 import sys
+
+import cv2
+
+import fileutils
 
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:
     import timing
+
     assert timing  # silence warnings
 except ImportError:
     pass
@@ -39,8 +43,7 @@ def create_dir(directory):
         os.mkdir(directory)
 
 
-def detect_and_save(
-        input_name, cascade, outdir, tight_crop=False, show=False):
+def detect_and_save(input_name, cascade, outdir, tight_crop=False, show=False):
     count = 0
     img = cv2.imread(input_name)
 
@@ -48,21 +51,24 @@ def detect_and_save(
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Scale input image for faster processing
-    fx = fy = 1.0/image_scale
-    small_img = cv2.resize(
-        gray, (0, 0), fx=fx, fy=fy)
+    fx = fy = 1.0 / image_scale
+    small_img = cv2.resize(gray, (0, 0), fx=fx, fy=fy)
 
     gray = cv2.equalizeHist(gray, cv2.COLOR_BGR2GRAY)
 
-    if(cascade):
+    if cascade:
         t = cv2.getTickCount()
         faces = cascade.detectMultiScale(
-            small_img, scaleFactor=haar_scale, minNeighbors=min_neighbors,
-            minSize=min_size, flags=haar_flags)
+            small_img,
+            scaleFactor=haar_scale,
+            minNeighbors=min_neighbors,
+            minSize=min_size,
+            flags=haar_flags,
+        )
         t = cv2.getTickCount() - t
-        print("detection time = %gms" % (t/(cv2.getTickFrequency()*1000.)))
+        print("detection time = %gms" % (t / (cv2.getTickFrequency() * 1000.0)))
         if len(faces):
-            for ((x, y, w, h)) in faces:
+            for (x, y, w, h) in faces:
                 # The input to was resized, so scale the bounding box
                 # of each face and convert it to two CvPoints
 
@@ -74,9 +80,9 @@ def detect_and_save(
                 # print(x, y, w, h)
                 if not tight_crop:
                     # Widen box
-                    x = int(x - w*0.5)
+                    x = int(x - w * 0.5)
                     # x = int(x - w)
-                    y = int(y - h*0.5)
+                    y = int(y - h * 0.5)
                     w = int(w * 2)
                     # w = int(w * 3)
                     h = int(h * 2)
@@ -104,17 +110,15 @@ def detect_and_save(
                     pt2 = ((x0 + w0), (y0 + h0))
                     cv2.rectangle(img, pt1, pt2, cv.RGB(255, 0, 0), 3, 8, 0)
 
-                cropped = img[y: y + h, x: x + w]
+                cropped = img[y : y + h, x : x + w]
                 if show:
                     cv2.imshow("result", cropped)
                     cv2.waitKey(0)
                 head, tail = os.path.split(input_name)
-                outfile = os.path.join(
-                    outdir, tail + "_" + str(count) + ".jpg")
+                outfile = os.path.join(outdir, tail + "_" + str(count) + ".jpg")
                 if not os.path.isfile(outfile):
                     print("Save to", outfile)
-                    cv2.imwrite(
-                        outfile, cropped, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
+                    cv2.imwrite(outfile, cropped, [int(cv2.IMWRITE_JPEG_QUALITY), 90])
                 count += 1
 
     # This code is show/save the original with boxes around detected faces
@@ -125,41 +129,45 @@ def detect_and_save(
     return count
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(
-        description='Find, crop and save faces (or other objects). '
-        'Requires OpenCV.',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        description="Find, crop and save faces (or other objects). Requires OpenCV.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
     parser.add_argument(
-        '-c', '--cascade',
+        "-c",
+        "--cascade",
         # default='D:\\temp\\opencv\\data\\haarcascades\\'
         # 'haarcascade_frontalface_alt.xml',
-        default='/usr/local/Cellar/opencv/3.4.1_2/share/OpenCV/haarcascades/'
-                'haarcascade_frontalface_alt.xml',
-        help='Haar cascade file')
+        default="/usr/local/Cellar/opencv/3.4.1_2/share/OpenCV/haarcascades/"
+        "haarcascade_frontalface_alt.xml",
+        help="Haar cascade file",
+    )
+    parser.add_argument("-i", "--inspec", default="*.jpg", help="Input file spec")
+    parser.add_argument("-o", "--outdir", default="crop", help="Output directory")
     parser.add_argument(
-        '-i', '--inspec', default='*.jpg',
-        help='Input file spec')
+        "-a",
+        "--findall",
+        action="store_true",
+        help="Find all objects in photo instead of biggest (slower)",
+    )
     parser.add_argument(
-        '-o', '--outdir', default='crop',
-        help='Output directory')
+        "-f", "--fast", action="store_true", help="Faster but less accurate detection"
+    )
     parser.add_argument(
-        '-a', '--findall', action='store_true',
-        help='Find all objects in photo instead of biggest (slower)')
+        "-r", "--recursive", action="store_true", help="Recurse directories"
+    )
     parser.add_argument(
-        '-f', '--fast', action='store_true',
-        help='Faster but less accurate detection')
+        "-t",
+        "--tight_crop",
+        action="store_true",
+        help="Crop image tight around detected feature "
+        "(otherwise a margin is added)",
+    )
     parser.add_argument(
-        '-r', '--recursive', action='store_true',
-        help='Recurse directories')
-    parser.add_argument(
-        '-t', '--tight_crop', action='store_true',
-        help='Crop image tight around detected feature '
-        '(otherwise a margin is added)')
-    parser.add_argument(
-        '-s', '--show', action='store_true',
-        help='Show detected image with box')
+        "-s", "--show", action="store_true", help="Show detected image with box"
+    )
 
     args = parser.parse_args()
     print(args)
@@ -185,10 +193,11 @@ if __name__ == '__main__':
     total_found = 0
     create_dir(args.outdir)
     for i, filename in enumerate(files):
-        print(i+1, "/", total_files)
+        print(i + 1, "/", total_files)
         # try:
         total_found += detect_and_save(
-            filename, cascade, args.outdir, args.tight_crop, args.show)
+            filename, cascade, args.outdir, args.tight_crop, args.show
+        )
         #     total_found += detect_and_save(
         #         filename, cascade, args.outdir, args.tight_crop, args.show)
         # except Exception as e:

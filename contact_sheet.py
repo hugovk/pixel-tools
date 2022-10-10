@@ -6,7 +6,8 @@ Based on Rick Muller's recipe:
 http://code.activestate.com/recipes/412982/
 Licensed under the PSF License
 """
-from __future__ import print_function
+
+from __future__ import annotations
 
 import argparse
 import glob
@@ -14,8 +15,9 @@ import os
 import random
 import sys
 
-import factors
 from PIL import Image
+
+import factors
 
 # PIL jpeg saving: Maximum supported image dimension is 65500 pixels
 MAX_DIMENSION = 65500
@@ -23,12 +25,12 @@ MAX_DIMENSION = 65500
 
 def tuple_arg(s):
     try:
-        if ',' in s:
-            w, h = map(int, s.split(','))
-        elif ':' in s:
-            w, h = map(int, s.split(':'))
-        elif 'x' in s:
-            w, h = map(int, s.split('x'))
+        if "," in s:
+            w, h = map(int, s.split(","))
+        elif ":" in s:
+            w, h = map(int, s.split(":"))
+        elif "x" in s:
+            w, h = map(int, s.split("x"))
         return w, h
     except Exception:
         raise argparse.ArgumentTypeError("Value must be w,h or w:h or wxh")
@@ -44,6 +46,7 @@ def aspect_ratio(number, thumbsize, aspect_ratio):
     aspect_ratio    The width and height of an aspect ratio (eg 16,9)
     """
     from math import sqrt
+
     total_area = number * thumbsize[0] * thumbsize[1]
     ideal_width = sqrt(total_area * aspect_ratio[0] / aspect_ratio[1])
     ideal_height = total_area / ideal_width
@@ -69,10 +72,16 @@ def aspect_ratio(number, thumbsize, aspect_ratio):
     return cols, rows
 
 
-def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
-                       marl_mart_marr_marb,
-                       padding,
-                       bgcolour="white", thumbnail=False, flip=False):
+def make_contact_sheet(
+    fnames,
+    ncols_nrows,
+    photow_photoh,
+    marl_mart_marr_marb,
+    padding,
+    bgcolour="white",
+    thumbnail=False,
+    flip=False,
+):
     """
     Make a contact sheet from a group of filenames:
 
@@ -104,27 +113,35 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
 
     # Calculate the size of the output image, based on the
     #  photo thumb sizes, margins, and padding
-    marw = marl+marr
-    marh = mart+marb
+    marw = marl + marr
+    marh = mart + marb
 
-    padw = (ncols-1)*padding
-    padh = (nrows-1)*padding
-    isize = (int(ncols*photow+marw+padw), int(nrows*photoh+marh+padh))
+    padw = (ncols - 1) * padding
+    padh = (nrows - 1) * padding
+    isize = (int(ncols * photow + marw + padw), int(nrows * photoh + marh + padh))
 
     print("Image size:", isize)
     if isize[0] > MAX_DIMENSION:
         sys.exit(
-            "Output image is too wide: " + str(isize[0]) +
-            " (Max: " + str(MAX_DIMENSION) + "). Tip: use --thumbsize "
-            "(or --half or --quarter).")
+            "Output image is too wide: "
+            + str(isize[0])
+            + " (Max: "
+            + str(MAX_DIMENSION)
+            + "). Tip: use --thumbsize "
+            "(or --half or --quarter)."
+        )
     if isize[1] > MAX_DIMENSION:
         sys.exit(
-            "Output image is too high: " + str(isize[1]) +
-            " (Max: " + str(MAX_DIMENSION) + "). Tip: use --thumbsize "
-            "(or --half or --quarter).")
+            "Output image is too high: "
+            + str(isize[1])
+            + " (Max: "
+            + str(MAX_DIMENSION)
+            + "). Tip: use --thumbsize "
+            "(or --half or --quarter)."
+        )
 
     # Create the new image
-    inew = Image.new('RGB', isize, bgcolour)
+    inew = Image.new("RGB", isize, bgcolour)
 
     if thumbnail or flip:
         from PIL import ImageOps
@@ -134,10 +151,11 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
     for irow in range(nrows):
         for icol in range(ncols):
             sys.stdout.write(
-                '\rProcessing file ' + str(count+1) + "/" + str(len(fnames)))
-            left = marl + icol*(photow+padding)
+                "\rProcessing file " + str(count + 1) + "/" + str(len(fnames))
+            )
+            left = marl + icol * (photow + padding)
             right = left + photow
-            upper = mart + irow*(photoh+padding)
+            upper = mart + irow * (photoh + padding)
             lower = upper + photoh
             bbox = (left, upper, right, lower)
             try:
@@ -156,14 +174,26 @@ def make_contact_sheet(fnames, ncols_nrows, photow_photoh,
                 break
             inew.paste(img, bbox)
             count += 1
-    sys.stdout.write('\r\n')
+    sys.stdout.write("\r\n")
     return inew
 
 
 def make(
-        ncols_nrows, inspec, reverse, shuffle, outfile, thumbsize,
-        half, quarter, margins, padding, quality,
-        bgcolour="white", thumbnail=False, flip=False):
+    ncols_nrows,
+    inspec,
+    reverse,
+    shuffle,
+    outfile,
+    thumbsize,
+    half,
+    quarter,
+    margins,
+    padding,
+    quality,
+    bgcolour="white",
+    thumbnail=False,
+    flip=False,
+):
     ncols, nrows = ncols_nrows
     files = sorted(glob.glob(inspec))
 
@@ -179,9 +209,9 @@ def make(
     if not thumbsize:
         thumbsize = Image.open(files[0]).size
         if half:
-            thumbsize = (thumbsize[0]/2, thumbsize[1]/2)
+            thumbsize = (thumbsize[0] / 2, thumbsize[1] / 2)
         elif quarter:
-            thumbsize = (thumbsize[0]/4, thumbsize[1]/4)
+            thumbsize = (thumbsize[0] / 4, thumbsize[1] / 4)
 
     if args.aspect_ratio:
         ncols, nrows = aspect_ratio(len(files), thumbsize, args.aspect_ratio)
@@ -200,82 +230,96 @@ def make(
     print("Cols:\t", ncols)
 
     # Don't bother reading in files we aren't going to use
-    if len(files) > ncols*nrows:
-        files = files[:ncols*nrows]
+    if len(files) > ncols * nrows:
+        files = files[: ncols * nrows]
 
     margins = [margins, margins, margins, margins]
 
     print("Making contact sheet")
     inew = make_contact_sheet(
-        files, (ncols, nrows), thumbsize, margins, padding, bgcolour,
-        thumbnail, flip)
+        files, (ncols, nrows), thumbsize, margins, padding, bgcolour, thumbnail, flip
+    )
     print("Saving to", outfile)
     inew.save(outfile, quality=quality)
     print("Done.")
     # inew.show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description='Make a contact sheet. Requires Pillow.',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        description="Make a contact sheet. Requires Pillow.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("-i", "--inspec", default="*.jpg", help="Input file spec")
     parser.add_argument(
-        '-i', '--inspec', default='*.jpg',
-        help='Input file spec')
+        "-v", "--reverse", action="store_true", help="Reverse list of input files"
+    )
     parser.add_argument(
-        '-v', '--reverse', action='store_true',
-        help='Reverse list of input files')
+        "-s", "--shuffle", action="store_true", help="Shuffle list of input files"
+    )
     parser.add_argument(
-        '-s', '--shuffle', action='store_true',
-        help='Shuffle list of input files')
+        "-tn",
+        "--thumbnail",
+        action="store_true",
+        help="Thumbnail/crop images instead of resizing",
+    )
     parser.add_argument(
-        '-tn', '--thumbnail', action='store_true',
-        help='Thumbnail/crop images instead of resizing')
+        "-f", "--flip", action="store_true", help="Flip input images left-to-right"
+    )
     parser.add_argument(
-        '-f', '--flip', action='store_true',
-        help='Flip input images left-to-right')
+        "-o", "--outfile", default="contact_sheet.jpg", help="Output filename"
+    )
+    parser.add_argument("-r", "--rows", type=int, help="Number of rows")
+    parser.add_argument("-c", "--cols", type=int, help="Number of columns")
+    parser.add_argument("-bg", "--bgcolour", default="white", help="Background colour")
     parser.add_argument(
-        '-o', '--outfile', default='contact_sheet.jpg',
-        help='Output filename')
+        "-a",
+        "--aspect_ratio",
+        type=tuple_arg,
+        help="Calculate rows and columns to approximate this aspect ratio (eg 16,9)",
+    )
     parser.add_argument(
-        '-r', '--rows', type=int,
-        help='Number of rows')
+        "-t",
+        "--thumbsize",
+        type=tuple_arg,
+        metavar="pixels",
+        help="Width,height tuple of the photo thumbs",
+    )
     parser.add_argument(
-        '-c', '--cols', type=int,
-        help='Number of columns')
+        "-hs",
+        "--half",
+        action="store_true",
+        help="Shortcut to calculate --thumbsize as half input size",
+    )
     parser.add_argument(
-        '-bg', '--bgcolour', default='white',
-        help='Background colour')
+        "-qs",
+        "--quarter",
+        action="store_true",
+        help="Shortcut to calculate --thumbsize as quarter input size",
+    )
+    parser.add_argument("-m", "--margins", type=int, default=5, help="Margins")
     parser.add_argument(
-        '-a', '--aspect_ratio', type=tuple_arg,
-        help='Calculate rows and columns to approximate this '
-        'aspect ratio (eg 16,9)')
+        "-p",
+        "--padding",
+        metavar="pixels",
+        type=int,
+        default=1,
+        help="Padding between images",
+    )
     parser.add_argument(
-        '-t', '--thumbsize', type=tuple_arg, metavar='pixels',
-        help='Width,height tuple of the photo thumbs')
+        "-q", "--quality", default=90, type=int, help="Output image's save quality"
+    )
     parser.add_argument(
-        '-hs', '--half', action='store_true',
-        help='Shortcut to calculate --thumbsize as half input size')
-    parser.add_argument(
-        '-qs', '--quarter', action='store_true',
-        help='Shortcut to calculate --thumbsize as quarter input size')
-    parser.add_argument(
-        '-m', '--margins', type=int, default=5,
-        help='Margins')
-    parser.add_argument(
-        '-p', '--padding', metavar='pixels',
-        type=int, default=1,
-        help='Padding between images')
-    parser.add_argument(
-        '-q', '--quality', default=90, type=int,
-        help="Output image's save quality")
-    parser.add_argument(
-        '-nc', '--noclobber', action='store_true',
-        help="Don't clobber pre-existing output file")
+        "-nc",
+        "--noclobber",
+        action="store_true",
+        help="Don't clobber pre-existing output file",
+    )
     args = parser.parse_args()
 
     try:
         import timing  # optional
+
         assert timing  # silence warnings
     except ImportError:
         pass
@@ -285,8 +329,20 @@ if __name__ == '__main__':
         sys.exit("Output file (" + args.outfile + ") already exists, exiting")
 
     make(
-        (args.cols, args.rows), args.inspec, args.reverse, args.shuffle, args.outfile,
-        args.thumbsize, args.half, args.quarter, args.margins,
-        args.padding, args.quality, args.bgcolour, args.thumbnail, args.flip)
+        (args.cols, args.rows),
+        args.inspec,
+        args.reverse,
+        args.shuffle,
+        args.outfile,
+        args.thumbsize,
+        args.half,
+        args.quarter,
+        args.margins,
+        args.padding,
+        args.quality,
+        args.bgcolour,
+        args.thumbnail,
+        args.flip,
+    )
 
 # End of file
