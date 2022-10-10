@@ -3,10 +3,12 @@
 Tests for pixel tools
 """
 import argparse
+import imp
 import os
+import sys
 import unittest
 
-import imp
+import pytest
 
 try:
     imp.find_module("coverage")
@@ -45,6 +47,7 @@ class TestPixelTools(unittest.TestCase):
         self.outfile = "out_" + cmd + ".jpg"
         self.assert_deleted(self.outfile)
 
+    @pytest.mark.skipif(sys.platform == 'linux', reason="No Helvetica font")
     def test_annotate(self):
         """Just test with some options and check an output file is created"""
         # Arrange
