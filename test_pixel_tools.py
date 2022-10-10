@@ -7,23 +7,25 @@ import os
 import unittest
 
 import imp
+
 try:
     imp.find_module("coverage")
-    COVERAGE_CMD = ('coverage run --append --omit */site-packages/*,*pypy* ')
+    COVERAGE_CMD = "coverage run --append --omit */site-packages/*,*pypy* "
 except ImportError:
     COVERAGE_CMD = "python3 "
 
 
+def remove_file(file):
+    if os.path.isfile(file):
+        os.remove(file)
+
+
+def mkdir(directory):
+    if not os.path.exists(directory):
+        os.mkdir(directory)
+
+
 class TestPixelTools(unittest.TestCase):
-
-    def remove_file(self, file):
-        if os.path.isfile(file):
-            os.remove(file)
-
-    def mkdir(self, dir):
-        if not os.path.exists(dir):
-            os.mkdir(dir)
-
     def run_cmd(self, cmd, args="", include_outfile=True):
         cmd = COVERAGE_CMD + cmd + " " + args
         if include_outfile:
@@ -36,7 +38,7 @@ class TestPixelTools(unittest.TestCase):
         self.infile = "11132002246_2d43b85286_o.jpg"
 
     def assert_deleted(self, filename):
-        self.remove_file(filename)
+        remove_file(filename)
         self.assertFalse(os.path.isfile(filename))
 
     def helper_set_up(self, cmd):
@@ -55,9 +57,7 @@ class TestPixelTools(unittest.TestCase):
 
         # Assert
         self.assertTrue(os.path.isfile(self.outfile))
-        self.assertNotEqual(
-            os.path.getsize(self.infile),
-            os.path.getsize(self.outfile))
+        self.assertNotEqual(os.path.getsize(self.infile), os.path.getsize(self.outfile))
 
     def test_blockit(self):
         """Just test with some options and check an output file is created"""
@@ -114,23 +114,23 @@ class TestPixelTools(unittest.TestCase):
         self.assertTrue(os.path.isfile(self.outfile))
 
     # def test_face_cropper(self):
-        # # Arrange
-        # """Just test with some options and check an output file is created"""
-        # # Arrange
-        # cmd = "face_cropper.py"
-        # outdir = "face_cropper"
-        # args = " -c haarcascade_frontalface_alt.xml -i " + self.inspec + \
-        #    " -o " + outdir
-        # self.helper_set_up(cmd)
-        # outspec = os.path.join(outdir, self.inspec.strip('"'))
-        # import glob
-
-        # # Act
-        # self.run_cmd(cmd, args, include_outfile=False)
-
-        # # Assert
-        # outfiles = glob.glob(outspec)
-        # self.assertGreater(len(outfiles), 0)
+    #     # Arrange
+    #     """Just test with some options and check an output file is created"""
+    #     # Arrange
+    #     cmd = "face_cropper.py"
+    #     outdir = "face_cropper"
+    #     args = " -c haarcascade_frontalface_alt.xml -i " + self.inspec + \
+    #        " -o " + outdir
+    #     self.helper_set_up(cmd)
+    #     outspec = os.path.join(outdir, self.inspec.strip('"'))
+    #     import glob
+    #
+    #     # Act
+    #     self.run_cmd(cmd, args, include_outfile=False)
+    #
+    #     # Assert
+    #     outfiles = glob.glob(outspec)
+    #     self.assertGreater(len(outfiles), 0)
 
     def test_factors_unit(self):
         # Arrange
@@ -260,7 +260,8 @@ class TestPixelTools(unittest.TestCase):
             "out-vertical-eiriksmagick-greedy.jpg",
             "out-vertical-fixed.jpg",
             "out-horizontal-fixed-greedy.jpg",
-            "out-vertical-eiriksmagick.jpg"]
+            "out-vertical-eiriksmagick.jpg",
+        ]
         for file in filelist:
             self.assert_deleted(file)
 
