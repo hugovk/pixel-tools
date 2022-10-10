@@ -7,7 +7,6 @@ very slow paging. To counter this, average in (preferably equal-sized)
 batches, which creates temp averages from a smaller number and
 then averages those.
 """
-from __future__ import print_function
 import argparse
 import datetime
 import glob
@@ -204,7 +203,7 @@ def save_im(im):
     print("Save to", args.outfile)
     try:
         im.save(args.outfile, quality=95)
-    except IOError:
+    except OSError:
         print("Cannot save")
 
 

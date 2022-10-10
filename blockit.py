@@ -4,7 +4,6 @@ Create an image from random blocks of other images.
 
 Can do a grid of squares or rectangles, or vertical or horizontal stripes.
 """
-from __future__ import print_function
 import argparse
 import fileutils
 from operator import itemgetter
@@ -25,7 +24,7 @@ def save_im(im):
     print("Save image to " + args.outfile)
     try:
         im.save(args.outfile)
-    except IOError:
+    except OSError:
         print("Cannot save")
 
 

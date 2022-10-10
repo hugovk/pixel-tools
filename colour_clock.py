@@ -3,7 +3,6 @@
 Make a colour clock/story wheel of the five most dominant colours
 on each page of a book (or jpg).
 """
-from __future__ import print_function
 from PIL import Image, ImageDraw
 from collections import namedtuple
 from math import sqrt

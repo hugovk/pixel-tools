@@ -6,7 +6,6 @@ Based on Rick Muller's recipe:
 http://code.activestate.com/recipes/412982/
 Licensed under the PSF License
 """
-from __future__ import print_function
 
 import argparse
 import glob

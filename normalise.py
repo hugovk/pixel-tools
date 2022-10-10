@@ -2,7 +2,6 @@
 """
 Normalise input images.
 """
-from __future__ import print_function
 import glob
 import os
 import shutil

@@ -2,7 +2,6 @@
 """
 Take a screenshot of a website
 """
-from __future__ import print_function, unicode_literals
 import argparse
 from selenium import webdriver
 

@@ -2,7 +2,6 @@
 """
 Wrapper around ffmpeg to extract frames from a video.
 """
-from __future__ import print_function
 import argparse
 import os
 

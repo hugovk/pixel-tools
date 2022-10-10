@@ -9,7 +9,6 @@ Requirements:
  * ChromeDriver https://code.google.com/p/selenium/wiki/ChromeDriver
  * Or PhantomJS http://phantomjs.org/
 """
-from __future__ import print_function, unicode_literals
 import argparse
 from PIL import Image  # pip install pillow
 from selenium import webdriver  # pip install selenium

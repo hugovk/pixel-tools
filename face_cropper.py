@@ -6,7 +6,6 @@ Based on opencv/samples/python/facedetect.py
 Original C implementation by:  ?
 Python implementation by: Roman Stanchak, James Bowman
 """
-from __future__ import print_function
 import argparse
 import cv2
 import fileutils

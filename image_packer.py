@@ -7,7 +7,6 @@ http://code.activestate.com/recipes/442299/
 http://code.activestate.com/recipes/578585/
 Licensed under the PSF License
 """
-from __future__ import print_function
 import argparse
 import glob
 from PIL import Image
@@ -39,7 +38,7 @@ def tuple_arg(s):
         raise argparse.ArgumentTypeError("Value must be w,h or w:h or wxh")
 
 
-class PackNode(object):
+class PackNode:
     """
     Creates an area which can recursively pack other areas of
     smaller sizes into itself.
@@ -52,7 +51,7 @@ class PackNode(object):
         self.area = area
 
     def __repr__(self):
-        return "<{} {}>".format(self.__class__.__name__, str(self.area))
+        return f"<{self.__class__.__name__} {str(self.area)}>"
 
     def get_width(self):
         return self.area[2] - self.area[0]

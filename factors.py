@@ -6,7 +6,6 @@ Usage: factors.py INTEGER
 Usage: factors.py FILESPEC
 Usage: factors.py [*.jpg]
 """
-from __future__ import print_function
 from functools import reduce
 import sys
 

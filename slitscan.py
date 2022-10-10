@@ -2,7 +2,6 @@
 """
 Python/PIL version of eirikmagick.sh with extra options
 """
-from __future__ import print_function
 import argparse
 import glob
 import os
