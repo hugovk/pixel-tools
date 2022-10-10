@@ -129,7 +129,7 @@ if __name__ == "__main__":
     random_indices.sort(key=itemgetter(0))
 
     # Create new blank image
-    new_image = Image.new('RGBA', (args.outwidth, args.outheight))
+    new_image = Image.new('RGB', (args.outwidth, args.outheight))
 
     # Now open each image in turn and get the blocks
     open_index = -1

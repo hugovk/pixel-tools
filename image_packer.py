@@ -89,7 +89,7 @@ def image_packer(inspec=DEFAULT_INSPEC,
                  largest_first=DEFAULT_LARGEST_FIRST,
                  tempfiles=DEFAULT_TEMPFILES):
 
-    im_format = 'RGBA'
+    im_format = 'RGB'
     # Get a list of PNG files in the current directory
     names = glob.glob(inspec)
     if outfile in names:

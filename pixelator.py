@@ -163,7 +163,7 @@ def create_randomised_image(files):
     print("Mode:", first_image.mode)
     print(width, "x", height)
     # Create new blank image
-    new_image = Image.new('RGBA', (width, height))
+    new_image = Image.new('RGB', (width, height))
     new_pix = new_image.load()
 
     # For each pixel, pick a random image and store its index
