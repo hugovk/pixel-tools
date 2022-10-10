@@ -4,6 +4,9 @@ Some file utilities
 """
 
 
+from __future__ import annotations
+
+
 def mkdir(directory):
     import os
 

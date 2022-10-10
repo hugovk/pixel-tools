@@ -7,8 +7,11 @@ http://code.activestate.com/recipes/442299/
 http://code.activestate.com/recipes/578585/
 Licensed under the PSF License
 """
+from __future__ import annotations
+
 import argparse
 import glob
+
 from PIL import Image
 
 # Optional, http://stackoverflow.com/a/1557906/724176

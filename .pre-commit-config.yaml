@@ -11,5 +11,11 @@ repos:
       - id: black
         args: [--target-version=py37]
 
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+        args: [--add-import=from __future__ import annotations]
+
 ci:
   autoupdate_schedule: quarterly

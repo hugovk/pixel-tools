@@ -9,12 +9,15 @@ Requirements:
  * ChromeDriver https://code.google.com/p/selenium/wiki/ChromeDriver
  * Or PhantomJS http://phantomjs.org/
 """
+from __future__ import annotations
+
 import argparse
-from PIL import Image  # pip install pillow
-from selenium import webdriver  # pip install selenium
-import StringIO
 import os.path
 import time
+
+import StringIO
+from PIL import Image  # pip install pillow
+from selenium import webdriver  # pip install selenium
 
 
 def do_one_account(driver, url_or_username, outdir, headless):

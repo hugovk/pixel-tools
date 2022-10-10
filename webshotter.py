@@ -2,7 +2,10 @@
 """
 Take a screenshot of a website
 """
+from __future__ import annotations
+
 import argparse
+
 from selenium import webdriver
 
 

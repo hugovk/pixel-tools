@@ -2,6 +2,8 @@
 """
 Wrapper around ffmpeg to animate frames into a video.
 """
+from __future__ import annotations
+
 import argparse
 import os
 from sys import platform as _platform

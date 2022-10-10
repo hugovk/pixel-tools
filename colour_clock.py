@@ -3,14 +3,17 @@
 Make a colour clock/story wheel of the five most dominant colours
 on each page of a book (or jpg).
 """
-from PIL import Image, ImageDraw
-from collections import namedtuple
-from math import sqrt
+from __future__ import annotations
+
 import argparse
 import glob
 import os
 import random
 import sys
+from collections import namedtuple
+from math import sqrt
+
+from PIL import Image, ImageDraw
 
 WHITE = (255, 255, 255)
 

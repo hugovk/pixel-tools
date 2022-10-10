@@ -7,15 +7,18 @@ very slow paging. To counter this, average in (preferably equal-sized)
 batches, which creates temp averages from a smaller number and
 then averages those.
 """
+from __future__ import annotations
+
 import argparse
 import datetime
 import glob
-from operator import itemgetter
-from PIL import Image
 import os
 import random
 import shutil
 import sys
+from operator import itemgetter
+
+from PIL import Image
 
 import normalise
 

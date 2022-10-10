@@ -3,6 +3,8 @@
 Pad images of different sizes so all end up the same size
 with the same colour borders.
 """
+from __future__ import annotations
+
 import argparse
 import glob
 import os

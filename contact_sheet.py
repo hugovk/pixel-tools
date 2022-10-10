@@ -7,14 +7,17 @@ http://code.activestate.com/recipes/412982/
 Licensed under the PSF License
 """
 
+from __future__ import annotations
+
 import argparse
 import glob
 import os
 import random
 import sys
 
-import factors
 from PIL import Image
+
+import factors
 
 # PIL jpeg saving: Maximum supported image dimension is 65500 pixels
 MAX_DIMENSION = 65500

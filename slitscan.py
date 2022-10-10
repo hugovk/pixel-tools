@@ -2,6 +2,8 @@
 """
 Python/PIL version of eirikmagick.sh with extra options
 """
+from __future__ import annotations
+
 import argparse
 import glob
 import os

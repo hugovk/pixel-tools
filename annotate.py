@@ -2,9 +2,10 @@
 """
 Wrapper around ImageMagick to annotate images
 """
+from __future__ import annotations
+
 import argparse
 import os
-
 
 if __name__ == "__main__":
 

@@ -6,8 +6,10 @@ Usage: factors.py INTEGER
 Usage: factors.py FILESPEC
 Usage: factors.py [*.jpg]
 """
-from functools import reduce
+from __future__ import annotations
+
 import sys
+from functools import reduce
 
 
 def factors(n):

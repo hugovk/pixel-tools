@@ -2,6 +2,8 @@
 """
 Wrapper around ffmpeg to mix audio from one video into another video.
 """
+from __future__ import annotations
+
 import argparse
 import os
 

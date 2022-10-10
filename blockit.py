@@ -4,12 +4,16 @@ Create an image from random blocks of other images.
 
 Can do a grid of squares or rectangles, or vertical or horizontal stripes.
 """
+from __future__ import annotations
+
 import argparse
-import fileutils
-from operator import itemgetter
-from PIL import Image
 import random
 import sys
+from operator import itemgetter
+
+from PIL import Image
+
+import fileutils
 
 
 def save_im(im):

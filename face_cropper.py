@@ -6,11 +6,15 @@ Based on opencv/samples/python/facedetect.py
 Original C implementation by:  ?
 Python implementation by: Roman Stanchak, James Bowman
 """
+from __future__ import annotations
+
 import argparse
-import cv2
-import fileutils
 import os
 import sys
+
+import cv2
+
+import fileutils
 
 # Optional, http://stackoverflow.com/a/1557906/724176
 try:

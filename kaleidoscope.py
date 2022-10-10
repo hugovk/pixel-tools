@@ -2,8 +2,11 @@
 """
 Make a kaleidoscope
 """
+from __future__ import annotations
+
 import argparse
 import os
+
 import numpy
 from PIL import Image, ImageDraw, ImageOps
 

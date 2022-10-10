@@ -2,6 +2,8 @@
 """
 Normalise input images.
 """
+from __future__ import annotations
+
 import glob
 import os
 import shutil
