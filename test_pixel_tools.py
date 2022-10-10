@@ -199,7 +199,9 @@ class TestPixelTools(unittest.TestCase):
     def test_og_image(self):
         """Check an output file is created"""
         # Arrange
-        cmd = "og_image.py --logo tests/python-logo.png"
+        cmd = (
+            "og_image.py --logo tests/python-logo.png --font tests/OpenSans-Regular.ttf"
+        )
         self.helper_set_up("og-image", extension="png")
 
         # Act

@@ -23,6 +23,12 @@ def main() -> None:
     parser.add_argument("-t", "--text", default="Devguide", help="Text to add")
     parser.add_argument("-l", "--logo", default="python-logo.png", help="Logo filename")
     parser.add_argument("-s", "--size", type=int, default=170, help="Font size")
+    parser.add_argument(
+        "-f",
+        "--font",
+        default="/System/Library/Fonts/Supplemental/Arial.ttf",
+        help="Font file",
+    )
     parser.add_argument("-o", "--outfile", help="Output filename")
     args = parser.parse_args()
 
@@ -33,10 +39,7 @@ def main() -> None:
         im.paste(logo, (LOGO_PADDING_X, LOGO_PADDING_Y))
 
     draw = ImageDraw.Draw(im)
-    font = ImageFont.truetype(
-        "/System/Library/Fonts/Supplemental/Arial.ttf",
-        args.size,
-    )
+    font = ImageFont.truetype(args.font, args.size)
 
     _, font_top, _, font_bottom = font.getbbox(args.text)
     x_offset = logo.width + 2 * LOGO_PADDING_X
