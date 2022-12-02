@@ -41,10 +41,16 @@ def main() -> None:
     draw = ImageDraw.Draw(im)
     font = ImageFont.truetype(args.font, args.size)
 
-    _, font_top, _, font_bottom = font.getbbox(args.text)
+    args.text = args.text.replace(" ", "\n")
+
+    _, font_top, _, font_bottom = draw.multiline_textbbox(
+        (0, 0), args.text, font=font, anchor="la"
+    )
     x_offset = logo.width + 2 * LOGO_PADDING_X
     y_offset = (630 - font_bottom - font_top) / 2
-    draw.text((x_offset, y_offset), args.text, font=font, fill="#646464", anchor="la")
+    draw.multiline_text(
+        (x_offset, y_offset), args.text, font=font, anchor="la", fill="#646464"
+    )
 
     outfile = args.outfile if args.outfile else f"og-image-{args.text.lower()}.png"
     im.save(outfile)
