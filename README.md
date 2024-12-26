@@ -1,7 +1,6 @@
 [![GitHub Actions status](https://github.com/hugovk/pixel-tools/workflows/Test/badge.svg)](https://github.com/hugovk/pixel-tools/actions)
 [![Codecov](https://codecov.io/gh/hugovk/pixel-tools/branch/main/graph/badge.svg)](https://codecov.io/gh/hugovk/pixel-tools)
-[![Code Health](https://landscape.io/github/hugovk/pixel-tools/master/landscape.png)](https://landscape.io/github/hugovk/pixel-tools/master)
-[![Python: 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
+[![Python: 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 
 # Requirements
 

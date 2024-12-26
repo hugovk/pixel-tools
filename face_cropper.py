@@ -68,7 +68,7 @@ def detect_and_save(input_name, cascade, outdir, tight_crop=False, show=False):
         t = cv2.getTickCount() - t
         print("detection time = %gms" % (t / (cv2.getTickFrequency() * 1000.0)))
         if len(faces):
-            for (x, y, w, h) in faces:
+            for x, y, w, h in faces:
                 # The input to was resized, so scale the bounding box
                 # of each face and convert it to two CvPoints
 

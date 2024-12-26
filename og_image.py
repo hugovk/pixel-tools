@@ -3,6 +3,7 @@ Create an image consisting of logo and text for use as the
 image for The Open Graph protocol's og:image metadata.
 https://ogp.me/#structured
 """
+
 from __future__ import annotations
 
 import argparse
