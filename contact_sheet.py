@@ -162,9 +162,9 @@ def make_contact_sheet(
                 # Read in an image and resize appropriately
                 img = Image.open(fnames[count])
                 if thumbnail:
-                    img = ImageOps.fit(img, (photow, photoh), Image.ANTIALIAS)
+                    img = ImageOps.fit(img, (photow, photoh), Image.Resampling.LANCZOS)
                 else:
-                    img = img.resize((photow, photoh), Image.ANTIALIAS)
+                    img = img.resize((photow, photoh), Image.Resampling.LANCZOS)
                 if flip:
                     img = ImageOps.mirror(img)
             except KeyboardInterrupt:

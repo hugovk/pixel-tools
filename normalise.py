@@ -115,7 +115,7 @@ def normalise_files(spec, files, normalise, temp_dir):
             try:
                 im = Image.open(f)
                 # im = im.resize(size)
-                im = ImageOps.fit(im, size, Image.ANTIALIAS)
+                im = ImageOps.fit(im, size, Image.Resampling.LANCZOS)
                 im.save(temp_file, quality=95)
             except Exception as e:
                 print("Ignoring problem file:", filename)
