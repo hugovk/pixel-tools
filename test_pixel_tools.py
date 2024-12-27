@@ -5,17 +5,16 @@ Tests for pixel tools
 from __future__ import annotations
 
 import argparse
-import imp
+import importlib.util
 import os
 import sys
 import unittest
 
 import pytest
 
-try:
-    imp.find_module("coverage")
+if importlib.util.find_spec("coverage") is not None:
     COVERAGE_CMD = "coverage run --append --omit */site-packages/*,*pypy* "
-except ImportError:
+else:
     COVERAGE_CMD = "python3 "
 
 
