@@ -32,7 +32,7 @@ except ImportError:
 
 # From a bunch of images, make a composite from average or random pixels
 # Python dependencies: Python Imaging Library (PIL)
-# External dependencies: ImageMagick's convert
+# External dependencies: ImageMagick's magick
 
 TEMP_DIR = "temp"
 TEMP_PREFIX = "tmp"
@@ -90,7 +90,7 @@ def get_file_list(spec):
 def imagemagick_average(inspec, outfile):
     if " " in outfile:
         outfile = '"' + outfile + '"'
-    command = "convert " + inspec + " -evaluate-sequence mean " + outfile
+    command = "magick " + inspec + " -evaluate-sequence mean " + outfile
     print(command)
     os.system(command)
 
@@ -223,7 +223,7 @@ if __name__ == "__main__":
         "to average, ImageMagick uses a lot of RAM causing very slow paging. "
         "To counter this, average in (preferably equal-sized) batches, which "
         "creates temp averages from a smaller number and then averages those. "
-        "Requires PIL and ImageMagick's convert.",
+        "Requires PIL and ImageMagick's magick.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("-i", "--inspec", default="*.jpg", help="Input file spec")
