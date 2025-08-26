@@ -33,7 +33,8 @@ def tuple_arg(s):
             w, h = map(int, s.split("x"))
         return w, h
     except Exception:
-        raise argparse.ArgumentTypeError("Value must be w,h or w:h or wxh")
+        msg = "Value must be w,h or w:h or wxh"
+        raise argparse.ArgumentTypeError(msg)
 
 
 def aspect_ratio(number, thumbsize, aspect_ratio):
