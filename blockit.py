@@ -4,6 +4,7 @@ Create an image from random blocks of other images.
 
 Can do a grid of squares or rectangles, or vertical or horizontal stripes.
 """
+
 from __future__ import annotations
 
 import argparse

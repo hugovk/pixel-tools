@@ -3,6 +3,7 @@
 Make a colour clock/story wheel of the five most dominant colours
 on each page of a book (or jpg).
 """
+
 from __future__ import annotations
 
 import argparse

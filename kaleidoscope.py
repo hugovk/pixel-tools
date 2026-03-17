@@ -2,6 +2,7 @@
 """
 Make a kaleidoscope
 """
+
 from __future__ import annotations
 
 import argparse
@@ -18,8 +19,8 @@ def is_odd(num):
 # This bit of maths could be simplified for our case, but it gets the job done
 # From http://stackoverflow.com/a/6959111/724176
 def transformblit(src_tri, dst_tri, src_img, dst_img):
-    ((x11, x12), (x21, x22), (x31, x32)) = src_tri
-    ((y11, y12), (y21, y22), (y31, y32)) = dst_tri
+    (x11, x12), (x21, x22), (x31, x32) = src_tri
+    (y11, y12), (y21, y22), (y31, y32) = dst_tri
 
     M = numpy.array(
         [

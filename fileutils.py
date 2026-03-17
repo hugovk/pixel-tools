@@ -3,7 +3,6 @@
 Some file utilities
 """
 
-
 from __future__ import annotations
 
 

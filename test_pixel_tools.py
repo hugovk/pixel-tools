@@ -2,6 +2,7 @@
 """
 Tests for pixel tools
 """
+
 from __future__ import annotations
 
 import argparse

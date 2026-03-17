@@ -4,6 +4,7 @@ Make a collage of photos inspired by Nana & Felix's Kanta|Väestö
 http://www.nana-felix.com/
 http://www.hippolyte.fi/nana-felix-3/?lang=en
 """
+
 from __future__ import annotations
 
 import argparse
