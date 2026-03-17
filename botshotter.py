@@ -9,6 +9,7 @@ Requirements:
  * ChromeDriver https://code.google.com/p/selenium/wiki/ChromeDriver
  * Or PhantomJS http://phantomjs.org/
 """
+
 from __future__ import annotations
 
 import argparse
