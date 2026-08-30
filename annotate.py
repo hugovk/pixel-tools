@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 Wrapper around ImageMagick to annotate images
 """
@@ -39,6 +39,9 @@ if __name__ == "__main__":
     parser.add_argument("-c", "--colour", default="black", help="Text colour")
     parser.add_argument("-p", "--pointsize", default="19", help="Text point size")
     parser.add_argument(
+        "-f", "--font", default="/System/Library/Fonts/Helvetica.ttc", help="Font"
+    )
+    parser.add_argument(
         "-x", "--no_box", action="store_true", help="Text with no background box"
     )
     parser.add_argument("--geometry", default="+3+3", help="Geometry argument (offset)")
@@ -56,13 +59,15 @@ if __name__ == "__main__":
 
     if args.no_box:
         cmd = (
-            'convert "'
+            'magick "'
             + args.infile
             + '" -quality 100 -fill '
             + args.colour
             + " -gravity "
             + args.gravity
-            + " -pointsize "
+            + ' -font "'
+            + args.font
+            + '" -pointsize '
             + str(args.pointsize)
             + ' -annotate 0 "'
             + args.text
@@ -72,17 +77,17 @@ if __name__ == "__main__":
         )
     else:
         cmd = (
-            'convert -background "'
+            'magick -background "'
             + args.background
             + '" -fill '
             + args.colour
-            + " -pointsize "
+            + ' -font "'
+            + args.font
+            + '" -pointsize '
             + str(args.pointsize)
-            + " -geometry "
-            + args.geometry
             + ' label:"'
             + args.text
-            + '" miff:- | composite -gravity '
+            + '" miff:- | magick composite -gravity '
             + args.gravity
             + " -geometry "
             + args.geometry
