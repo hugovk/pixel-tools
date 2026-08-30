@@ -24,12 +24,12 @@ jobs:
 
       - name: Before install
         run: |
-          curl -O https://hugovk.github.io/test/pixel-tools/testimages.zip
+          curl -O https://hugovk.dev/test/pixel-tools/testimages.zip
           unzip testimages.zip
-          curl -O https://hugovk.github.io/test/pixel-tools/ffmpeg-2.1.3-64bit-static.tar.bz2
+          curl -O https://hugovk.dev/test/pixel-tools/ffmpeg-2.1.3-64bit-static.tar.bz2
           tar jxf ffmpeg-2.1.3-64bit-static.tar.bz2
           sudo cp ffmpeg-2.1.3-64bit-static/ffmpeg /usr/bin
-          curl -O https://hugovk.github.io/test/pixel-tools/haarcascade_frontalface_alt.xml
+          curl -O https://hugovk.dev/test/pixel-tools/haarcascade_frontalface_alt.xml
 
       - name: Install ImageMagick
         uses: mfinelli/setup-imagemagick@v5
